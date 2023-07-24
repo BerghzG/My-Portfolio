@@ -1,5 +1,4 @@
 # My Portfolio
- Paste of some projects.
  This is my project portfolio, where I share a collection of work that I have developed or copied for educational and learning purposes. Each project has its own directory with a brief description.
 
  ## Projects
