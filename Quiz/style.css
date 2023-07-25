@@ -1,0 +1,103 @@
+@charset 'UTF-8';
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pop', sans-serif;
+}
+
+@font-face {
+    font-family: 'Doc';
+    src: url(Fontes/doctor_who_2006/DOCWHO.TTF)
+}
+@font-face {
+    font-family: 'Pop';
+    src: url(Fontes/Poppins/Poppins-Regular.ttf)
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+    flex-direction: column;
+    gap: 5px;
+    background: linear-gradient(90deg, #a09e9e, #e9da84)
+}
+
+body h1 {
+    display: block;
+    font-size: 40px;
+    margin-top: -5px;
+    padding-bottom: 8px;
+}
+
+body h2 {
+    display: block;
+    max-width: 500px;
+    margin: 10px;
+    
+}
+
+main {
+    background-color: #232da2;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 540px;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.spnQtd {
+    text-align: end;
+}
+.answer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+button {
+    width: 100%;
+    text-align: start;
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #080b35;
+    color: aliceblue;
+}
+
+button:hover {
+    background-color: #010213;
+    color: #ffd700;
+}
+
+.finish {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.finish button {
+    text-align: center;
+}
+
+p.a {
+    font-size: 40px;
+    font-family: 'Doc';
+}
