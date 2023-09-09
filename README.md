@@ -4,8 +4,7 @@
  ## Projects
  Here is alist of the top projects in this repository:
 
- 1. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Quiz">Quiz:</a>
- <br>
+ 1. ### <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Quiz">Quiz:</a>
  This is an interactive quiz project about the science fiction series Doctor Who, created by the BBC. The quiz consists of 10 multiple-choice questions about the characters, episodes and interesting facts from the series. The aim is to test your knowledge and passion for the Doctor Who universe.
 
  2.
