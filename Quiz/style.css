@@ -101,3 +101,9 @@ p.a {
     font-size: 40px;
     font-family: 'Doc';
 }
+
+a {
+    text-decoration: none;
+    color: black;
+    outline: none;
+}
