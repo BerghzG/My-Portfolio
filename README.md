@@ -7,10 +7,10 @@
 1. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Quiz">Quiz:</a>
  This is an interactive quiz project about the science fiction series Doctor Who, created by the BBC. The quiz consists of 10 multiple-choice questions about the characters, episodes and interesting facts from the series. The aim is to test your knowledge and passion for the Doctor Who universe.
 
- 2.<a href="https://github.com/BerghzG/My-Portfolio/tree/main/Bot%20de%20Discord">Discord Bot</a>
+2. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Bot%20de%20Discord">Discord Bot:</a>
   This is a Discord bot that plays a points game. The player adds points by summoning the bot using the "!pontos" command.
 
- 3.
+3.
 
  ## Contribution
  If any projects were inspired by tutorialos or other people's work, they will be properly credited here.
