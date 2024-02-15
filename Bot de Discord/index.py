@@ -60,7 +60,6 @@ dragon_names = {
 }
 
 # Função para adicionar pontos diariamente
-
 async def adicionar_pontos():
     while True:
         for guild in client.guilds:
@@ -68,7 +67,12 @@ async def adicionar_pontos():
                 cursor.execute('INSERT OR IGNORE INTO pontos (user_id, pontos) VALUES (?, ?)', (str(member.id), 0))
                 cursor.execute('UPDATE pontos SET pontos = pontos + ? WHERE user_id = ?', (random.randint(500, 2000), str(member.id)))
                 conn.commit()
+            # Adiciona novos membros que podem ter se juntado desde o último ciclo
+            for member in guild.fetch_members():  # Fetches all members, including offline ones
+                cursor.execute('INSERT OR IGNORE INTO pontos (user_id, pontos) VALUES (?, ?)', (str(member.id), 0))
+                conn.commit()
         await asyncio.sleep(86400)  # Espera 24 horas
+
 
 # Comando para verificar os pontos e os dragões disponíveis
 
@@ -101,7 +105,7 @@ async def on_message(message):
                 conn.commit()
                 await message.channel.send(f"Você vendeu o dragão {dragon_names[dragao_num]} por {preco_do_dragao} pontos.")
             else:
-                await message.send("Você não tem pontos suficientes para vender esse dragão")     
+                await message.channel.send("Você não tem pontos suficientes para vender esse dragão")     
         else:
             await message.channel.send("Você não tem esse dragão para vender.")
 
