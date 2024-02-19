@@ -27,4 +27,4 @@
  If you like to get in touch with me about a specific project or collaboration opportunity, you can find me at <a href="https://www.instagram.com/berghz_g/">Instagram</a>.
 
  ## Project Status
- This portfolio is a work in progress, and new projects may be added as i continue to learn and create more. Please feel free to follow the updates.
+ This portfolio is a work in progress, and new projects may be added or updated as i continue to learn and create more. Please feel free to follow the updates.
