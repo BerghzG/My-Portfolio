@@ -11,7 +11,7 @@
   This is a Discord bot made with Python that plays a points game. The player adds points by summoning the bot using the "!pontos" command.
 
 3. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/PySimpleGui%20Login">Login with PySimpleGUI </a>
-   This is a simple user login and registration system developed in Python with the PySimpleGUI library. The system allows users to log in with a previously registered username and password, in addition to offering the option to save the login and register new users in the system. Additionally, the system has a button to show the list of registered users. This project serves as a basic example of implementing authentication and storing user information in Python. 
+   This is a simple user login and registration system developed in Python with the PySimpleGUI library. The system allows users to log in with a previously registered username and password, in addition to offering the option to save the login, register new users in the system and the system has a button to show the list of registered users. This project serves as a basic example of implementing authentication and storing user information in Python. 
 
 4.
 
