@@ -10,12 +10,15 @@
 2. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Bot%20de%20Discord">Discord Bot:</a>
   This is a Discord bot made with Python that plays a points game. The player adds points by summoning the bot using the "!pontos" command.
 
-3. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/PySimpleGui%20Login">Login with PySimpleGUI </a>
+3. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/PySimpleGui%20Login">Login with PySimpleGUI:</a>
    This is a simple user login and registration system developed in Python with the PySimpleGUI library. The system allows users to log in with a previously registered username and password, in addition to offering the option to save the login, register new users in the system and the system has a button to show the list of registered users. This project serves as a basic example of implementing authentication and storing user information in Python. 
 
-4.
+4. <a href="https://t.me/BerghzBot">My Bot Portfolio:</a>
+This is my bot in pt-br on Telegram, a lowcode bot made by me to present my portfolio and provide project options. With this bot, you can explore my professional portfolio and request a quote for a specific project. It was developed to make it easier to view my projects and offer an interactive way to interact with my portfolio. Feel free to explore the options available and learn more about my work!
 
 5.
+
+6.
 
  ## Contribution
  If any projects were inspired by tutorialos or other people's work, they will be properly credited here.
