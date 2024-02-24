@@ -1,0 +1,41 @@
+Hey ya
+I'm Berghz G
+A Web Developer
+
+About Me
+I'm a technology enthusiast passionate about HTML, CSS and Bootstrap, with strong interest in UX (User Experience). My fascionation with programming extends beyound work, reflecting on my hobbies, such as drawing and exploring new games. I love reading about technologies and applying this knowledge to creative projects.
+
+Curriculum
+Udemy curse
+Curso em Video
+[adicionar coisas]
+
+Profisional Experience
+Discord Bot 
+[adicionar coisas]
+
+Other information
+In addition to my technical experience, I am an enthusiast by nature,always seeking to expand my knowledge and skills through personal and collaborative projects.
+
+Contact
+I look forward to hearing your exciting ideas and projects. If you're looking to collaborate, need advice or just want to say hi, don't hesitate to get in touch. Use the form below or send an email directly to berghzg@gmai.com
+
+Opening Hours
+Monday to Friday: 12am - 20pm
+
+Social media
+Connect with me on social media:
+[links]
+
+Location
+Brazil, RJ
+
+Fontes a serem usadas:
+Montserrat e Roboto Slab
+
+Paleta: 
+#1b3141 (texto de destaque ou botoes, titulos)
+#44434b (texto de corpo)
+#a9cfea (conteudo principal)
+#aab7c0 (fundo ou icons)
+#fff 
