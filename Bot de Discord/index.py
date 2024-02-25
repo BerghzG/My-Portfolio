@@ -101,7 +101,7 @@ async def on_message(message):
                 conn.commit()
                 await message.channel.send(f"Você vendeu o dragão {dragon_names[dragao_num]} por {preco_do_dragao} pontos.")
             else:
-                await message.send("Você não tem pontos suficientes para vender esse dragão")     
+                await message.channel.send("Você não tem pontos suficientes para vender esse dragão")     
         else:
             await message.channel.send("Você não tem esse dragão para vender.")
 
