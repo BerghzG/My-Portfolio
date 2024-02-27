@@ -19,9 +19,12 @@
 5. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Jokenpo">Jokenpo:<a>
    In this game, players can compete against the computer in a classic game of rock, paper, scissors. With an attractive and interactive design, players can test their skills and try to beat the computer in a series of rounds. Additionally, the game includes a scoreboard to keep track of scores and the ability to reset the score with just one click. Have fun challenging the computer and see who will be the big winner!
 
-6.
+6. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/PyGame%20Project">Ping Pong Game:</a>
+   This is a ping pong game project developed in Python with the Pygame library, inspired by the classic Atari game. The goal is to provide a fun and nostalgic experience for players, recreating the atmosphere of retro games. 
 
 7.
+
+8.
 
  ## Contribution
  If any projects were inspired by tutorialos or other people's work, they will be properly credited here.
