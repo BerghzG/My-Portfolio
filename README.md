@@ -22,7 +22,8 @@
 6. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/PyGame%20Project">Ping Pong Game:</a>
    This is a ping pong game project developed in Python with the Pygame library, inspired by the classic Atari game. The goal is to provide a fun and nostalgic experience for players, recreating the atmosphere of retro games. 
 
-7.
+7. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Bootstap%20Portifolio">First Personal Portfolio Website </a>This site was created to provide an overview of who I am and what I can offer. I used HTML for structuring, CSS for styling and Bootstrap to ensure a responsive and modern design.
+ 
 
 8.
 
