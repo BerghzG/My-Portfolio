@@ -15,14 +15,56 @@
     <title>Portfolio</title>
 </head>
 <body>
+ <nav id="Nav" class="navbar navbar-expand-lg sticky-top">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse coisas" id="navbarTogglerDemo01">
+                     <a class="navbar-brand" href="index.html">Berghz G</a>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" id="navabout" href="#about">About Me</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="navskill" href="#skill">Skills</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="navcontact" href="#contact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="navprojects" href="projects.html">Projects</a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-translate"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li class="dropdown-item" id="en" onclick="ingles()">English</li>
+                                <li class="dropdown-item" id="pt" onclick="portugues()">Portuguese</li>
+                                <li class="dropdown-item" id="sp" onclick="espanhol()">Spanish</li>
+                                <li class="dropdown-item" id="fr" onclick="frances()">French</li>
+                                <li class="dropdown-item" id="ge" onclick="alemao()">Germany</li>
+                                <li class="dropdown-item" id="ma" onclick="mandarim()">Mandarin</li>
+                                <li class="dropdown-item" id="ar" onclick="arabe()">Arabic</li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                    
+                    </div>
+                </div>
+            </nav>
+
     <header>
         <section id="me">
             <div class="container">
                 <div class="a row">
                     <div class="theader col-md-6">
-                        <h1>Hey ya</h1>
-                        <h2> I'm Berghz G</h2>
-                        <h3>A Web Developer</h3>
+                        <h1 id="h1header">Hey ya</h1>
+                        <h2 id="h2header"> I'm Berghz G</h2>
+                        <h3 id="h3header">A Web Developer</h3>
                     </div>
                     <div class="col-md-6">
                         <img class="img-fluid" src="estilos/imagens/Berghz G profile.png" alt="Berghz G Picture Profile">
@@ -51,9 +93,9 @@
                                 <i class="bi bi-tools"></i>
                             </div>
                            
-                            <h2 class="p3">Web Development Frelancer</h2>
-                            <p class="p3">2021 - Present</p>
-                            <p class="cardp">I worked with clients on web development projects, using technologies such as HTML, CSS, JS, Python and Bootstrap. I created responsive websites and optimized performance.</p>
+                            <h2 id="h2Web" class="p3">Web Development Frelancer</h2>
+                            <p id="pWeb" class="p3">2021 - Present</p>
+                            <p id="pWeb2" class="cardp">I worked with clients on web development projects, using technologies such as HTML, CSS, JS, Python and Bootstrap. I created responsive websites and optimized performance.</p>
                         </div> 
                     </div>
                    </div>
@@ -65,9 +107,9 @@
                               <i class="bi bi-pencil-fill"></i>  
                             </div>
                             
-                            <h2 class="p3">Graphic Design Freelancer</h2>
+                            <h2 id="h2Gra" class="p3">Graphic Design Freelancer</h2>
                             <p class="p3">2019 - 2021</p>
-                            <p class="cardp">Collaborated with companies to create logos, banners and promotional materials using tools such as Adobe Illustrator and Photoshop.</p>
+                            <p id="pGra" class="cardp">Collaborated with companies to create logos, banners and promotional materials using tools such as Adobe Illustrator and Photoshop.</p>
                         </div>
                     </div>
                    </div>
@@ -79,8 +121,8 @@
                             <i class="bi bi-file-earmark-person"></i>     
                         </div>
                        
-                          <h2 class="p3">Skills</h2>
-                          <p class="cardp">Full Stack Web Developer with expertise in various technologies: HTML, CSS, JavaScript (including JQuery, API and DOM manipulation), Python, Bootstrap, EJS, PHP and more. Always exited to create amazing solutions!</p>
+                          <h2 id="h2Ski" class="p3">Skills</h2>
+                          <p id="pSki" class="cardp">Full Stack Web Developer with expertise in various technologies: HTML, CSS, JavaScript (including JQuery, API and DOM manipulation), Python, Bootstrap, EJS, PHP and more. Always exited to create amazing solutions!</p>
                        </div> 
                     </div>
                    </div> 
@@ -92,8 +134,8 @@
                                  <i class="bi bi-info-circle"></i>
                             </div>
                            
-                            <h2 class="p3">Other information</h2>
-                            <p class="cardp">In addition to my technical experience, I am an enthusiast by nature, always seeking to expand my knowledge and skills through personal and collaborative projects.</p>
+                            <h2 id="h2Oth" class="p3">Other information</h2>
+                            <p id="pOth" class="cardp">In addition to my technical experience, I am an enthusiast by nature, always seeking to expand my knowledge and skills through personal and collaborative projects.</p>
                         </div> 
                     </div>
                    </div>
@@ -107,16 +149,16 @@
             <div class="container">
                 <div class="row">
                     <div class="f1 col-md-6 m">
-                        <h2>Contact</h2>
-                        <p class="img-fluid">I look forward to hearing your exciting ideas and projects. If you're looking to collaborate, need advice or just want to say hi, don't hesitate to get in touch. Use the form below or send an email directly to berghzg@gmail.com</p>
+                        <h2 id="conH2">Contact</h2>
+                        <p id="conP1" class="img-fluid">I look forward to hearing your exciting ideas and projects. If you're looking to collaborate, need advice or just want to say hi, don't hesitate to get in touch. Use the form below or send an email directly to berghzg@gmail.com</p>
                     </div>
 
                     <div class="f2 col-md-6">
-                        <h3>Opening Hours</h3>
-                        <p class="img-fluid">Monday to Friday: 12am - 20pm</p>
+                        <h3 id="conH31">Opening Hours</h3>
+                        <p id="conP2" class="img-fluid">Monday to Friday: 12am - 20pm</p>
 
-                        <h3>Social Media</h3>
-                        <p class="img-fluid">Connect with me on social media:</p>
+                        <h3 id="conH32">Social Media</h3>
+                        <p id="conP3" class="img-fluid">Connect with me on social media:</p>
                         <a href="https://www.instagram.com/berghz_g"><i class="bi bi-instagram"></i></a>
 
                         <a href="https://t.me/BerghzG"><i class="bi bi-telegram"></i></a>
@@ -125,7 +167,7 @@
 
                         <a href="https://wa.me/5521977378034"><i class="bi bi-whatsapp"></i></a>
                         
-                        <h4>Location</h4>
+                        <h4 id="conH4">Location</h4>
                         <p>Brazil, RJ</p>
                     </div>
                 </div>
@@ -136,5 +178,6 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

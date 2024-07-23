@@ -21,8 +21,66 @@
    src: url(fonts/Montserrat-e-Roboto-Slab/Montserrat/static/Montserrat-Regular.ttf);
 }
 
+html {
+   scroll-behavior: smooth;
+}
+
+nav.navbar {
+   position: fixed;
+   z-index: 1000;
+}
+
 header {
    background-color: var(--cor4);
+}
+
+.coisas {
+   background-color: var(--cor2);
+   padding: 7px;
+   margin-top: 5px;
+   border-radius: 7px;
+   text-align: center;
+}
+
+.btn-dark {
+   padding: 10px;
+   margin: 7px;
+}
+
+a.nav-link {
+   color: var(--cor5);
+   font-family: 'Roboto Slab';
+   font-variation-settings: "wght" 300;
+   padding: 10px;
+   
+}
+
+a.navbar-brand {
+   color: rgb(0, 102, 255);
+   font-family: 'Montserrat', sans-serif;
+   padding-left: 17px;
+}
+
+@media only screen and (min-width: 1000px) {
+   a.navbar-brand {
+      padding-left: 50px;
+   }
+
+   a.nav-link {
+      margin-top: 4px;
+   }
+
+   ul.navbar-nav {
+      margin-left: 28px;
+   }
+
+   .coisas {
+      padding-right: 55px;
+   }
+}
+
+a.navbar-brand:hover {
+   color: rgb(0, 119, 255);
 }
 
 .theader {
@@ -189,4 +247,21 @@ h4 {
 .fp3 {
    text-align: center;
    margin-top: 30px;
+}
+
+
+/* Projects.html */
+
+.divproject {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+   text-align: center;
+}
+
+.divproject img {
+   padding: 15px;
+   width: 300px;
 }
