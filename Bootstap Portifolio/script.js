@@ -71,7 +71,7 @@ function portugues() {
     skillH22.innerHTML = "Freelancer de Design Gráfico"
     skillP3.innerHTML = "Colaborei com empresas para criar logotipos, banners e materiais promocionais usando ferramentas como Adobe Illustrator e Photoshop."
     skillH23.innerHTML = "Habilidades"
-    skillP4.innerHTML = "Desenvolvedor Web Full Stack com experiência em várias tecnologias: HTML, CSS, javaScript (incluindo JQuery, API e manipulação de DOM, Python, EJS, PHP e muito mais. Sempre animado para criar soluções incríveis!"
+    skillP4.innerHTML = "Desenvolvedor Web Full Stack com experiência em várias tecnologias: HTML, CSS, javaScript (incluindo JQuery, API e manipulação de DOM), Python, EJS, PHP e muito mais. Sempre animado para criar soluções incríveis!"
     skillH24.innerHTML = "Outras informações"
     skillP5.innerHTML = "Além da minha experiência técnica, sou um entusiasta por natureza, sempre buscando expandir meus conhecimentos e habilidades por meio de projetos pessoais e colaborativos."
 
