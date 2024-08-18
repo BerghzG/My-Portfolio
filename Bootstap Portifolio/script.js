@@ -106,7 +106,7 @@ function ingles() {
     aboutH2.innerHTML = "About Me"
     aboutP.innerHTML = "I'm a technology enthusiast passionate about HTML, CSS and Bootstrap, with strong interest in UX (User Experience). My fascionation with programming extends beyound work, reflecting on my hobbies, such as drawing and exploring new games. I love reading about technologies and applying this knowledge to creative projects."
 
-    skillH21.innerHTML = "Web Development Frelancer"
+    skillH21.innerHTML = "Web Development Freelancer"
     skillP1.innerHTML = "2021 - Present"
     skillP2.innerHTML = "I worked with clients on web development projects, using technologies such as HTML, CSS, JS, Python and Bootstrap. I created responsive websites and optimized performance."
     skillH22.innerHTML = "Graphic Design Freelancer"
