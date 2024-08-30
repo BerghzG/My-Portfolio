@@ -1,0 +1,69 @@
+<% 
+	function escapeHtml(str) {
+		return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+	}
+ %>
+
+
+<div id="postContainer" class="container">
+	<h2 id="title-post"></h2>
+	
+	<div class="posts">
+		<% posts.forEach(post => { %>
+			<div class="post">
+				<h3><%= post.title %></h3>
+				<p id="postTExt"><%= post.text.substring(0, 100) %>...</p>
+				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view-modal" onclick="showViewModal('<%= post.id %>')">See More</button>
+				
+				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit-modal" onclick="showEditModal('<%= post.id %>', '<%= post.title %>', '<%= escapeHtml(post.text) %>')">Edit</button>
+
+				<form action="/posts/<%= post.id %>?_method=DELETE" method="post" style="display: inline;">
+					<input type="hidden" name="_method" value="DELETE">
+					<button class="btn btn-danger" type="submit">Delete</button>
+				</form>
+			</div>
+		<% }) %>
+	</div>
+	
+	<!-- Contêiner para Modais -->
+    <div id="modal-container">
+        <!-- Modal para visualização -->
+        <div id="view-modal" class="modal fade" tabindex="-1" aria-labellendby="view-modal-label" aria-hidden="true">
+        	<div class="modal-dialog">
+			 	<div class="modal-content">
+			 		<div class="modal-header">
+						<h3 id="view-modal-title"></h3>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			 		</div>
+			        <div class="modal-body">
+						<div id="view-modal-body"></div>
+			        </div>
+			    </div>
+        	</div>
+           
+        </div>
+
+        <!-- Modal para edição -->
+        <div id="edit-modal" class="modal fade" tabindex="-1" aria-labellendby="edit-modal-label" aria-hidden="true">
+        	<div class="modal-dialog">
+	            <div class="modal-content">
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                <form id="edit-form" method="post" action="">
+	                    <input type="hidden" name="_method" value="PUT">
+	                    <input type="hidden" id="edit-post-id" name="id">
+	                    <label for="edit-title">Título:</label>
+	                    <input type="text" id="edit-title" name="title" required>
+	                    <label for="edit-text">Texto:</label>
+	                    <textarea id="edit-text" name="text" required></textarea>
+	                    <button class="btn btn-primary" type="submit">Salvar</button>
+	                </form>
+	            </div>
+        	</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+	document.getElementById("footerHeader").style.display = none
+</script>
