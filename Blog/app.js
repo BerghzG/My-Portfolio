@@ -4,6 +4,7 @@ import fs from "fs";
 import { dirname } from "path";
 import path from "path"
 import { fileURLToPath } from "url";
+import methodOverride from 'method-override';
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -14,6 +15,7 @@ const postPath = path.join(__dirname, "data/data.json")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("public"))
+app.use(methodOverride("_method"))
 
 
 app.set("views", path.join(__dirname, "views"))
@@ -77,16 +79,11 @@ app.put("/posts/:id", (req, res) => {
     }
 })
 
-app.post("/posts/:id", (req, res) => {
-    if (req.query._method === 'DELETE') {
+app.delete("/posts/:id", (req, res) => {  
         let posts = readData()
         posts = posts.filter(p => p.id != req.params.id)
         writeData(posts)
         res.status(204).send() 
-    } else {
-        console.log("Defaut case: req.query._method is not DELETE")
-    }
-    
 })
 
 app.listen(port, () => {
