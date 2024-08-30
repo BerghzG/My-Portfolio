@@ -14,13 +14,13 @@
 			<div class="post">
 				<h3><%= post.title %></h3>
 				<p id="postTExt"><%= post.text.substring(0, 100) %>...</p>
-				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view-modal" onclick="showViewModal('<%= post.id %>')">See More</button>
+				<button class="btn btn-primary butpost" data-bs-toggle="modal" data-bs-target="#view-modal" onclick="showViewModal('<%= post.id %>')">See More</button>
 				
-				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit-modal" onclick="showEditModal('<%= post.id %>', '<%= post.title %>', '<%= JSON.stringify(post.text) %>')">Edit</button>
+				<button class="btn btn-success butpost" data-bs-toggle="modal" data-bs-target="#edit-modal" onclick="showEditModal('<%= post.id %>', '<%= post.title %>', '<%= JSON.stringify(post.text) %>')">Edit</button>
 
 				<form action="/posts/<%= post.id %>?_method=DELETE" method="post" style="display: inline;">
 					<input type="hidden" name="_method" value="DELETE">
-					<button class="btn btn-danger" type="submit">Delete</button>
+					<button class="btn btn-danger butpost" type="submit">Delete</button>
 				</form>
 			</div>
 		<% }) %>

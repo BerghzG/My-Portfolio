@@ -296,6 +296,11 @@ p#postTExt {
     text-align: justify;
 }
 
+button.butpost {
+    width: 65px;
+    padding-bottom: 4px;
+}
+
 div#editarea {
     padding-top: 14px;
     padding-bottom: 12px;
