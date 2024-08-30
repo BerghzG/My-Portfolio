@@ -301,12 +301,12 @@ p#postTExt {
 
 [data-bs-theme="light"] footer {
     background-color: #0056b3;
-    padding: 43px 30px 43px 30px;
+    padding: 43px 30px 40px 30px;
 }
 
 [data-bs-theme="dark"] footer {
     background-color: #083a6f;
-    padding: 30px;
+    padding: 43px 30px 40px 30px;
 }
 
 div.divImageLinks h4 {
@@ -345,4 +345,6 @@ div.divMyLinks i:hover {
 
 p#copyFooter {
     text-align: center;
+    color: #f5f5f5;
+    padding-top: 3px;
 }
