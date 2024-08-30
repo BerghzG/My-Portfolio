@@ -297,13 +297,9 @@ p#postTExt {
 }
 
 div#editarea {
-    padding-top: 10px;
+    padding-top: 14px;
+    padding-bottom: 12px;
 }
-
-button#iditbtn {
-    padding-top: 10px;
-}
-
 
 /* FOOTER.EJS */
 
