@@ -297,8 +297,8 @@ p#postTExt {
 }
 
 button.butpost {
-    width: 105px;
-    padding: 5px;
+    width: 98px;
+    margin-bottom: 5px;
 }
 
 div#editarea {
