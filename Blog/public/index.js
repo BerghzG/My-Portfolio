@@ -44,10 +44,10 @@ function hora() {
 		saudacao = "Good Morning";
 		textosaudacao = "Start the day by exercising your mind!"
 	} else if (horas < 18) {
-		saudacao = "Good Afternoon"
+		saudacao = "Good Afternoon";
 		textosaudacao = "Take the opportunity to write down something that's on your mind!"
 	} else {
-		saudacao = "Good Evening"
+		saudacao = "Good Evening";
 		textosaudacao = "Before you go to bed, share your thoughts from the day!"
 	}
 	

@@ -16,7 +16,7 @@
 				<p id="postTExt"><%= post.text.substring(0, 100) %>...</p>
 				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#view-modal" onclick="showViewModal('<%= post.id %>')">See More</button>
 				
-				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit-modal" onclick="showEditModal('<%= post.id %>', '<%= post.title %>', '<%= escapeHtml(post.text) %>')">Edit</button>
+				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit-modal" onclick="showEditModal('<%= post.id %>', '<%= post.title %>', '<%= JSON.stringify(post.text) %>')">Edit</button>
 
 				<form action="/posts/<%= post.id %>?_method=DELETE" method="post" style="display: inline;">
 					<input type="hidden" name="_method" value="DELETE">
@@ -58,12 +58,12 @@
 		                    <input type="hidden" id="edit-post-id" name="id">
     						<div class="form-group">
 	 							<label for="edit-title">Título:</label>
-			                    <input type="text" id="edit-title" name="title" required>
+			                    <input type="text" class="form-control" type="text" id="edit-title" name="title" style="padding-bottom: 15px; padding-top: 10px; required>
     						</div>
 		                 	
 		                 	<div class="form-group">
 								<label for="edit-text">Texto:</label>
-			                    <textarea id="edit-text" name="text" required></textarea>
+			                    <textarea class="form-control" style="resize: none; overflow-y: auto; height: 125px" rows="3" id="edit-text" name="text" required></textarea>
 		                 	</div>
 		                   
 		                    <button class="btn btn-primary" type="submit">Salvar</button>
