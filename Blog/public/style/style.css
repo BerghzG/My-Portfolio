@@ -296,17 +296,25 @@ p#postTExt {
     text-align: justify;
 }
 
+div#editarea {
+    padding-top: 10px;
+}
+
+button#iditbtn {
+    padding-top: 10px;
+}
+
 
 /* FOOTER.EJS */
 
 [data-bs-theme="light"] footer {
     background-color: #0056b3;
-    padding: 43px 30px 40px 30px;
+    padding: 43px 30px 1px 30px;
 }
 
 [data-bs-theme="dark"] footer {
     background-color: #083a6f;
-    padding: 43px 30px 40px 30px;
+    padding: 43px 30px 1px 30px;
 }
 
 div.divImageLinks h4 {
@@ -346,5 +354,5 @@ div.divMyLinks i:hover {
 p#copyFooter {
     text-align: center;
     color: #f5f5f5;
-    padding-top: 3px;
+    padding-top: 40px;
 }
