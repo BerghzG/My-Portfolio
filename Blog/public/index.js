@@ -38,16 +38,21 @@ function checkInput() {
 function hora() {
 	const horas = new Date().getHours()
 	let saudacao
+	let textosaudacao
 	
 	if (horas < 12) {
-		saudacao = "Good Morning"
+		saudacao = "Good Morning";
+		textosaudacao = "Start the day by exercising your mind!"
 	} else if (horas < 18) {
 		saudacao = "Good Afternoon"
+		textosaudacao = "Take the opportunity to write down something that's on your mind!"
 	} else {
 		saudacao = "Good Evening"
+		textosaudacao = "Before you go to bed, share your thoughts from the day!"
 	}
 	
 	document.getElementById("title-post").innerText = saudacao
+	document.getElementById("p-title-post").innerText = textosaudacao
 }
 
 hora()

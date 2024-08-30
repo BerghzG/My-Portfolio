@@ -66,10 +66,17 @@
 
 
 
-h1.modal-title {
+h2.modal-title {
 	font-family: 'Poppins', sans-serif;
 	margin-left: 145px;
 }
+
+@media (max-width: 768px) { /* Ajuste para dispositivos móveis */
+    h2.modal-title {
+        margin-left: 100px;
+    }
+}
+
 
 div.modal-footer {
 	border: none;
@@ -258,7 +265,18 @@ h2#title-post {
     font-family: 'Poppins-Bold', sans-serif;
     text-align: center;
     font-size: 26pt;
+    padding-bottom: 2px;
+}
+
+div#footercopy {
+    text-align: justify;
+}
+
+p#p-title-post {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
     padding-bottom: 30px;
+    text-align: center;
 }
 
 div.posts {
@@ -322,4 +340,8 @@ div.divMyLinks i {
 
 div.divMyLinks i:hover {
     color: #ababab;
+}
+
+p#copyFooter {
+    text-align: center;
 }
