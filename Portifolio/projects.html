@@ -22,11 +22,54 @@
 </head>
 <body>
     <div class="container divproject">
-        <img class="img-fluid" src="estilos/imagens/Cat-Gif.gif" alt="cat typing on computer">
+        <h1 id="projectH1">Projects That Define My Journey</h1>
+        <p id="projectP">Explore my latest work and discover my passion for creativity and innovation</p>
 
-        <p class="ppp">Sorry, we are working to add more projects, come back later.</p>
-        <a class="aaa" href="index.html">Back to Menu</a>
+        <nav class="navbar">
+            <div class="d-flex justify-content-between w-100">
+                <a href="">
+                    <i class="bi bi-house"></i>
+                </a>
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-translate"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li class="dropdown-item" id="en" onclick="ingles()">English</li>
+                            <li class="dropdown-item" id="pt" onclick="portugues()">Portuguese</li>
+                            <li class="dropdown-item" id="sp" onclick="espanhol()">Spanish</li>
+                            <li class="dropdown-item" id="fr" onclick="frances()">French</li>
+                            <li class="dropdown-item" id="ge" onclick="alemao()">Germany</li>
+                            <li class="dropdown-item" id="ma" onclick="mandarim()">Mandarin</li>
+                            <li class="dropdown-item" id="ar" onclick="arabe()">Arabic</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 100%;">
+                    <img class="card-img-top" src="estilos/imagens/Blog-Image.jpeg" alt="Blog Card Image Cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Writting Blog</h5>
+                        <p class="card-text">The project is a personal blog created with Node.js, Express, EJS, CSS, Bootstrap and JavaScript, allowing the user to create, edit and delete posts. It works offline, storing information locally, but posts made in incognito mode will be lost when you close the application.</p>
+                        <a class="btn btn-primary" href="https://blog-w1k7.onrender.com">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mais Cards Em Breve -->
+        </div>
+
     </div>
+
+    <footer>
+        <p class="fp3">&copy;Berghz G - 2024</p>
+    </footer>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>

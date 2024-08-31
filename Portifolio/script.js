@@ -40,6 +40,8 @@ var contactP2 = document.querySelector("#conP2")
 var contactH32 = document.querySelector("#conH32")
 var contactP3 = document.querySelector("#conP3")
 var contactH4 = document.querySelector("#conH4")
+// projects.html
+
 
 
 // funções da tradução
@@ -348,18 +350,3 @@ const idiomaSelecionado = navigator.language || navigator.userLanguage;
 
 var html2 = document.getElementById("htmlaa")
 
-if (idiomaSelecionado === "pt-BR") {
-    //projects.html
-    
-    html2.setAttribute('lang', 'pt-br')
-    document.querySelector(".ppp").innerHTML = "Desculpe, nós estamos trabalhando para adicionar mais projetos, volte mais tarde."
-    document.querySelector(".aaa").innerHTML = "Voltar ao Menu"
-} else if (idiomaSelecionado === "en-ES") {
-    html2.setAttribute('lang', 'en')
-    document.querySelector(".ppp").innerHTML = "Los sentimos, estamos trabajando para agregar más proyetos, vulve a consultar más tarde."
-    document.querySelector(".aaa").innerHTML = "Volver al Menú"
-} else if (idiomaSelecionado === "fr-FR") {
-    html2.setAttribute('lang', 'fr')
-    document.querySelector(".ppp").innerHTML = "Désolé, nous travaillons sur l'ajout d'autres projets, revenez plus tard."
-    document.querySelector(".aaa").innerHTML = "Retour au Menu"
-}

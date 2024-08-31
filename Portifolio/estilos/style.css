@@ -261,7 +261,7 @@ h4 {
    text-align: center;
 }
 
-.divproject img {
-   padding: 15px;
-   width: 300px;
+.divproject h1 {
+   font-family: font-family: 'Montserrat', sans-serif;font-variation-settings: 'wght' 400;;
 }
+
