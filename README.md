@@ -16,13 +16,13 @@
 4. <a href="https://t.me/BerghzBot">My Bot Portfolio:</a>
    This is my bot in pt-br on Telegram, a lowcode bot made by me to present my portfolio and provide project options. With this bot, you can explore my professional portfolio and request a quote for a specific project. It was developed to make it easier to view my projects and offer an interactive way to interact with my portfolio. Feel free to explore the options available and learn more about my work!
 
-5. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Jokenpo">Jokenpo:<a>
+5. <a href="https://berghzg.github.io/My-Portfolio/Jokenpo/">Jokenpo:<a>
    In this game, players can compete against the computer in a classic game of rock, paper, scissors. With an attractive and interactive design, players can test their skills and try to beat the computer in a series of rounds. Additionally, the game includes a scoreboard to keep track of scores and the ability to reset the score with just one click. Have fun challenging the computer and see who will be the big winner!
 
 6. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/PyGame%20Project">Ping Pong Game:</a>
    This is a ping pong game project developed in Python with the Pygame library, inspired by the classic Atari game. The goal is to provide a fun and nostalgic experience for players, recreating the atmosphere of retro games. 
 
-7. <a href="https://github.com/BerghzG/My-Portfolio/tree/main/Bootstap%20Portifolio">First Personal Portfolio Website </a>This site was created to provide an overview of who I am and what I can offer. I used HTML for structuring, CSS for styling and Bootstrap to ensure a responsive and modern design.
+7. <a href="https://berghzg.github.io/My-Portfolio/Bootstap%20Portifolio/">First Personal Portfolio Website </a>This site was created to provide an overview of who I am and what I can offer. I used HTML for structuring, CSS for styling and Bootstrap to ensure a responsive and modern design.
  
 
 8.
