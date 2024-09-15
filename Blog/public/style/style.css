@@ -121,8 +121,15 @@ label.labelModal {
 
 #logo {
     order: 1;
-    width: 245px;
+    width: 271px;
     height: auto;
+}
+
+@media (max-width: 768px) { /* Ajuste para dispositivos móveis */
+    #logo {
+        width: 100%; /* Faz o logo ocupar 100% da largura do contêiner */
+        max-width: 200px; /* Limita a largura máxima do logo para não ficar muito grande */
+    }
 }
 
 #butao {
