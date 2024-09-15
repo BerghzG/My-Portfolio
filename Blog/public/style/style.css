@@ -121,7 +121,7 @@ label.labelModal {
 
 #logo {
     order: 1;
-    width: 255px;
+    width: 245px;
     height: auto;
 }
 
@@ -178,7 +178,7 @@ label.labelModal {
 
 #headerText {
     margin-top: 60px;
-    padding-bottom: 100px;
+    padding-bottom: 90px;
     text-align: center;
 }
 
