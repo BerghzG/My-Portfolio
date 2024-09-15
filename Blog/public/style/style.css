@@ -95,10 +95,11 @@ label.labelModal {
 
 [data-bs-theme="light"] header p {
     font-family: 'Nunito', sans-serif;
-    color: #f0f0f0;
+    color: #0a0a0a;
     text-align: justify;
     width: 675px;
     font-size: 1rem;
+    font-weight: 500;
     margin: auto;
     padding: 0 10px 0 10px;
 }
