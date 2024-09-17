@@ -66,18 +66,19 @@ app.get("/posts/:id", (req, res) => {
 })
 
 app.put("/posts/:id", (req, res) => {
-    const updated = req.body
-    const posts = readData()
-    const index = posts.findIndex(p => p.id == req.params.id)
-    
+    console.log('Request body:', req.body); // Adicione este log
+    const updated = req.body;
+    const posts = readData();
+    const index = posts.findIndex(p => p.id == req.params.id);
+
     if (index !== -1) {
-        posts[index] = {...posts[index], ...updated}
-        writeData(posts)
-        res.json(posts[index])
+        posts[index] = { ...posts[index], ...updated };
+        writeData(posts);
+        res.json(posts[index]);
     } else {
-        res.status((404).json({message: "Post not found"}))
+        res.status(404).json({ message: "Post not found" });
     }
-})
+});
 
 app.delete("/posts/:id", (req, res) => {
     const postId = parseInt(req.params.id, 10); // Converte para número
