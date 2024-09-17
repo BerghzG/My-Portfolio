@@ -71,10 +71,14 @@ function showViewModal(id) {
 }
 
 function showEditModal(id, title, text) {
-	document.getElementById('edit-post-id').value = id;
-	document.getElementById('edit-title').value = title;
-	document.getElementById('edit-text').value = text;
-	document.getElementById('edit-form').action = `/posts/${id}`;
+    if (!isNaN(parseInt(id, 10))) {
+        document.getElementById('edit-post-id').value = parseInt(id, 10);
+        document.getElementById('edit-title').value = title;
+        document.getElementById('edit-text').value = text;
+        document.getElementById('edit-form').action = `/posts/${id}`;
+    } else {
+        console.error("Invalid ID:", id);
+    }
 }
 
 
