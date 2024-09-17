@@ -77,3 +77,34 @@ function showEditModal(id, title, text) {
 	document.getElementById('edit-form').action = `/posts/${id}`;
 }
 
+
+let postIdToDelete = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Função para mostrar o modal
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+    document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+        button.addEventListener('click', function() {
+            postIdToDelete = this.getAttribute('data-post-id');
+        });
+    });
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+        if (postIdToDelete !== null) {
+            fetch(`/posts/${postIdToDelete}`, {
+                method: 'DELETE'
+            }).then(response => {
+                if (response.ok) {
+                    location.reload();  // Recarregue a página ou remova o item da DOM
+                } else {
+                    alert('Erro ao deletar o post.');
+                }
+            }).catch(error => {
+                console.error('Erro:', error);
+            });
+            deleteModal.hide(); // Ocultar o modal após a confirmação
+        }
+    });
+});
+
