@@ -18,11 +18,10 @@
 				
 				<button class="btn btn-success butpost" data-bs-toggle="modal" data-bs-target="#edit-modal" onclick="showEditModal('<%= post.id %>', '<%= post.title %>', '<%= JSON.stringify(post.text) %>')">Edit</button>
 
-				<form id="delete-form" method="post" style="display: inline;">
-					<input type="hidden" name="_method" value="DELETE">
-					<input type="hidden" id="delete-post-id" name="id">
-					<button class="btn btn-danger butpost" type="submit">Delete</button>
-				</form>
+				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-post-id="<%= post.id %>">
+  Deletar
+</button>
+
 			</div>
 		<% }) %>
 	</div>
@@ -75,7 +74,24 @@
         </div>
 
         <!-- Modal de Confirmação -->
-        
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+           <div class="modal-dialog">
+               <div class="modal-content">
+               <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+        Você tem certeza que deseja deletar este post?
+               </div>
+               <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                     <button type="button" class="btn btn-danger" id="confirmDeleteButton">Confirmar</button>
+               </div>
+              </div>
+        </div>
+  </div>
+     
     </div>
 
 </div>
