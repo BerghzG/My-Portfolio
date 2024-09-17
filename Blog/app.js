@@ -79,12 +79,28 @@ app.put("/posts/:id", (req, res) => {
     }
 })
 
-app.delete("/posts/:id", (req, res) => {  
-        let posts = readData()
-        posts = posts.filter(p => p.id != req.params.id)
-        writeData(posts)
-        res.status(204).send() 
-})
+app.delete("/posts/:id", (req, res) => {
+    const postId = parseInt(req.params.id, 10); // Converte para número
+    if (isNaN(postId)) {
+        return res.status(400).send('ID inválido'); // Retorna erro se o ID não for válido
+    }
+
+    try {
+        let posts = readData();
+        const initialLength = posts.length;
+        posts = posts.filter(post => post.id !== postId);
+
+        if (posts.length === initialLength) {
+            return res.status(404).send('Post não encontrado'); // Retorna erro se o post não for encontrado
+        }
+
+        writeData(posts);
+        res.status(204).send(); // Envia resposta de sucesso
+    } catch (error) {
+        console.error('Erro ao processar a solicitação:', error);
+        res.status(500).send('Erro interno do servidor'); // Retorna erro se houver um problema no servidor
+    }
+});
 
 app.listen(port, () => {
     console.log(`Está funcionando na porta ${port}`)
