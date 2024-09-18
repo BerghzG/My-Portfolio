@@ -72,30 +72,46 @@ function showViewModal(id) {
 
 function showEditModal(id, title, text) {
   if (!isNaN(parseInt(id, 10))) {
-    document.getElementById('edit-post-id').value = parseInt(id, 10);
     document.getElementById('edit-title').value = title;
     document.getElementById('edit-text').value = text;
-    document.getElementById('edit-form').action = `/posts/${id}`;
-    document.getElementById('edit-form').id = `edit-form-${id}`;
+
+    // Seleciona o formulário de edição pelo id
+    const editForm = document.getElementById(`edit-form-${id}`);
+    
+    // Remove event listener anterior, se houver
+    const existingListener = editForm.getAttribute('data-listener');
+    if (existingListener) {
+      editForm.removeEventListener('submit', existingListener);
+    }
+    
+    // Adiciona o listener ao formulário
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(editForm);
+      fetch(`/posts/${id}`, {
+        method: 'PUT',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Erro ao atualizar o post.');
+        }
+      })
+      .then(data => {
+        console.log('Post atualizado:', data);
+        location.reload(); // Recarrega a página após a edição
+      })
+      .catch(error => console.error(error));
+    };
+    
+    editForm.addEventListener('submit', handleSubmit);
+    editForm.setAttribute('data-listener', handleSubmit);
   } else {
     console.error("Invalid ID:", id);
   }
 }
-
-const editForm = document.getElementById(`edit-form-${id}`);
-editForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const id = editForm.dataset.id;
-  const formData = new FormData(editForm);
-  fetch(`/posts/${id}`, {
-    method: 'PUT',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error(error));
-});
-
 
 let postIdToDelete = null;
 
