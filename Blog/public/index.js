@@ -81,6 +81,20 @@ function showEditModal(id, title, text) {
     }
 }
 
+const editForm = document.getElementById('edit-form');
+editForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const id = editForm.dataset.id;
+  const formData = new FormData(editForm);
+  fetch(`/posts/${id}`, {
+    method: 'PUT',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+});
+
 
 let postIdToDelete = null;
 
