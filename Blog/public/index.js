@@ -73,16 +73,24 @@ function showViewModal(id) {
 //Atualizar
 
 function showEditModal(id, title, text) {
+    // Atualiza os campos do formulário com o título e o texto do post
     document.getElementById('edit-title').value = title;
     document.getElementById('edit-text').value = text;
 
-    const editForm = document.getElementById(`edit-form-${id}`);
-    
-    const handleSubmit = (e) => {
+    // Atualiza o action do formulário para enviar a requisição PUT para o post específico
+    const editForm = document.getElementById('edit-form');
+    editForm.action = `/posts/${id}?_method=PUT`;
+
+    // Remove o event listener anterior (se houver), para evitar múltiplas submissões
+    const newForm = editForm.cloneNode(true);
+    editForm.parentNode.replaceChild(newForm, editForm);
+
+    // Adiciona o event listener para enviar a requisição PUT
+    newForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const formData = new FormData(editForm);
-        fetch(`/posts/${id}`, {
-            method: 'PUT',
+        const formData = new FormData(newForm);
+        fetch(newForm.action, {
+            method: 'POST',  // Usar POST porque o method-override irá convertê-lo para PUT
             body: formData
         })
         .then(response => {
@@ -97,11 +105,8 @@ function showEditModal(id, title, text) {
             location.reload(); // Recarrega a página após a edição
         })
         .catch(error => console.error(error));
-    };
-
-    editForm.addEventListener('submit', handleSubmit);
+    });
 }
-
 
 // Deletar
 
