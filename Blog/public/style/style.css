@@ -28,7 +28,7 @@
 [data-bs-theme="light"] header { 
     position: relative;
     z-index: 1;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08)), url("../images/freepick1.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.09), rgba(0, 0, 0, 0.09)), url("../images/freepick1.jpg");
     background-size: cover;
     background-position: center;
     padding: 10px;
