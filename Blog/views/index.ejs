@@ -35,6 +35,30 @@
     <!-- <script src="/jquery.min.js"></script> --> 
 
     <script src="/index.js"></script>
+    
+    <!-- Script para alternar o tema e armazená-lo no localStorage -->
+    <script>
+        // Função para aplicar o tema
+        function applyTheme(theme) {
+            document.body.setAttribute('data-bs-theme', theme);
+        }
 
+        // Verificar se o tema está no localStorage e aplicar
+        const savedTheme = localStorage.getItem('theme') || 'light'; // 'light' como padrão
+        applyTheme(savedTheme);
+
+        // Botão ou input para alternar o tema
+        const themeToggle = document.getElementById('ligaDesliga'); // O seu input checkbox
+
+        // Aplicar a seleção no botão
+        themeToggle.checked = savedTheme === 'dark'; // Marcar o checkbox se o tema for 'dark'
+
+        // Alterar o tema ao clicar no checkbox
+        themeToggle.addEventListener('change', function() {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme); // Armazenar a escolha do tema no localStorage
+        });
+    </script>
 </body>
 </html>
