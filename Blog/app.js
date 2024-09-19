@@ -69,19 +69,23 @@ app.get("/posts/:id", (req, res) => {
 })
 
 app.put("/posts/:id", (req, res) => {
-    console.log('Request body:', req.body); // Adicione este log
-    const updated = req.body;
-    const posts = readData();
-    const index = posts.findIndex(p => p.id == req.params.id);
+    const postId = req.params.id;
+    const updatedPost = req.body; // Certifique-se de que o corpo é um objeto válido
+    const posts = readData(); // Lê todos os posts do arquivo JSON
+    const index = posts.findIndex(p => p.id == postId);
 
     if (index !== -1) {
-        posts[index] = { ...posts[index], ...updated };
-        writeData(posts);
-        res.json(posts[index]);
+        // Atualiza apenas os campos fornecidos (title e text)
+        posts[index].title = updatedPost.title || posts[index].title;
+        posts[index].text = updatedPost.text || posts[index].text;
+
+        writeData(posts); // Escreve de volta no arquivo JSON
+        res.json(posts[index]); // Retorna o post atualizado
     } else {
         res.status(404).json({ message: "Post not found" });
     }
 });
+
 
 app.delete("/posts/:id", (req, res) => {
     const postId = parseInt(req.params.id, 10); // Converte para número
