@@ -70,6 +70,8 @@ function showViewModal(id) {
 		.catch(error => console.log("Erro ao buscar o post:", error));
 }
 
+//Atualizar
+
 function showEditModal(id, title, text) {
   if (!isNaN(parseInt(id, 10))) {
     document.getElementById('edit-title').value = title;
@@ -112,6 +114,8 @@ function showEditModal(id, title, text) {
     console.error("Invalid ID:", id);
   }
 }
+
+// Deletar
 
 let postIdToDelete = null;
 
