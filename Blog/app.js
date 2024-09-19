@@ -26,14 +26,14 @@ app.get("/", (req, res) => {
     res.render("index.ejs", { posts, showIcons: true })
 })
 
-function readData(data) {
-	try {
-		const data = fs.readFileSync(postPath, 'utf8')
-		return JSON.parse(data)
-	} catch (err) {
-		console.error("ERRO ao ler ou analisar o arquivo JSON")
-		return []
-	}
+function readData() {
+    try {
+        const data = fs.readFileSync(postPath, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error("ERRO ao ler ou analisar o arquivo JSON:", err);
+        return [];
+    }
 }
 
 function writeData(data) {
@@ -46,13 +46,14 @@ app.get("/posts", (req, res) => {
 })
 
 app.post("/posts", (req, res) => {
-    const novo = req.body
-    const posts = readData()
-    novo.id = Date.now()
-    posts.push(novo)
-    writeData(posts)
-	res.redirect("/")
-})
+    console.log('Dados recebidos:', req.body); // Adicione este log
+    const novo = req.body;
+    const posts = readData();
+    novo.id = Date.now();
+    posts.push(novo);
+    writeData(posts);
+    res.redirect("/");
+});
 
 app.get("/posts/:id", (req, res) => {
     const posts = readData()
