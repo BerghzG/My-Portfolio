@@ -46,13 +46,15 @@ app.get("/posts", (req, res) => {
 })
 
 app.post("/posts", (req, res) => {
-    console.log('Dados recebidos:', req.body); // Adicione este log
-    const novo = req.body;
-    const posts = readData();
-    novo.id = Date.now();
-    posts.push(novo);
-    writeData(posts);
-    res.redirect("/");
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).send({ message: "Dados do formulário estão vazios" });
+  }
+  const novo = req.body;
+  const posts = readData();
+  novo.id = Date.now();
+  posts.push(novo);
+  writeData(posts);
+  res.redirect("/");
 });
 
 app.get("/posts/:id", (req, res) => {
