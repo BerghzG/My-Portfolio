@@ -89,9 +89,22 @@ function showEditModal(id, title, text) {
     newForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(newForm);
+        
+        // Obtendo os valores de title e text
+        const updatedTitle = document.getElementById('edit-title').value;
+        const updatedText = document.getElementById('edit-text').value;
+        
+        const postData = {
+            title: updatedTitle,
+            text: updatedText
+        };
+        
         fetch(newForm.action, {
             method: 'POST',  // Usar POST porque o method-override irá convertê-lo para PUT
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
         })
         .then(response => {
             if (response.ok) {
@@ -107,6 +120,7 @@ function showEditModal(id, title, text) {
         .catch(error => console.error(error));
     });
 }
+
 
 // Deletar
 
