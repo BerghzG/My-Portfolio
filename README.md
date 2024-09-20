@@ -25,7 +25,10 @@
 7. <a href="https://berghzg.github.io/My-Portfolio/Bootstap%20Portifolio/">First Personal Portfolio Website </a>This site was created to provide an overview of who I am and what I can offer. I used HTML for structuring, CSS for styling and Bootstrap to ensure a responsive and modern design.
  
 
-8.
+8. <a href="">Web Blog </a>This project is a personal blog, developed with Node.js, Express, EJS, CSS, Bootstrap and JavaScript, where the user can create, edit and delete their posts as they wish. The blog is completely offline, that is, all information is stored locally on the user's machine. However, if the user chooses to use incognito mode, all posts created during that session will be lost when closing the application. 
+
+
+9.
 
  ## Contribution
  If any projects were inspired by tutorialos or other people's work, they will be properly credited here.
