@@ -75,6 +75,11 @@ h2.modal-title {
     h2.modal-title {
         margin-left: 100px;
     }
+
+    #headerText {
+        margin-top: 50px;
+        padding-bottom: 95px;
+    }
 }
 
 
@@ -191,8 +196,8 @@ label.labelModal {
 }
 
 #headerText {
-    margin-top: 60px;
-    padding-bottom: 100px;
+    margin-top: 65px;
+    padding-bottom: 105px;
     text-align: center;
 }
 
