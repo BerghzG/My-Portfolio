@@ -28,7 +28,7 @@
 [data-bs-theme="light"] header { 
     position: relative;
     z-index: 1;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.00)), url("https://img.freepik.com/fotos-gratis/mao-masculina-com-um-lapis-e-um-copo_155003-6446.jpg?t=st=1726933555~exp=1726937155~hmac=5aeadb72e14e623985c904d34dc74c1a9ae5a802e190e75eda10943837ccc952&w=740");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.00)), url("https://img.freepik.com/fotos-gratis/mao-masculina-com-um-lapis-e-um-copo_155003-6446.jpg?t=st=1726933555~exp=1726937155~hmac=5aeadb72e14e623985c904d34dc74c1a9ae5a802e190e75eda10943837ccc952&w=1080");
     background-size: cover;
     background-position: center;
     padding: 10px;
