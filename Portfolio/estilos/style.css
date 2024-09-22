@@ -265,9 +265,22 @@ h4 {
    font-family: font-family: 'Montserrat', sans-serif;font-variation-settings: 'wght' 400;;
 }
 
-.divproject .col {
-    flex: 1;
-    text-align: center;
+.projectMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+
+}
+
+.projectMenuA {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-left: 20px;
+}
+
+#projectP {
+  margin-bottom: 30px;
 }
 
 .card {
