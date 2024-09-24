@@ -295,5 +295,12 @@ h4 {
    padding-right: 10px;
 }
 
+#houseIcon {
+   text-decoration: none;
+}
+
+#houseIcon:hover {
+  color: blue;
+}
 
 
