@@ -40,7 +40,14 @@ var contactP2 = document.querySelector("#conP2")
 var contactH32 = document.querySelector("#conH32")
 var contactP3 = document.querySelector("#conP3")
 var contactH4 = document.querySelector("#conH4")
+
 // projects.html
+let projectH1 = document.getElementById("projectH1");
+let projectP = document.getElementById("projectP");
+let blogCardH5 = document.getElementById("blogCardH5");
+let blogCardP = document.getElementById("blogCardP");
+
+
 
 
 
