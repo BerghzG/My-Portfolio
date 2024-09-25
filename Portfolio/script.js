@@ -92,6 +92,13 @@ function portugues() {
     contactP3.innerHTML = "Conecte-se comigo nas redes sociais:"
     contactH4.innerHTML = "Localização"
 
+   // projects.html
+
+    projectH1.innerHTML = "Projetos que definem minha jornada" 
+    projectP.innerHTML = "Explore meu trabalho mais recente e descubra minha paixão pela criatividade e inovação." 
+    blogCardH5.innerHTML = "Escrevendo Blog" 
+    blogCardP.innerHTML = "O projeto é um blog pessoal criado com Node.js, Express, EJS, CSS, Bootstrap e JavaScript, permitindo ao usuário criar, editar e excluir postagens. Funciona offline, armazenando informações localmente, mas as postagens feitas no modo de navegação anônima serão perdidas quando você fechar o aplicativo."
+
 }
 
 function ingles() {
