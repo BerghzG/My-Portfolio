@@ -132,6 +132,13 @@ function ingles() {
     contactH32.innerHTML = "Social Media"
     contactP3.innerHTML = "Connect with me on social media:"
     contactH4.innerHTML = "Location"
+
+  // projects.html
+
+    projectH1.innerHTML = "Projects That Define My Journey"
+    projectP.innerHTML = "Explore my latest work and discover my passion for creativity and innovation."
+    blogCardH5.innerHTML = "Writing Blog"
+    blogCardP.innerHTML = "The project is a personal blog created with Node.js, Express, EJS, CSS, Bootstrap, and JavaScript, allowing the user to create, edit, and delete posts. It works offline, storing information locally, but posts made in incognito mode will be lost when you close the application."
 }
 
 function espanhol() {
