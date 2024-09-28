@@ -226,6 +226,13 @@ function frances() {
     contactH32.innerHTML = "Réseaux Sociaux"
     contactP3.innerHTML = "rejoignez-moi sur les réseaux sociaux:"
     contactH4.innerHTML = "Emplacement"
+
+    // projects.html
+
+    projectH1.innerHTML = "Proyectos que definen mi viaje" 
+    projectP.innerHTML = "Explora mi último trabajo y descubre mi pasión por la creatividad y la innovación."
+    blogCardH5.innerHTML = "Blog de escritura" 
+    blogCardP.innerHTML = "El proyecto es un blog personal creado con Node.js, Express, EJS, CSS, Bootstrap y JavaScript, que permite al usuario crear, editar y eliminar publicaciones. Funciona sin conexión, almacenando información localmente, pero las publicaciones realizados en modo incógnito se perderán cuando cierres la aplicación".
 }
 
 function alemao() {
