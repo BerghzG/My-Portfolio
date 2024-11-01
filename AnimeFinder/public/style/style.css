@@ -1,0 +1,19 @@
+.container {
+    
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar-toggler-icon {
+    transition: transform 0.3 ease-in-out;
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon {
+    transform: rotate(0deg);
+}
+
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon { 
+    transform: rotate(90deg); 
+}
