@@ -1,13 +1,38 @@
-.container {
-    
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.20)), url('../images/image.jpg'); 
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    background-position: center; 
+    position: relative;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px; /* Ajuste o padding conforme necessário */
+}
+
+.navbar-brand {
+    margin-right: auto;
+}
+
+.navbar-nav {
+    margin-left: auto;
 }
 
 .navbar-brand img {
     height: 40px;
+    padding-right: 9px;
 }
 
 .navbar-toggler-icon {
-    transition: transform 0.3 ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
 .navbar-toggler.collapsed .navbar-toggler-icon {
@@ -17,3 +42,4 @@
 .navbar-toggler:not(.collapsed) .navbar-toggler-icon { 
     transform: rotate(90deg); 
 }
+
