@@ -33,8 +33,46 @@
                 </div>
             </nav>
         </div>
+
+        <div class="row g-0">
+            <div class="col-md-6 image-container">
+                <img src="/images/Every-Night.png" alt="image of the main character of the site">
+                <div class="text-overlay d-block d-md-none">
+                    <h1>Welcome to AnimeFinder!</h1>
+                    <p>Ready to find your next favorite anime? Upload an image or GIF below!</p>
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="fileInput">Choice a file:</label>
+                            <input type="file" class="form-control-file" name="file" id="fileInput">
+                            <button type="submit" class="btn btn-primary mt-2"> 
+                                <i class="bi bi-upload"></i> Send 
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Texto no lado direito -->
+            <div class="col-md-6 d-none d-md-flex justify-content-center align-items-center text-center">
+                <div class="text-overlay">
+                    <h1>Welcome to AnimeFinder!</h1>
+                    <p>Ready to find your next favorite anime? Upload an image or GIF below!</p>
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="fileInput">Choice a file:</label>
+                            <input type="file" class="form-control-file" name="file" id="fileInput">
+                            <button type="submit" class="btn btn-primary mt-2"> 
+                                <i class="bi bi-upload"></i> Enviar 
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script>
+        function redirectToSearch() { window.location.href = '/search.ejs'; }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 .container-fluid {
@@ -9,13 +10,15 @@
     background-size: cover; 
     background-position: center; 
     position: relative;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px; /* Ajuste o padding conforme necessário */
+    padding: 0 15px;
 }
 
 .navbar-brand {
@@ -41,5 +44,58 @@
 
 .navbar-toggler:not(.collapsed) .navbar-toggler-icon { 
     transform: rotate(90deg); 
+}
+
+.container.row {
+    padding-top: 5px;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    z-index: 0; /* Imagem fica atrás do texto no mobile e desktop */
+}
+
+/* Desktop */
+.text-overlay.d-none.d-md-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    background-color: transparent; /* Sem fundo escuro */
+    color: black;
+    z-index: 1; /* Texto no meio da imagem */
+}
+
+/* Mobile */
+.text-overlay.d-block.d-md-none {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro sobre a imagem */
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 2; /* O fundo fica sobre a imagem no mobile */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .text-overlay.d-block.d-md-none {
+        top: 40%;
+        width: 90%;
+    }
 }
 
