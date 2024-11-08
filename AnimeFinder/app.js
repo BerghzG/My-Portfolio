@@ -26,3 +26,6 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`Sá merda tá funcionando na porta ${port}`);
 });
+
+
+// Trace Moe API
