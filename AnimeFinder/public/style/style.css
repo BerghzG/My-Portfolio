@@ -1,19 +1,22 @@
+/* Reset de margens e preenchimento */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Estilos de fundo da página */
 .container-fluid {
-    background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.20)), url('../images/image.jpg'); 
-    background-repeat: no-repeat; 
-    background-size: cover; 
-    background-position: center; 
+    background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.20)), url('../images/image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     position: relative;
     min-height: 100vh;
     overflow: hidden;
 }
 
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -29,27 +32,16 @@
     margin-left: auto;
 }
 
+a.nav-link {
+    color: rgb(238, 70, 70);
+}
+
 .navbar-brand img {
     height: 40px;
     padding-right: 9px;
 }
 
-.navbar-toggler-icon {
-    transition: transform 0.3s ease-in-out;
-}
-
-.navbar-toggler.collapsed .navbar-toggler-icon {
-    transform: rotate(0deg);
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon { 
-    transform: rotate(90deg); 
-}
-
-.container.row {
-    padding-top: 5px;
-}
-
+/* Conteúdo da imagem */
 .image-container {
     position: relative;
     width: 100%;
@@ -61,22 +53,61 @@
     height: 100%;
     object-fit: cover;
     object-position: top;
-    z-index: 0; /* Imagem fica atrás do texto no mobile e desktop */
+    z-index: 1; /* A imagem fica acima do fundo */
 }
 
-/* Desktop */
+.back {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px 30px;
+    margin: 5px 10px;
+
+    border-radius: 7px;
+    color: white;
+}
+
+.back button {
+    padding-top: 7px;
+}
+
+/* Estilo do formulário no desktop */
 .text-overlay.d-none.d-md-flex {
     display: flex;
+    flex-direction: column; /* Dispor os elementos em coluna */
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%; /* Garantir que ocupe toda a altura da imagem */
     text-align: center;
-    background-color: transparent; /* Sem fundo escuro */
-    color: black;
-    z-index: 1; /* Texto no meio da imagem */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro atrás do conteúdo no desktop */
+    color: white; /* Cor do texto ajustada para branco */
+    z-index: 2; /* Texto acima do fundo */
 }
 
-/* Mobile */
+/* Ajuste de largura do formulário e espaçamento dos elementos */
+.text-overlay.d-none.d-md-flex form {
+    display: flex;
+    flex-direction: column;  /* Dispor os elementos em coluna */
+    gap: 15px;               /* Espaçamento entre os elementos */
+    width: 80%;              /* Ajustar a largura do formulário */
+    margin: 0 auto;          /* Centralizar o formulário */
+}
+
+/* Ajuste no input file e botão de envio */
+.text-overlay.d-none.d-md-flex .form-group label,
+.text-overlay.d-none.d-md-flex .form-group input,
+.text-overlay.d-none.d-md-flex .enviar {
+    display: block;  /* Faz com que o label, input e botão fiquem em blocos */
+    width: 100%;     /* Garante que ocupem 100% da largura disponível */
+}
+
+/* Botão de envio no desktop */
+.text-overlay.d-none.d-md-flex .enviar {
+    padding-top: 7px;
+    max-width: 250px; /* Limita a largura do botão */
+    margin-top: 15px; /* Espaçamento entre os itens do formulário */
+}
+
+/* Estilo do formulário no mobile */
 .text-overlay.d-block.d-md-none {
     position: absolute;
     top: 10%;
@@ -84,14 +115,14 @@
     transform: translateX(-50%);
     width: 90%;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro sobre a imagem */
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro no mobile */
     color: white;
     padding: 20px;
     border-radius: 5px;
-    z-index: 2; /* O fundo fica sobre a imagem no mobile */
+    z-index: 2;
 }
 
-/* Responsividade */
+/* Responsividade para o formulário no mobile */
 @media (max-width: 768px) {
     .text-overlay.d-block.d-md-none {
         top: 40%;
@@ -99,3 +130,72 @@
     }
 }
 
+/* Correção para garantir que as colunas não tenham margens indesejadas */
+.row.g-0 {
+    margin-right: 0;
+    margin-left: 0;
+    display: flex;
+}
+
+.col-md-6 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Estilos para o input e o botão de envio no mobile */
+.text-overlay.d-block.d-md-none .form-group input,
+.text-overlay.d-block.d-md-none .enviar {
+    width: 100%;  /* Garante que o input e o botão ocupem 100% da largura */
+}
+
+/* Estilos para o label, input e botão */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Para o botão de envio */
+.enviar {
+    padding: 10px 15px;
+    text-align: center;
+    width: 100%; /* Ocupa toda a largura disponível */
+    max-width: 250px; /* Limita a largura máxima do botão */
+    margin-top: 15px; /* Espaçamento superior */
+    margin-bottom: 15px; /* Espaçamento inferior */
+    font-weight: bold;
+}
+
+/* Estilos adicionais para o botão com o ícone */
+.enviar i {
+    margin-right: 10px;
+}
+
+/* Estilos para o input file */
+.form-control-file {
+    width: 100%; /* Garante que o input ocupe 100% da largura */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Label */
+label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Estilos para a imagem de fundo */
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    z-index: 1; /* A imagem fica atrás do fundo escuro */
+}
+
+/* Ajuste no layout mobile */
+@media (max-width: 768px) {
+    .text-overlay.d-block.d-md-none {
+        top: 40%;
+    }
+}
