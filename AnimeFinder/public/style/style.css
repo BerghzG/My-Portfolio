@@ -199,3 +199,27 @@ label {
         top: 40%;
     }
 }
+
+/* 
+ <!-- sera adicionado em breve
+    <% if (recentSearches && recentSearches.length > 0) { %>
+        <h2 class="mt-5">Animes Procurados Recentemente</h2>
+        <div class="row">
+            <% recentSearches.forEach((anime) => { %>
+                <div class="col-md-3">
+                    <div class="card mt-3">
+                        <img src="<%= anime.coverImage %>" class="card-img-top" alt="<%= anime.title %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= anime.title %></h5>
+                            <a href="https://anilist.co/anime/<%= anime.id %>" target="_blank" class="btn btn-primary">Ver no AniList</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <h2 class="mt-5">Nenhuma busca foi realizada ainda</h2>
+    <% } %>
+    -->
+
+*/

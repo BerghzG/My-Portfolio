@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Cowboy Bebop",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx1-CXtrrkMpJ8Zq.png"
+  },
+  {
+    "id": 20,
+    "title": "NARUTO",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-LxrhhIQyiE60.jpg"
+  },
+  {
+    "id": 166715,
+    "title": "Kuroshitsuji: Kishuku Gakkou-hen",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx166715-humnzscIw7SC.jpg"
+  },
+  {
+    "id": 7647,
+    "title": "Arakawa Under the Bridge",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx7647-IRs5Yo8pAOFw.jpg"
+  },
+  {
+    "id": 122954,
+    "title": "Ijirare: Fukushuu Saimin",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx122954-kOisr0EF5mRW.jpg"
+  },
+  {
+    "id": 5424,
+    "title": "OPPAI Life",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/5424.jpg"
+  },
+  {
+    "id": 146676,
+    "title": "Renai Flops",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx146676-8hkJxhY3b4tX.jpg"
+  },
+  {
+    "id": 107444,
+    "title": "Ano Danchi no Tsuma-tachi wa... The Animation",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/nx107444-hY27R9jslOji.jpg"
+  },
+  {
+    "id": 21144,
+    "title": "3Ping Lovers!☆Ippu Nisai no Sekai e Youkoso♪ THE ANIMATION",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx21144-tl9BRZtzIej6.jpg"
+  },
+  {
+    "id": 5112,
+    "title": "Akikan!",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/5112.jpg"
+  },
+  {
+    "id": 427,
+    "title": "Kaleido Star",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx427-tlbAV0iPJjG1.jpg"
+  },
+  {
+    "id": 98144,
+    "title": "Mahoujin Guru Guru (2017)",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/nx98144-nmrzhflCbHoQ.jpg"
+  },
+  {
+    "id": 68,
+    "title": "Black Cat",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx68-DKUkbrlNTPSy.png"
+  },
+  {
+    "id": 171030,
+    "title": "Wonderful Precure!",
+    "coverImage": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx171030-U7zjkqv8pQFq.jpg"
+  }
+]
