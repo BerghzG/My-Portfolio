@@ -29,7 +29,7 @@
     <div class="container mt-4">
         <div class="menu">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a href="/index.ejs" class="navbar-brand">
+                <a href="/" class="navbar-brand">
                     <img src="/images/Logo.png" alt="Logo">
                 </a>
 
@@ -60,9 +60,10 @@
                 placeholder="Write the anime name or use an image"
                 name="animeName"
             >
-        
+            
             <!-- Formulário para envio -->
             <form id="searchForm" action="/search" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="hiddenAnimeName" name="animeName">
                 <!-- Ícone dinâmico (será alternado via JavaScript) -->
                 <label for="fileUpload" id="iconLabel">
                     <i class="bi bi-upload" id="iconDynamic" style="cursor: pointer;"></i>
@@ -82,71 +83,79 @@
                 <div class="card-body">
                     <h5 class="card-title"><%= mainResult.title %></h5>
                     <p class="card-text"><strong>Sinopse:</strong> <%= mainResult.description ? mainResult.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %></p>
-                    <p class="card-text">Episódio: <%= mainResult.episode %></p>
-                    <p class="card-text">Tempo: <%= mainResult.from.toFixed(2) %>s - <%= mainResult.to.toFixed(2) %>s</p>
+                    <p class="card-text">Episódio: <%= mainResult.episode || "Informação não disponível" %></p>
+                    <% if (mainResult.from !== undefined && mainResult.to !== undefined) { %>
+                        <p class="card-text">Tempo: <%= mainResult.from.toFixed(2) %>s - <%= mainResult.to.toFixed(2) %>s</p>
+                    <% } else { %>
+                        <p class="card-text">Tempo: Informação não disponível</p>
+                    <% } %>
                     <p class="card-text">Similaridade: <%= (mainResult.match * 100).toFixed(2) %> %</p>
                     <a href="https://anilist.co/anime/<%= mainResult.id %>" target="_blank" class="btn btn-primary">Ver no AniList</a>
                 </div>
             </div>
-
-            <!-- Outras possibilidades -->
-            <h2>Outras Possibilidades</h2>
-            <div class="card-container">
-                <% otherResults.forEach((anime) => { %>
-                    <div class="card">
-                        <img src="<%= anime.coverImage %>" class="card-img-top" alt="<%= anime.title %>">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= anime.title %></h5>
-                            <p class="card-text"><strong>Sinopse:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %></p>
-                            <p class="card-text">Similaridade: <%= (anime.match * 100).toFixed(2) %> %</p>
-                            <a href="https://anilist.co/anime/<%= anime.id %>" target="_blank" class="btn btn-secondary">Ver no AniList</a>
+        
+            <% if (otherResults && otherResults.length > 0) { %>
+                <h2>Outras Possibilidades</h2>
+                <div class="card-container">
+                    <% otherResults.forEach((anime) => { %>
+                        <div class="card">
+                            <img src="<%= anime.coverImage %>" class="card-img-top" alt="<%= anime.title %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= anime.title %></h5>
+                                <p class="card-text"><strong>Sinopse:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %></p>
+                                <p class="card-text">Similaridade: <%= (anime.match * 100).toFixed(2) %> %</p>
+                                <a href="https://anilist.co/anime/<%= anime.id %>" target="_blank" class="btn btn-secondary">Ver no AniList</a>
+                            </div>
                         </div>
-                    </div>
-                <% }) %>
-            </div>
-        <% } else { %>
-            <p>Não foram encontradas informações sobre o anime.</p>
-        <% } %>
+                    <% }) %>
+                </div>
+            <% } %>
+        <% } %>                  
 
         <a href="/" class="btn btn-secondary mt-3">Voltar</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        // Referências aos elementos
-        const fileUpload = document.getElementById("fileUpload");
-        const searchInput = document.getElementById("searchInput");
-        const searchForm = document.getElementById("searchForm");
-        const iconDynamic = document.getElementById("iconDynamic");
-        const iconLabel = document.getElementById("iconLabel");
-    
-        // Envia o formulário automaticamente ao selecionar um arquivo
-        fileUpload.addEventListener("change", (event) => {
-            if (event.target.files.length > 0) {
-                // Altera o placeholder opcionalmente para mostrar o nome do arquivo
-                searchInput.placeholder = event.target.files[0].name;
-    
-                // Envia o formulário
-                searchForm.submit();
-            }
-        });
-    
-        // Altera o ícone dinamicamente ao digitar no campo de texto
-        searchInput.addEventListener("input", () => {
-            if (searchInput.value.trim() !== "") {
-                // Mostra o ícone de lupa e ativa envio manual ao clicar nele
-                iconDynamic.className = "bi bi-search";
-                iconLabel.removeAttribute("for"); // Remove o comportamento de upload
-                iconLabel.onclick = () => {
-                    searchForm.submit(); // Submete o formulário manualmente
-                };
-            } else {
-                // Volta para o ícone de upload
-                iconDynamic.className = "bi bi-upload";
-                iconLabel.setAttribute("for", "fileUpload"); // Reativa o comportamento de upload
-                iconLabel.onclick = null; // Remove a ação de clique
-            }
-        });
+// Referências aos elementos
+const fileUpload = document.getElementById("fileUpload");
+const searchInput = document.getElementById("searchInput");
+const searchForm = document.getElementById("searchForm");
+const iconDynamic = document.getElementById("iconDynamic");
+const iconLabel = document.getElementById("iconLabel");
+const hiddenAnimeName = document.getElementById("hiddenAnimeName");
+
+// Envia o formulário automaticamente ao selecionar um arquivo
+fileUpload.addEventListener("change", (event) => {
+    if (event.target.files.length > 0) {
+        // Altera o placeholder opcionalmente para mostrar o nome do arquivo
+        searchInput.placeholder = event.target.files[0].name;
+        
+        // Envia o formulário
+        searchForm.submit();
+    }
+});
+
+// Altera o ícone dinamicamente ao digitar no campo de texto
+searchInput.addEventListener("input", () => {
+    hiddenAnimeName.value = searchInput.value.trim(); // Define o valor do campo oculto
+    if (searchInput.value.trim() !== "") {
+        // Mostra o ícone de lupa e ativa envio manual ao clicar nele
+        iconDynamic.className = "bi bi-search";
+        iconLabel.removeAttribute("for"); // Remove o comportamento de upload
+        iconLabel.style.cursor = "pointer"; // Altera o cursor para indicar clicável
+        iconLabel.onclick = (event) => {
+            event.preventDefault(); // Previna o comportamento padrão
+            searchForm.submit(); // Submete o formulário manualmente
+        };
+    } else {
+        // Volta para o ícone de upload
+        iconDynamic.className = "bi bi-upload";
+        iconLabel.setAttribute("for", "fileUpload"); // Reativa o comportamento de upload
+        iconLabel.style.cursor = "default"; // Volta o cursor ao padrão
+        iconLabel.onclick = null; // Remove a ação de clique
+    }
+});
     </script>
 </body>
 </html>
