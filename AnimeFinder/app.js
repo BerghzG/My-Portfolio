@@ -36,6 +36,10 @@ app.get("/", (req, res) => {
     res.render("index.ejs", { recentSearches });
 });
 
+app.get("/search", (req, res) => {
+    res.render("search", { mainResult: null, otherResults: [] })
+})
+
 // Rota de busca usando Trace.moe e AniList
 app.post("/search", upload.single("image"), async (req, res) => {
     const animeName = req.body.animeName;

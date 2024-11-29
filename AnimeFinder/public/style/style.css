@@ -5,6 +5,29 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Libre Baskerville';
+    src: url('../fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Definindo a fonte Merriweather */
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../fonts/Merriweather/Merriweather-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Definindo a fonte Oswald */
+@font-face {
+    font-family: 'Oswald';
+    src: url('../fonts/Oswald/static/Oswald-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Estilos de fundo da página */
 .container-fluid {
     background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.20)), url('../images/image.jpg');
@@ -205,36 +228,99 @@ label {
 
 /* Search.ejs */
 
+.menu {
+    padding-bottom: 6px;
+}
+
+.navbar a, 
+.navbar button {
+    outline: none; /* Remove o outline padrão */
+    transition: box-shadow 0.3s ease, border-color 0.3s ease; /* Suaviza mudanças de estilo */
+}
+
+.navbar a:focus, 
+.navbar button:focus {
+    outline: none; /* Remove o outline padrão */
+    border-color: #007bff; /* Opcional: adiciona borda colorida no foco */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Opcional: leve brilho */
+}
+
 .search-container {
     display: flex;
-    align-items: center;
+    align-items: center; /* Centraliza verticalmente todos os elementos */
     justify-content: center;
     margin: 20px 20px 35px;
 }
 
-
 #searchInput {
     flex: 1;
     padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    border-color: #a79f9f;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #a79f9f;
+    height: 40px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Suaviza a transição */
 }
+
+/* Remove o outline padrão e muda a cor da borda ao focar */
+#searchInput:focus {
+    outline: none; /* Remove a linha grossa padrão */
+    border-color: #007bff; /* Define a cor da borda no foco */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Opcional: leve brilho na borda */
+}
+
 
 #uploadLabel {
     display: flex;
-    align-items: center;
+    align-items: center; /* Centraliza o conteúdo do label */
     cursor: pointer;
+    height: 40px; /* Igual à altura do input */
+    margin: 0; /* Remove margens indesejadas */
+    vertical-align: middle; /* Garante alinhamento */
+}
+
+#iconLabel {
+    display: flex;
+    align-items: center; /* Centraliza o ícone verticalmente */
+    justify-content: center; /* Centraliza o ícone horizontalmente */
+    background-color: rgb(245, 79, 79);
+    height: 40px; /* Igual à altura do input */
+    padding: 0 15px; /* Espaçamento interno horizontal */
+    border-radius: 0 8px 8px 0; /* Para que o botão tenha bordas arredondadas */
+    margin: 0; /* Remove margens indesejadas */
+    vertical-align: middle; /* Garante alinhamento */
 }
 
 #iconLabel i {
-    font-size: 24px;
-    margin-right: 10px;
+    font-size: 20px; /* Tamanho do ícone */
+    line-height: 1; /* Remove espaçamento extra do ícone */
 }
 
-#searchButton i {
-    font-size: 20px;
+.TextSearch {
+    padding-bottom: 15px;
+    font-family: 'Oswald', sans-serif;
+    color: rgb(22, 8, 8);
+}
+
+#possh2 {
+    padding-top: 60px;
+}
+
+#CardOne {
+    max-width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+#imgOne {
+    width: 100%;
+    height: auto;
+}
+
+.card-body {
+    padding: 1rem;
 }
 
 /* 

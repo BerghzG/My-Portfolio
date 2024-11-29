@@ -74,36 +74,44 @@
         
         
 
-        <h1>Resultado da Busca</h1>
+        <h1 class="TextSearch">Search Result</h1>
 
         <% if (mainResult) { %>
             <!-- Destaque para o mais relevante -->
-            <div class="card mb-5">
-                <img src="<%= mainResult.coverImage %>" class="card-img-top" alt="<%= mainResult.title %>">
-                <div class="card-body">
-                    <h5 class="card-title"><%= mainResult.title %></h5>
-                    <p class="card-text"><strong>Sinopse:</strong> <%= mainResult.description ? mainResult.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %></p>
-                    <p class="card-text">Episódio: <%= mainResult.episode || "Informação não disponível" %></p>
-                    <% if (mainResult.from !== undefined && mainResult.to !== undefined) { %>
-                        <p class="card-text">Tempo: <%= mainResult.from.toFixed(2) %>s - <%= mainResult.to.toFixed(2) %>s</p>
-                    <% } else { %>
-                        <p class="card-text">Tempo: Informação não disponível</p>
-                    <% } %>
-                    <p class="card-text">Similaridade: <%= (mainResult.match * 100).toFixed(2) %> %</p>
-                    <a href="https://anilist.co/anime/<%= mainResult.id %>" target="_blank" class="btn btn-primary">Ver no AniList</a>
+            <div class="card mb-3" id="CardOne">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="<%= mainResult.coverImage %>" class="img-fluid rounded-start" id="imgOne" alt="<%= mainResult.title %>">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= mainResult.title %></h5>
+                            <p class="card-text"><strong>Synopsis:</strong> 
+                                <%= mainResult.description ? mainResult.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %>
+                            </p>
+                            <p class="card-text">Episode: <%= mainResult.episode || "Informação não disponível" %></p>
+                            <% if (mainResult.from !== undefined && mainResult.to !== undefined) { %>
+                                <p class="card-text">Time: <%= mainResult.from.toFixed(2) %>s - <%= mainResult.to.toFixed(2) %>s</p>
+                            <% } else { %>
+                                <p class="card-text">Time: Information not available</p>
+                            <% } %>
+                            <p class="card-text">Similarity: <%= (mainResult.match * 100).toFixed(2) %> %</p>
+                            <a href="https://anilist.co/anime/<%= mainResult.id %>" target="_blank" class="btn btn-primary">Ver no AniList</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div>            
         
             <% if (otherResults && otherResults.length > 0) { %>
-                <h2>Outras Possibilidades</h2>
+                <h2 id="possh2" class="TextSearch">Others Possibilities</h2>
                 <div class="card-container">
                     <% otherResults.forEach((anime) => { %>
                         <div class="card">
                             <img src="<%= anime.coverImage %>" class="card-img-top" alt="<%= anime.title %>">
                             <div class="card-body">
                                 <h5 class="card-title"><%= anime.title %></h5>
-                                <p class="card-text"><strong>Sinopse:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %></p>
-                                <p class="card-text">Similaridade: <%= (anime.match * 100).toFixed(2) %> %</p>
+                                <p class="card-text"><strong>Synopsis:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %></p>
+                                <p class="card-text">Similarity: <%= (anime.match * 100).toFixed(2) %> %</p>
                                 <a href="https://anilist.co/anime/<%= anime.id %>" target="_blank" class="btn btn-secondary">Ver no AniList</a>
                             </div>
                         </div>
@@ -112,50 +120,56 @@
             <% } %>
         <% } %>                  
 
-        <a href="/" class="btn btn-secondary mt-3">Voltar</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-// Referências aos elementos
-const fileUpload = document.getElementById("fileUpload");
-const searchInput = document.getElementById("searchInput");
-const searchForm = document.getElementById("searchForm");
-const iconDynamic = document.getElementById("iconDynamic");
-const iconLabel = document.getElementById("iconLabel");
-const hiddenAnimeName = document.getElementById("hiddenAnimeName");
-
-// Envia o formulário automaticamente ao selecionar um arquivo
-fileUpload.addEventListener("change", (event) => {
-    if (event.target.files.length > 0) {
-        // Altera o placeholder opcionalmente para mostrar o nome do arquivo
-        searchInput.placeholder = event.target.files[0].name;
+        // Referências aos elementos
+        const fileUpload = document.getElementById("fileUpload");
+        const searchInput = document.getElementById("searchInput");
+        const searchForm = document.getElementById("searchForm");
+        const iconDynamic = document.getElementById("iconDynamic"); // Correção: Usando o id correto do ícone
+        const iconLabel = document.getElementById("iconLabel");
+        const hiddenAnimeName = document.getElementById("hiddenAnimeName");
         
-        // Envia o formulário
-        searchForm.submit();
-    }
-});
+        // Envia o formulário automaticamente ao selecionar um arquivo
+        fileUpload.addEventListener("change", (event) => {
+            if (event.target.files.length > 0) {
+                // Altera o placeholder opcionalmente para mostrar o nome do arquivo
+                searchInput.placeholder = event.target.files[0].name;
+                
+                // Envia o formulário
+                searchForm.submit();
+            }
+        });
+        
+        // Altera o ícone dinamicamente ao digitar no campo de texto
+        searchInput.addEventListener("input", () => {
+            hiddenAnimeName.value = searchInput.value.trim(); // Define o valor do campo oculto
+            if (searchInput.value.trim() !== "") {
+                // Mostra o ícone de lupa e ativa envio manual ao clicar nele
+                iconDynamic.className = "bi bi-search"; // Muda o ícone para a lupa
+                iconLabel.removeAttribute("for"); // Remove o comportamento de upload
+                iconLabel.style.cursor = "pointer"; // Altera o cursor para indicar clicável
+                iconLabel.style.transition = "background-color 0.3s ease"; // Transição suave para a cor de fundo
+                iconLabel.style.backgroundColor = "rgb(139, 0, 0)"; // Altera a cor de fundo (nova cor)
+                iconDynamic.style.color = "white"; // Altera a cor do ícone para branco
 
-// Altera o ícone dinamicamente ao digitar no campo de texto
-searchInput.addEventListener("input", () => {
-    hiddenAnimeName.value = searchInput.value.trim(); // Define o valor do campo oculto
-    if (searchInput.value.trim() !== "") {
-        // Mostra o ícone de lupa e ativa envio manual ao clicar nele
-        iconDynamic.className = "bi bi-search";
-        iconLabel.removeAttribute("for"); // Remove o comportamento de upload
-        iconLabel.style.cursor = "pointer"; // Altera o cursor para indicar clicável
-        iconLabel.onclick = (event) => {
-            event.preventDefault(); // Previna o comportamento padrão
-            searchForm.submit(); // Submete o formulário manualmente
-        };
-    } else {
-        // Volta para o ícone de upload
-        iconDynamic.className = "bi bi-upload";
-        iconLabel.setAttribute("for", "fileUpload"); // Reativa o comportamento de upload
-        iconLabel.style.cursor = "default"; // Volta o cursor ao padrão
-        iconLabel.onclick = null; // Remove a ação de clique
-    }
-});
-    </script>
+                iconLabel.onclick = (event) => {
+                    event.preventDefault(); // Previna o comportamento padrão
+                    searchForm.submit(); // Submete o formulário manualmente
+                };
+            } else {
+                // Volta para o ícone de upload
+                iconDynamic.className = "bi bi-upload"; // Muda o ícone para o upload
+                iconLabel.setAttribute("for", "fileUpload"); // Reativa o comportamento de upload
+                iconLabel.style.cursor = "default"; // Volta o cursor ao padrão
+                iconLabel.style.transition = "background-color 0.3s ease"; // Transição suave para a cor de fundo
+                iconLabel.style.backgroundColor = "rgb(245, 79, 79)"; // Volta a cor de fundo para o estado original
+                iconDynamic.style.color = ""; // Restaura a cor original do ícone (preto ou o padrão do bootstrap)
+                iconLabel.onclick = null; // Remove a ação de clique
+            }
+        });
+</script>   
 </body>
 </html>
