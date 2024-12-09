@@ -319,9 +319,39 @@ label {
     height: auto;
 }
 
+#imgOne, #videoOne {
+    transition: opacity 0.4s ease-in-out; /* Suaviza a transição da opacidade */
+    opacity: 1; /* Inicialmente, ambos estarão visíveis */
+}
+
+#imgOne.hidden, #videoOne.hidden {
+    opacity: 0; /* Quando a classe 'hidden' for aplicada, a opacidade se torna 0 */
+}
+
 .card-body {
     padding: 1rem;
 }
+
+a.vejaso {
+    background-color: #b22222; /* Vermelho tijolo */
+    color: #ffffff; /* Texto branco */
+    border: none; /* Sem borda */
+}
+
+a.vejaso:hover {
+    background-color: #8b0000; /* Vermelho escuro no hover */
+    color: #ffffff;
+}
+
+.gif-image {
+    cursor: pointer; /* Indica que a imagem é interativa */
+    transition: all 0.3s ease; /* Efeito suave de transição */
+}
+
+.gif-image:hover {
+    opacity: 0.8; /* Efeito de opacidade ao passar o mouse */
+}
+
 
 /* 
  <!-- sera adicionado em breve

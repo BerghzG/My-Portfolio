@@ -17,11 +17,45 @@
             flex: 1 1 calc(33.333% - 1rem); /* Ocupa 3 colunas em telas grandes */
             max-width: calc(33.333% - 1rem);
         }
+
+        .col-md-4 {
+            display: flex;
+            justify-content: center; /* Centraliza o conteúdo horizontalmente */
+            align-items: center; /* Centraliza o conteúdo verticalmente */
+        }
+
+        #videoOne {
+            width: 90%; /* Ajuste o tamanho do vídeo conforme necessário */
+            height: auto;
+            margin: 0 auto; /* Centraliza o vídeo dentro da coluna */
+            padding-left: 6px;
+            border-radius: 10px;
+        }
+
+        /* Aplique a margem à direita apenas em telas grandes */
+        @media (min-width: 768px) {
+            .card1 {
+                margin-right: 1rem;
+            }
+        }
+
+
         @media (max-width: 768px) {
             .card {
                 flex: 1 1 100%; /* Em telas menores, ocupa toda a largura */
                 max-width: 100%;
             }
+
+            #videoOne {
+                width: 100%; /* O vídeo ocupa 100% da largura em dispositivos móveis */
+                padding-left: 0;
+                padding-right: 0;
+                border-radius: 0;
+            }
+        }
+
+        p {
+            text-align: justify;
         }
     </style>
 </head>
@@ -74,53 +108,83 @@
         
         
 
-        <h1 class="TextSearch">Search Result</h1>
-
-        <% if (mainResult) { %>
-            <!-- Destaque para o mais relevante -->
-            <div class="card mb-3" id="CardOne">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="<%= mainResult.coverImage %>" class="img-fluid rounded-start" id="imgOne" alt="<%= mainResult.title %>">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= mainResult.title %></h5>
-                            <p class="card-text"><strong>Synopsis:</strong> 
-                                <%= mainResult.description ? mainResult.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %>
-                            </p>
-                            <p class="card-text">Episode: <%= mainResult.episode || "Informação não disponível" %></p>
-                            <% if (mainResult.from !== undefined && mainResult.to !== undefined) { %>
-                                <p class="card-text">Time: <%= mainResult.from.toFixed(2) %>s - <%= mainResult.to.toFixed(2) %>s</p>
-                            <% } else { %>
-                                <p class="card-text">Time: Information not available</p>
-                            <% } %>
-                            <p class="card-text">Similarity: <%= (mainResult.match * 100).toFixed(2) %> %</p>
-                            <a href="https://anilist.co/anime/<%= mainResult.id %>" target="_blank" class="btn btn-primary">Ver no AniList</a>
-                        </div>
-                    </div>
-                </div>
-            </div>            
         
-            <% if (otherResults && otherResults.length > 0) { %>
-                <h2 id="possh2" class="TextSearch">Others Possibilities</h2>
-                <div class="card-container">
-                    <% otherResults.forEach((anime) => { %>
-                        <div class="card">
-                            <img src="<%= anime.coverImage %>" class="card-img-top" alt="<%= anime.title %>">
+
+        <% if (!mainResult && (!otherResults || otherResults.length === 0)) { %>
+            <div class="text-center mt-5">
+                <img src="/images/maya_outfit.png" alt="Nenhuma busca realizada" class="img-fluid">
+                <p class="text-muted mt-3">Perform a search to view the results.</p>
+            </div>
+        <% } else { %>
+            <% if (mainResult) { %>
+                <!-- Destaque para o mais relevante -->
+                <h1 class="TextSearch">Search Result</h1>
+                <div class="card card1 mb-3" id="CardOne">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <!-- Imagem inicial -->
+                            <img 
+                                src="<%= mainResult.coverImage %>" 
+                                class="img-fluid rounded-start" 
+                                id="imgOne" 
+                                alt="<%= mainResult.title %>"
+                            >
+                            <!-- Vídeo correspondente -->
+                            <video 
+                                id="videoOne" 
+                                class="img-fluid rounded-start" 
+                                style="display: none; width: 100%; height: auto;" 
+                                autoplay 
+                                muted 
+                                loop 
+                                playsinline
+                            >
+                                <source src="<%= mainResult.video %>" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                                                                                
+                        <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title"><%= anime.title %></h5>
-                                <p class="card-text"><strong>Synopsis:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Sinopse não disponível" %></p>
-                                <p class="card-text">Similarity: <%= (anime.match * 100).toFixed(2) %> %</p>
-                                <a href="https://anilist.co/anime/<%= anime.id %>" target="_blank" class="btn btn-secondary">Ver no AniList</a>
+                                <h5 class="card-title"><%= mainResult.title %></h5>
+                                <p class="card-text"><strong>Synopsis:</strong> 
+                                    <%= mainResult.description ? mainResult.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %>
+                                </p>
+                                <p class="card-text">Episode: <%= mainResult.episode || "Information not available" %></p>
+                                <% if (mainResult.from !== undefined && mainResult.to !== undefined) { %>
+                                    <p class="card-text">Time: <%= mainResult.from.toFixed(2) %>s - <%= mainResult.to.toFixed(2) %>s</p>
+                                <% } else { %>
+                                    <p class="card-text">Time: Information not available</p>
+                                <% } %>
+                                <p class="card-text">Similarity: <%= (mainResult.match * 100).toFixed(2) %> %</p>
+                                <a href="https://anilist.co/anime/<%= mainResult.id %>" target="_blank" class="btn vejaso btn-primary">See More</a>
                             </div>
                         </div>
-                    <% }) %>
-                </div>
+                    </div>
+                </div>            
+        
+                <% if (otherResults && otherResults.length > 0) { %>
+                    <h2 id="possh2" class="TextSearch">Others Possibilities</h2>
+                    <div class="card-container">
+                        <% otherResults.forEach((anime) => { %>
+                            <div class="card">
+                                <img src="<%= anime.coverImage %>" class="card-img-top" alt="<%= anime.title %>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= anime.title %></h5>
+                                    <p class="card-text"><strong>Synopsis:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %></p>
+                                    <p class="card-text">Similarity: <%= (anime.match * 100).toFixed(2) %> %</p>
+                                    <a href="https://anilist.co/anime/<%= anime.id %>" target="_blank" class="btn btn-secondary">See More</a>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
             <% } %>
-        <% } %>                  
-
+        <% } %>
+        
     </div>
+
+    <%- include('partials/footer') %>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
@@ -170,6 +234,69 @@
                 iconLabel.onclick = null; // Remove a ação de clique
             }
         });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const image = document.getElementById("imgOne");
+            const video = document.getElementById("videoOne");
+            const card = document.querySelector(".card");
+            
+            const searchType = "<%= searchType %>";
+
+
+            // Checar se o searchType é 'image' e se os elementos de imagem e vídeo existem
+            if (searchType === 'image' && image && video) {
+                // Quando o mouse passa sobre a imagem
+                image.addEventListener("mouseenter", () => {
+                    image.style.opacity = "0"; // Fadear a imagem
+                    setTimeout(() => {
+                        image.style.display = "none"; // Esconde a imagem
+                        video.style.display = "block"; // Exibe o vídeo
+                        video.style.opacity = "1"; // Torna o vídeo visível
+                        video.play(); // Reproduz o vídeo
+                        card.classList.add("video-visible"); // Adiciona a classe para aplicar a margem
+                    }, 500); // Espera a transição de opacidade terminar antes de alterar o display
+                });
+
+                // Quando o mouse sai do vídeo
+                video.addEventListener("mouseleave", () => {
+                    video.style.opacity = "0"; // Fadear o vídeo
+                    setTimeout(() => {
+                        video.style.display = "none"; // Esconde o vídeo
+                        image.style.display = "block"; // Exibe a imagem
+                        image.style.opacity = "1"; // Torna a imagem visível
+                        video.pause(); // Pausa o vídeo
+                        video.currentTime = 0; // Reseta para o início
+                        card.classList.remove("video-visible"); // Remove a classe, removendo a margem
+                    }, 500); // Espera a transição de opacidade terminar antes de alterar o display
+                });
+
+                // Clique alterna entre imagem e vídeo
+                image.addEventListener("click", () => {
+                    image.style.opacity = "0"; // Fadear a imagem
+                    setTimeout(() => {
+                        image.style.display = "none"; // Esconde a imagem
+                        video.style.display = "block"; // Exibe o vídeo
+                        video.style.opacity = "1"; // Torna o vídeo visível
+                        video.play(); // Reproduz o vídeo
+                        card.classList.add("video-visible"); // Adiciona a classe para aplicar a margem
+                    }, 500); // Espera a transição de opacidade terminar antes de alterar o display
+                });
+
+                video.addEventListener("click", () => {
+                    video.style.opacity = "0"; // Fadear o vídeo
+                    setTimeout(() => {
+                        video.style.display = "none"; // Esconde o vídeo
+                        image.style.display = "block"; // Exibe a imagem
+                        image.style.opacity = "1"; // Torna a imagem visível
+                        video.pause(); // Pausa o vídeo
+                        video.currentTime = 0; // Reseta para o início
+                        card.classList.remove("video-visible"); // Remove a classe, removendo a margem
+                    }, 500); // Espera a transição de opacidade terminar antes de alterar o display
+                });
+            }
+        });
+
+
 </script>   
 </body>
 </html>

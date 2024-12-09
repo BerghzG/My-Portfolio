@@ -44,10 +44,16 @@ app.get("/search", (req, res) => {
 app.post("/search", upload.single("image"), async (req, res) => {
     const animeName = req.body.animeName;
     let results = [];
+    let searchType = 'text';  // Default é busca por texto
 
     // Se não houver nome de anime e arquivo de imagem, retorna erro
     if (!animeName && !req.file) {
         return res.status(400).send("Por favor, envie uma imagem ou digite o nome do anime.");
+    }
+
+    // Verificar se a busca foi feita por imagem
+    if (req.file) {
+        searchType = 'image'; // Busca feita por imagem
     }
 
     // Lógica para busca por imagem (existente)
@@ -186,7 +192,8 @@ app.post("/search", upload.single("image"), async (req, res) => {
                     title: animeDetails.title.romaji || animeDetails.title.native,
                     description: animeDetails.description,
                     coverImage: animeDetails.coverImage.large,
-                    anilistLink: `https://anilist.co/anime/${animeDetails.id}`, // Link direto para o AniList
+                    video: animeInfo.video, // Certifique-se de que isso está correto
+                    anilistLink: `https://anilist.co/anime/${animeDetails.id}`,
                 });
 
                 // Atualiza o histórico de buscas recentes
@@ -208,7 +215,7 @@ app.post("/search", upload.single("image"), async (req, res) => {
 
             // Exibir o resultado mais relevante em destaque
             const mainResult = animeDetailsList.shift();
-            return res.render("search", { mainResult, otherResults: animeDetailsList });
+            return res.render("search", { mainResult, otherResults: animeDetailsList, searchType });
         } catch (error) {
             console.error("Erro:", error.response?.data || error.message);
             return res.status(500).send("Erro ao buscar anime.");
@@ -256,14 +263,15 @@ app.post("/search", upload.single("image"), async (req, res) => {
     }
 
     // Processar resultados e renderizar a página
-if (!results || results.length === 0) {
+    if (!results || results.length === 0) {
         return res.status(404).send("Nenhum anime encontrado.");
     }
 
     const sortedResults = results.sort((a, b) => b.match - a.match);
     const mainResult = sortedResults.shift();
-    res.render("search", { mainResult, otherResults: sortedResults });
+    res.render("search", { mainResult, otherResults: sortedResults, searchType });
 });
+
 
 
 app.listen(port, () => {
