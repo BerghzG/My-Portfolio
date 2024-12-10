@@ -76,7 +76,7 @@
                             <a class="nav-link" href="https://berghzg.com">About</a> 
                         </li> 
                         <li class="nav-item"> 
-                            <a class="nav-link" href="partials/watched.ejs">Watched</a> 
+                            <a class="nav-link" href="/watched">Watched</a> 
                         </li> 
                         <li class="nav-item"> 
                             <a class="nav-link" href="https://berghzg.com/projects">Other Projects</a> 
@@ -157,8 +157,10 @@
                                     <p class="card-text">Time: Information not available</p>
                                 <% } %>
                                 <p class="card-text">Similarity: <%= (mainResult.match * 100).toFixed(2) %> %</p>
-                                <a href="https://anilist.co/anime/<%= mainResult.id %>" target="_blank" class="btn vejaso btn-primary">See More</a>
-                            </div>
+                            
+                                <!-- Botão único para o anime principal -->
+                                <a href="/details/<%= searchType === 'text' ? mainResult.anilist : mainResult.id %>" class="btn vejaso btn-primary">See More</a>
+                            </div>                            
                         </div>
                     </div>
                 </div>            
@@ -173,7 +175,7 @@
                                     <h5 class="card-title"><%= anime.title %></h5>
                                     <p class="card-text"><strong>Synopsis:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %></p>
                                     <p class="card-text">Similarity: <%= (anime.match * 100).toFixed(2) %> %</p>
-                                    <a href="https://anilist.co/anime/<%= anime.id %>" target="_blank" class="btn btn-secondary">See More</a>
+                                    <a href="/details/<%= anime.id %>" class="btn btn-secondary">See More</a>
                                 </div>
                             </div>
                         <% }) %>

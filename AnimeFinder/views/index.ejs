@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid containerfluid11">
         <div class="menu">
             <nav class="navbar navbar-expand navbar-light">
-                <a href="/index.ejs" class="navbar-brand">
+                <a href="/" class="navbar-brand">
                     <img src="/images/Logo.png" alt="Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,45 @@
         </div>
     </div>
 
-   
+    <% if (recentSearches.length > 0) { %>
+        <div class="container-fluid">
+            <h1 class="text-center my-4">Recently Searched Animes</h1>
+            <div id="animeCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <% for (let i = 0; i < recentSearches.length; i += 3) { %>
+                        <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                            <div class="d-flex justify-content-center">
+                                <% for (let j = i; j < i + 3 && j < recentSearches.length; j++) { %>
+                                    <div class="card mx-2 card11" style="width: 18rem;">
+                                        <a href="/details/<%= recentSearches[j].id %>">
+                                            <img src="<%= recentSearches[j].coverImage %>" class="card-img-top" alt="<%= recentSearches[j].title %>">
+                                        </a>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#animeCarousel" data-bs-slide="prev">
+                    <div class="botoespassa">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </div>
+                    
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#animeCarousel" data-bs-slide="next">
+                    <div class="botoespassa">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </div>
+                    
+                    <span class="visually-hidden">Próximo</span>
+                </button>
+            </div>
+        </div>
+
+        <%- include('partials/footer') %>
+    <% } %>    
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

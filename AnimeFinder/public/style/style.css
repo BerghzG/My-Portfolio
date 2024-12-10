@@ -29,7 +29,7 @@
 }
 
 /* Estilos de fundo da página */
-.container-fluid {
+.containerfluid11 {
     background: linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.20)), url('../images/image.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -223,6 +223,58 @@ label {
     }
 }
 
+
+/* Carrosel de recentes no index*/
+.carousel-caption {
+    bottom: 20px; /* Ajusta a posição do título */
+}
+.carousel-caption h5 {
+    font-size: 1.5em;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.carousel {
+    overflow: hidden; /* Garante que o conteúdo do carrossel seja visível */
+}
+
+#animeCarousel {
+    margin-bottom: 50px; /* Espaçamento abaixo do carrossel */
+}
+
+.card11 img {
+    width: 100%; /* Faz a imagem ocupar toda a largura do card */
+    height: 200px; /* Define uma altura fixa para uniformizar as imagens */
+    object-fit: cover; /* Faz a imagem se ajustar sem distorção, cortando as bordas se necessário */
+}
+
+@media (min-width: 568px) {
+    .card11 img {
+      height: 300px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+    }
+}
+
+@media (min-width: 768px) {
+    .card11 img {
+      height: 421px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+    }
+}
+
+/* Estiliza os botões de controle (anterior e próximo) */
+.botoespassa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.85); /* Cor de fundo dos botões */
+    border-radius: 100%; /* Torna os botões arredondados */
+    padding: 10px;
+}
+
+.botoespassa:hover {
+    background-color: rgba(15, 4, 4, 0.85);
+}
 
 
 

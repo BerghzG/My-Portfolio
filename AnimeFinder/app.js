@@ -27,7 +27,21 @@ const getRecentSearches = () => {
         return [];
     }
     const animes = JSON.parse(fs.readFileSync(animesPath));
-    return animes.slice(-10).reverse(); // Últimas 10 buscas, em ordem decrescente
+    return animes.slice(-12).reverse(); // Últimas 10 buscas, em ordem decrescente
+};
+
+const addAnimeTorecent = (newAnime) => {
+    const animePath = path.join(__dirname, "animes.json");
+    const animes = fs.existsSync(animePath)
+        ? JSON.parse(fs.readFileSync(animePath))
+        : [];
+    // Remover duplicatas
+    const filteredAnimes = animes.filter(anime => anime.id !== newAnime.id);
+    filteredAnimes.unshift(newAnime);
+    if (filteredAnimes.length > 12) {
+        filteredAnimes.pop();
+    }
+    fs.writeFileSync(animePath, JSON.stringify(filteredAnimes, null, 2));
 };
 
 // Página inicial com "Animes Procurados Recentemente"
@@ -37,8 +51,22 @@ app.get("/", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-    res.render("search", { mainResult: null, otherResults: [] })
+    const searchType = 'text';  // Ou 'image', dependendo da lógica
+    res.render("search", { mainResult: null, otherResults: [], searchType })   
 })
+
+app.get("/details/:id", (req, res) => {
+    const animeId = req.params.id; // Captura o ID do anime da URL
+    const animes = getRecentSearches(); // Pega os animes recentes do JSON
+    const anime = animes.find(a => a.id == animeId); // Verifica se o ID bate com algum anime
+
+    if (!anime) {
+        return res.status(404).send("Anime não encontrado.");
+    }
+
+    res.render("details", { anime }); // Renderiza a página de detalhes com as informações do anime
+});
+
 
 // Rota de busca usando Trace.moe e AniList
 app.post("/search", upload.single("image"), async (req, res) => {
@@ -197,7 +225,14 @@ app.post("/search", upload.single("image"), async (req, res) => {
                 });
 
                 // Atualiza o histórico de buscas recentes
-                const animes = fs.existsSync(animesPath)
+                addAnimeTorecent({
+                    id: animeDetails.id,
+                    title: animeDetails.title.romaji || animeDetails.title.native,
+                    coverImage: animeDetails.coverImage.large,
+                    description: animeDetails.description, 
+                });
+                
+                /*const animes = fs.existsSync(animesPath)
                     ? JSON.parse(fs.readFileSync(animesPath))
                     : [];
 
@@ -208,7 +243,7 @@ app.post("/search", upload.single("image"), async (req, res) => {
                         coverImage: animeDetails.coverImage.large,
                     });
                     fs.writeFileSync(animesPath, JSON.stringify(animes.slice(-50), null, 2));
-                }
+                }*/
             }
 
             await fs.promises.unlink(req.file.path).catch(err => console.error("Erro ao excluir arquivo temporário:", err));
@@ -239,15 +274,20 @@ app.post("/search", upload.single("image"), async (req, res) => {
                     }
                 }
             }`;
-
+    
             const searchResponse = await axios.post(
                 "https://graphql.anilist.co",
                 { query, variables: { search: animeName } },
                 { headers: { "Content-Type": "application/json" } }
             );
-
+    
             const animeDetails = searchResponse.data.data.Media;
+            
             if (animeDetails) {
+                if (!animeDetails.id) {
+                    throw new Error("ID do anime não encontrado.");
+                }
+    
                 results = [{
                     anilist: animeDetails.id,
                     title: animeDetails.title.romaji || animeDetails.title.native,
@@ -255,21 +295,33 @@ app.post("/search", upload.single("image"), async (req, res) => {
                     coverImage: animeDetails.coverImage.large,
                     match: 1.0, // Pode ser considerado 100% de similaridade, pois é uma busca direta
                 }];
+            } else {
+                results = [];  // Se não houver resultados, trata como um array vazio
             }
         } catch (error) {
             console.error("Erro ao buscar anime por título:", error.message);
             return res.status(500).send("Erro ao buscar anime.");
         }
     }
-
+    
     // Processar resultados e renderizar a página
     if (!results || results.length === 0) {
         return res.status(404).send("Nenhum anime encontrado.");
     }
-
+    
     const sortedResults = results.sort((a, b) => b.match - a.match);
     const mainResult = sortedResults.shift();
-    res.render("search", { mainResult, otherResults: sortedResults, searchType });
+    
+    // Adicionar o principal anime encontrado ao histórico
+    addAnimeTorecent({
+        id: mainResult.anilist, // ID do anime encontrado
+        title: mainResult.title, // Título do anime encontrado
+        coverImage: mainResult.coverImage,
+        description: mainResult.description, // Descrição do anime
+    });
+    
+    res.render("search", { mainResult, otherResults: sortedResults, searchType });    
+    
 });
 
 
