@@ -155,23 +155,56 @@ app.post("/search", upload.single("image"), async (req, res) => {
                                 coverImage {
                                     large
                                 }
+                                genres
+                                tags {
+                                    name
+                                }
+                                averageScore
+                                trailer {
+                                    site
+                                    id
+                                }
+                                staff {
+                                    edges {
+                                        role
+                                        node {
+                                            name {
+                                                full
+                                            }
+                                        }
+                                    }
+                                }
+                                characters {
+                                    edges {
+                                        role
+                                        node {
+                                            id
+                                            name {
+                                                full
+                                            }
+                                            image {
+                                                large
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }`;
-
+                
                         const variables = { id: parseInt(animeId, 10) };
-
+                
                         const anilistResponse = await axios.post(
                             "https://graphql.anilist.co",
                             { query, variables },
                             { headers: { "Content-Type": "application/json" } }
                         );
-
+                
                         animeDetails = anilistResponse.data.data.Media;
                     } catch (err) {
                         console.error(`Erro ao buscar detalhes do anime (ID: ${animeId}):`, err.message);
                     }
                 }
-
+                
                 // Fallback: buscar pelo título se o ID falhou
                 if (!animeDetails && animeTitle) {
                     try {
@@ -187,29 +220,62 @@ app.post("/search", upload.single("image"), async (req, res) => {
                                 coverImage {
                                     large
                                 }
+                                genres
+                                tags {
+                                    name
+                                }
+                                averageScore
+                                trailer {
+                                    site
+                                    id
+                                }
+                                staff {
+                                    edges {
+                                        role
+                                        node {
+                                            name {
+                                                full
+                                            }
+                                        }
+                                    }
+                                }
+                                characters {
+                                    edges {
+                                        role
+                                        node {
+                                            id
+                                            name {
+                                                full
+                                            }
+                                            image {
+                                                large
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }`;
-
+                
                         const searchResponse = await axios.post(
                             "https://graphql.anilist.co",
                             { query: searchQuery, variables: { search: animeTitle } },
                             { headers: { "Content-Type": "application/json" } }
                         );
-
+                
                         animeDetails = searchResponse.data.data.Media;
                     } catch (err) {
                         console.error("Erro ao buscar anime por título:", err.message);
                     }
                 }
-
-                // Se não conseguiu encontrar detalhes
-                if (!animeDetails) {
-                    console.warn(`Não foi possível encontrar detalhes para o anime: ${animeId || animeTitle}`);
-                    continue; // Pule para o próximo resultado
-                }
-
-                console.log("Detalhes do anime (AniList):", JSON.stringify(animeDetails, null, 2));
-
+                
+                // Processando os personagens
+                const characters = animeDetails.characters.edges.map(edge => ({
+                    id: edge.node.id,
+                    name: edge.node.name.full,
+                    role: edge.role,
+                    image: edge.node.image.large,
+                }));
+                
                 // Adiciona os detalhes na lista final
                 animeDetailsList.push({
                     match: animeInfo.similarity,
@@ -220,17 +286,36 @@ app.post("/search", upload.single("image"), async (req, res) => {
                     title: animeDetails.title.romaji || animeDetails.title.native,
                     description: animeDetails.description,
                     coverImage: animeDetails.coverImage.large,
-                    video: animeInfo.video, // Certifique-se de que isso está correto
+                    video: animeInfo.video,
                     anilistLink: `https://anilist.co/anime/${animeDetails.id}`,
+                    genres: animeDetails.genres,
+                    tags: animeDetails.tags.map(tag => tag.name),
+                    averageScore: animeDetails.averageScore,
+                    trailer: animeDetails.trailer
+                        ? animeDetails.trailer.site === "youtube"
+                            ? `https://www.youtube.com/watch?v=${animeDetails.trailer.id}`
+                            : animeDetails.trailer.id
+                        : null,
+                    staff: animeDetails.staff.edges.map(edge => ({
+                        role: edge.role,
+                        name: edge.node.name.full,
+                    })),
+                    characters, // Adicionando os personagens
                 });
-
+                
                 // Atualiza o histórico de buscas recentes
                 addAnimeTorecent({
                     id: animeDetails.id,
                     title: animeDetails.title.romaji || animeDetails.title.native,
                     coverImage: animeDetails.coverImage.large,
-                    description: animeDetails.description, 
-                });
+                    description: animeDetails.description,
+                    genres: animeDetails.genres,
+                    tags: animeDetails.tags,
+                    averageScore: animeDetails.averageScore,
+                    trailer: animeDetails.trailer,
+                    staff: animeDetails.staff,
+                    characters, // Incluindo os personagens
+                });                
                 
                 /*const animes = fs.existsSync(animesPath)
                     ? JSON.parse(fs.readFileSync(animesPath))
@@ -257,73 +342,129 @@ app.post("/search", upload.single("image"), async (req, res) => {
         }
     }
 
-    // Lógica para busca por nome
-    if (animeName) {
-        try {
-            const query = `
-            query ($search: String) {
-                Media(search: $search, type: ANIME) {
+// Lógica para busca por nome
+if (animeName) {
+    try {
+        const query = `
+        query ($search: String) {
+            Media(search: $search, type: ANIME) {
+                id
+                title {
+                    romaji
+                    native
+                }
+                description
+                coverImage {
+                    large
+                }
+                genres
+                tags {
+                    name
+                }
+                averageScore
+                trailer {
+                    site
                     id
-                    title {
-                        romaji
-                        native
-                    }
-                    description
-                    coverImage {
-                        large
+                }
+                staff {
+                    edges {
+                        role
+                        node {
+                            name {
+                                full
+                            }
+                        }
                     }
                 }
-            }`;
-    
-            const searchResponse = await axios.post(
-                "https://graphql.anilist.co",
-                { query, variables: { search: animeName } },
-                { headers: { "Content-Type": "application/json" } }
-            );
-    
-            const animeDetails = searchResponse.data.data.Media;
-            
-            if (animeDetails) {
-                if (!animeDetails.id) {
-                    throw new Error("ID do anime não encontrado.");
+                characters {
+                    edges {
+                        role
+                        node {
+                            name {
+                                full
+                            }
+                            image {
+                                large
+                            }
+                        }
+                    }
                 }
-    
-                results = [{
-                    anilist: animeDetails.id,
-                    title: animeDetails.title.romaji || animeDetails.title.native,
-                    description: animeDetails.description,
-                    coverImage: animeDetails.coverImage.large,
-                    match: 1.0, // Pode ser considerado 100% de similaridade, pois é uma busca direta
-                }];
-            } else {
-                results = [];  // Se não houver resultados, trata como um array vazio
             }
-        } catch (error) {
-            console.error("Erro ao buscar anime por título:", error.message);
-            return res.status(500).send("Erro ao buscar anime.");
-        }
+        }`;
+
+
+        const searchResponse = await axios.post(
+            "https://graphql.anilist.co",
+            { query, variables: { search: animeName } },
+            { headers: { "Content-Type": "application/json" } }
+        );
+
+        const animeDetails = searchResponse.data.data.Media;
+
+        if (animeDetails) {
+            if (!animeDetails.id) {
+                throw new Error("ID do anime não encontrado.");
+            }
+        
+            results = [{
+                anilist: animeDetails.id,
+                title: animeDetails.title.romaji || animeDetails.title.native,
+                description: animeDetails.description,
+                coverImage: animeDetails.coverImage.large,
+                genres: animeDetails.genres,
+                tags: animeDetails.tags.map(tag => tag.name),
+                averageScore: animeDetails.averageScore,
+                trailer: animeDetails.trailer
+                    ? animeDetails.trailer.site === "youtube"
+                        ? `https://www.youtube.com/watch?v=${animeDetails.trailer.id}`
+                        : animeDetails.trailer.id
+                    : null,
+                staff: animeDetails.staff.edges.map(edge => ({
+                    role: edge.role,
+                    name: edge.node.name.full,
+                })),
+                characters: animeDetails.characters.edges.map(edge => ({
+                    role: edge.role,
+                    name: edge.node.name.full,
+                    image: edge.node.image.large,
+                })),
+                match: 1.0, // Pode ser considerado 100% de similaridade, pois é uma busca direta
+            }];
+        } else {
+            results = []; // Se não houver resultados, trata como um array vazio
+        }        
+    } catch (error) {
+        console.error("Erro ao buscar anime por título:", error.message);
+        return res.status(500).send("Erro ao buscar anime.");
     }
-    
-    // Processar resultados e renderizar a página
-    if (!results || results.length === 0) {
-        return res.status(404).send("Nenhum anime encontrado.");
-    }
-    
-    const sortedResults = results.sort((a, b) => b.match - a.match);
-    const mainResult = sortedResults.shift();
-    
-    // Adicionar o principal anime encontrado ao histórico
-    addAnimeTorecent({
-        id: mainResult.anilist, // ID do anime encontrado
-        title: mainResult.title, // Título do anime encontrado
-        coverImage: mainResult.coverImage,
-        description: mainResult.description, // Descrição do anime
-    });
-    
-    res.render("search", { mainResult, otherResults: sortedResults, searchType });    
-    
+}
+
+// Processar resultados e renderizar a página
+if (!results || results.length === 0) {
+    return res.status(404).send("Nenhum anime encontrado.");
+}
+
+const sortedResults = results.sort((a, b) => b.match - a.match);
+const mainResult = sortedResults.shift();
+
+// Adicionar o principal anime encontrado ao histórico
+addAnimeTorecent({
+    id: mainResult.anilist, // ID do anime encontrado
+    title: mainResult.title, // Título do anime encontrado
+    coverImage: mainResult.coverImage,
+    description: mainResult.description, // Descrição do anime
+    genres: mainResult.genres, // Gêneros do anime
+    tags: mainResult.tags, // Tags do anime
+    averageScore: mainResult.averageScore, // Nota média
+    trailer: mainResult.trailer, // Link do trailer
+    staff: mainResult.staff, // Equipe de produção
+    characters: mainResult.characters, // Personagens do anime
 });
 
+
+res.render("search", { mainResult, otherResults: sortedResults, searchType });
+        
+});
 
 
 app.listen(port, () => {

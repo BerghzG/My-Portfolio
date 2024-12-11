@@ -106,6 +106,8 @@ a.nav-link {
     z-index: 2; /* Texto acima do fundo */
 }
 
+
+
 /* Ajuste de largura do formulário e espaçamento dos elementos */
 .text-overlay.d-none.d-md-flex form {
     display: flex;
@@ -236,23 +238,51 @@ label {
     border-radius: 5px;
 }
 
+.carroselflu {
+    background-color: #f5f3f3; 
+    padding: 25px 25px 35px; 
+}
+
 .carousel {
     overflow: hidden; /* Garante que o conteúdo do carrossel seja visível */
+    
 }
 
 #animeCarousel {
     margin-bottom: 50px; /* Espaçamento abaixo do carrossel */
 }
 
+.card11 {
+    border-radius: 5px;
+} 
+
 .card11 img {
     width: 100%; /* Faz a imagem ocupar toda a largura do card */
     height: 200px; /* Define uma altura fixa para uniformizar as imagens */
     object-fit: cover; /* Faz a imagem se ajustar sem distorção, cortando as bordas se necessário */
+    transition: transform 0.3s ease-in-out; /* Transição suave */
+}
+
+.card11 img:hover {
+    transform: scale(1.05); /* Aumenta a imagem em 5% */
+}
+
+
+@media (min-width: 468px) {
+    .card11 img {
+      height: 230px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+    }
+}
+
+@media (min-width: 500px) {
+    .card11 img {
+      height: 300px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+    }
 }
 
 @media (min-width: 568px) {
     .card11 img {
-      height: 300px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+      height: 315px; /* Aumenta a altura da imagem em telas maiores (desktop) */
     }
 }
 
@@ -274,6 +304,14 @@ label {
 
 .botoespassa:hover {
     background-color: rgba(15, 4, 4, 0.85);
+}
+
+
+.h2index {
+    padding-bottom: 5px;
+    font-family: 'Merriweather', sans-serif;
+    font-weight: bold;
+    color: rgb(22, 8, 8);
 }
 
 
@@ -366,6 +404,43 @@ label {
     overflow: hidden;
 }
 
+/* Exibe o conteúdo da card (card-body) apenas na versão mobile (largura < 768px) */
+.card-body {
+    display: block; /* Exibe o conteúdo por padrão */
+}
+
+/* Em telas maiores (desktop), esconde o card-body e exibe apenas a imagem */
+@media (min-width: 768px) {  
+    .alav .card-body {
+        display: none; /* Esconde o conteúdo do card no desktop */
+    }
+
+    .alav .card-img-top {
+        cursor: pointer; /* Deixa a imagem clicável */
+    }
+
+    .alav img {
+        display: block;
+        height: 470px;
+    }
+
+    /* Efeito de hover na imagem */
+    .alav img:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    /* Espaçamento entre os cards */
+    .alav .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 22px; /* Espaço entre os cards */
+        justify-content: space-around; /* Distribui os cards igualmente */
+    }
+
+}
+
+
 #imgOne {
     width: 100%;
     height: auto;
@@ -404,6 +479,11 @@ a.vejaso:hover {
     opacity: 0.8; /* Efeito de opacidade ao passar o mouse */
 }
 
+.searchP {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* 
  <!-- sera adicionado em breve
