@@ -62,6 +62,20 @@
                         <span>No genres available.</span>
                     <% } %>
                 </div>
+
+                <!-- Example single danger button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger dropdown-toggle" id="downMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="downMenu">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 order-lg-1 order-md-2 order-1">
                 <h4>Synopsis</h4>
@@ -79,6 +93,10 @@
                 <% } else { %>
                     <span>No tags available.</span>
                 <% } %>
+
+                <div>
+                    <h3 class="guri">Average Score: <%= anime.averageScore %></h3>
+                </div>
             </div>
         </div>
 
@@ -94,17 +112,101 @@
         <div>
             <% if (anime.characters && anime.characters.length > 0) { %>
                 <h4>Characters</h4>
-                <% anime.characters.forEach(function(character) { %>
-                    <div class="character-item">
-                        <img src="<%= character.image %>" alt="<%= character.name %>" class="character-image">
-                        <span class="character-name"><%= character.name %></span>
-                    </div>
-                <% }); %> 
+                <div class="characters-container">
+                    <% anime.characters.forEach(function(character) { %>
+                        <div class="character-item">
+                            <div class="character-info" onclick="toggleVoiceActors('<%= character.name.replace(/\s+/g, '-') %>')">
+                                <img src="<%= character.image %>" alt="<%= character.name %>" class="character-image">
+                                <span class="character-name"><%= character.name %></span>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+        
+                            <div class="voice-actors" id="<%= character.name.replace(/\s+/g, '-') %>-voice-actors">
+                                <% if (character.voiceActors && character.voiceActors.length > 0) { %>
+                                    <ul class="voice-actor-list">
+                                        <% character.voiceActors.forEach(function(voiceActor) { %>
+                                            <li class="voice-actor-item">
+                                                <img src="<%= voiceActor.image %>" alt="<%= voiceActor.name %>" class="voice-actor-image">
+                                                <span class="voice-actor-name"><%= voiceActor.name %></span>
+                                                <span class="voice-actor-language"><%= voiceActor.language %></span>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                <% } else { %>
+                                    <p>Sem informações de dubladores disponíveis.</p>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <p>Sem informações sobre personagens disponíveis.</p>
             <% } %>
-        </div>        
+        </div>                  
+        
+        <div>
+             <% if (anime.staff) { %>
+                <% if (anime.staff && anime.staff.length > 0) { %>
+                    <h4>Staff</h4>
+                    <ul class="staff-list">
+                        <% anime.staff.forEach(function(staffs) { %>
+                            <li class="staff-item">
+                                <img src="<%= staffs.image %>" alt="">
+                                <div class="staff-info">
+                                    <span class="staff-name"><%= staffs.name %></span>
+                                    <span class="staff-role"><%= staffs.role %></span>
+                                </div>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            <% } %>
+        </div>     
         
     </div>
 
+    <% if (anime.recommendations && anime.recommendations.length > 0) { %>
+        <h4>Recommended Animes</h4>
+        <div class="recommendations-container">
+            <% anime.recommendations.forEach(function(rec) { %>
+                <div class="recommendation-item">
+                    <img src="<%= rec.coverImage %>" alt="<%= rec.title %>" class="recommendation-image">
+                    <div class="recommendation-info">
+                        <h5><%= rec.title %></h5>
+                        <p><%= rec.description.substring(0, 150) %>...</p>
+                        <button class="see-more-btn">
+                            <a href="/add-recommendation/<%= rec.id %>/<%= encodeURIComponent(rec.title) %>">See More</a>
+                        </button>
+                    </div>
+                </div>
+            <% }); %>            
+        </div>
+    <% } else { %>
+        <p>No recommendations available for this anime.</p>
+    <% } %>
+    
+
+    <%- include('partials/footer') %>
+    
+    <script>
+        function toggleVoiceActors(characterName) {
+            const voiceActorsDiv = document.getElementById(`${characterName}-voice-actors`);
+            const toggleIcon = voiceActorsDiv.previousElementSibling.querySelector('.toggle-icon');
+    
+            if (voiceActorsDiv.style.display === 'block') {
+                voiceActorsDiv.style.display = 'none';
+                toggleIcon.textContent = '▼';  // Seta para baixo
+            } else {
+                voiceActorsDiv.style.display = 'block';
+                toggleIcon.textContent = '▲';  // Seta para cima
+            }
+        }
+
+        console.log("Anime Detalhado:", animeDetails);
+        console.log("Recomendações:", animeDetails.recommendations ? animeDetails.recommendations.edges : []);
+
+    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

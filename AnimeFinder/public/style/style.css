@@ -571,6 +571,251 @@ a.vejaso:hover {
     }
 }
 
+/* Estilo da lista de staff */
+.staff-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo para cada item de staff */
+.staff-item {
+    display: flex; /* Usar flexbox para alinhar os itens */
+    align-items: center; /* Alinha a imagem e o texto verticalmente */
+    justify-content: flex-start; /* Alinha os itens à esquerda */
+    padding: 15px; /* Espaçamento interno */
+    border: 1px solid #ddd; /* Borda sutil para cada item */
+    margin-bottom: 15px; /* Espaçamento entre os itens */
+    background-color: #f9f9f9; /* Cor de fundo suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito ao passar o mouse */
+}
+
+/* Efeito de hover no item */
+.staff-item:hover {
+    transform: scale(1.02); /* Leve aumento ao passar o mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo para a imagem do staff */
+.staff-item img {
+    width: 50px; /* Largura da imagem */
+    height: 50px; /* Altura da imagem */
+    border-radius: 50%; /* Deixa a imagem circular */
+    margin-right: 15px; /* Espaço à direita da imagem */
+}
+
+/* Informações do staff */
+.staff-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Nome do staff */
+.staff-name {
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: bold;
+    color: #333; /* Cor do texto */
+}
+
+/* Papel/ocupação do staff */
+.staff-role {
+    font-size: 14px;
+    color: #777; /* Cor mais suave para o papel */
+    margin-top: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .staff-item {
+        flex-direction: column; /* Muda a disposição para coluna em telas menores */
+        align-items: center; /* Alinha a imagem e o texto ao centro */
+        text-align: center; /* Centraliza o texto */
+    }
+
+    .staff-item img {
+        margin-bottom: 10px; /* Espaço abaixo da imagem em dispositivos móveis */
+    }
+}
+
+/* Estilo para a pontuação média */
+h3.guri {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* Contêiner para os personagens */
+.characters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Alinha os itens ao centro */
+}
+
+/* Cada item de personagem */
+.character-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 220px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+/* Efeito de hover no item */
+.character-item:hover {
+    transform: scale(1.05);
+}
+
+/* Imagem e nome do personagem */
+.character-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.character-image {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.character-name {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Ícone de seta */
+.toggle-icon {
+    margin-top: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Lista de dubladores */
+.voice-actors {
+    display: none;
+    margin-top: 10px;
+}
+
+.voice-actor-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.voice-actor-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.voice-actor-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.voice-actor-name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.voice-actor-language {
+    font-size: 12px;
+    color: #777;
+    margin-left: 5px;
+}
+
+/* Responsividade: Controle do número de colunas */
+@media (min-width: 1200px) {
+    .character-item {
+        flex: 0 0 18%; /* 5 personagens por linha */
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {
+    .character-item {
+        flex: 0 0 23%; /* 4 personagens por linha */
+    }
+}
+
+@media (max-width: 992px) and (min-width: 768px) {
+    .character-item {
+        flex: 0 0 30%; /* 3 personagens por linha */
+    }
+}
+
+@media (max-width: 768px) {
+    .character-item {
+        flex: 0 0 100%; /* 1 personagem por linha em telas menores */
+    }
+}
+
+
+
+/* Contêiner para as recomendações */
+.recommendations-container {
+    display: flex; /* Exibe os itens em linha */
+    overflow-x: auto; /* Permite rolagem horizontal */
+    gap: 20px; /* Espaçamento entre os itens */
+    padding: 10px 0; /* Espaçamento interno */
+}
+
+/* Estilo de cada item de recomendação */
+.recommendation-item {
+    flex: 0 0 auto; /* Garante que cada item tenha largura fixa */
+    width: 220px; /* Largura do item */
+    border: 1px solid #ddd; /* Borda ao redor de cada item */
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 10px; /* Espaçamento interno */
+    text-align: center; /* Alinha o conteúdo ao centro */
+}
+
+/* Imagem da recomendação */
+.recommendation-image {
+    width: 100%; /* A imagem ocupa toda a largura do item */
+    height: 150px; /* Altura fixa para a imagem */
+    object-fit: cover; /* Faz a imagem cobrir o espaço sem distorção */
+    border-radius: 8px; /* Arredondar a imagem */
+}
+
+/* Informações da recomendação */
+.recommendation-info {
+    margin-top: 10px;
+}
+
+/* Título da recomendação */
+.recommendation-info h5 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Descrição curta da recomendação */
+.recommendation-info p {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Link de 'See more' */
+.recommendation-info a {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.recommendation-info a:hover {
+    text-decoration: underline;
+}
 
 
 

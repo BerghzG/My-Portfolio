@@ -116,20 +116,27 @@ app.get("/details/:title", async (req, res) => {
                         }
                     }
                 }
-                characters {
-                    edges {
-                        role
-                        node {
-                            id
-                            name {
-                                full
+                    characters {
+                        edges {
+                            node {
+                                name {
+                                    full
+                                }
+                                image {
+                                    large
+                                }
                             }
-                            image {
-                                large
+                            voiceActors {
+                                name {
+                                    full
+                                }
+                                image {
+                                    large
+                                }
+                                languageV2
                             }
                         }
                     }
-                }
                 recommendations {
                     edges {
                         node {
@@ -184,13 +191,25 @@ app.get("/details/:title", async (req, res) => {
             staff: animeDetails.staff.edges.map(edge => ({
                 role: edge.role,
                 name: edge.node.name.full,
+                image: edge.node.image.large,
             })),
             characters: animeDetails.characters.edges.map(edge => ({
                 role: edge.role,
                 name: edge.node.name.full,
                 image: edge.node.image.large,
+                voiceActors: edge.voiceActors.map(va => ({
+                    name: va.name.full,
+                    image: va.image.large,
+                    language: va.languageV2,
+                })),
             })),
-        };
+            recommendations: animeDetails.recommendations.edges.map(edge => ({
+                id: edge.node.mediaRecommendation.id,
+                title: edge.node.mediaRecommendation.title.romaji || edge.node.mediaRecommendation.title.native,
+                coverImage: edge.node.mediaRecommendation.coverImage.large,
+                description: edge.node.mediaRecommendation.description,
+            })),
+        };        
 
         res.render("details", { anime: detailsResult, recommendations: animeDetails.recommendations.edges });
 
@@ -199,6 +218,71 @@ app.get("/details/:title", async (req, res) => {
         res.status(500).send("Erro ao buscar anime.");
     }
 });
+
+app.get("/add-recommendation/:id/:title", async (req, res) => {
+    const { id, title } = req.params;
+    console.log("ID do Anime:", id);
+    console.log("Título do Anime:", title);
+
+    // Verifique se o anime já está no histórico (não precisa adicionar se já estiver)
+    const animes = getRecentSearches();
+    const animeExists = animes.some(a => a.id == id);
+
+    if (!animeExists) {
+        // Agora vamos fazer a consulta para pegar as informações do anime
+        try {
+            const query = `
+            query ($id: Int) {
+                Media(id: $id, type: ANIME) {
+                    id
+                    title {
+                        romaji
+                        native
+                    }
+                    coverImage {
+                        large
+                    }
+                    description
+                }
+            }`;
+
+            const variables = { id: parseInt(id) };
+            const response = await axios.post("https://graphql.anilist.co", { query, variables }, {
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (response.data.errors) {
+                console.error("Erro na consulta GraphQL:", response.data.errors);
+                return res.status(500).send("Erro ao buscar anime.");
+            }
+
+            const animeDetails = response.data.data.Media;
+            if (!animeDetails || !animeDetails.id) {
+                return res.status(404).send("Anime não encontrado.");
+            }
+
+            // Agora adicione o anime ao histórico
+            const newAnime = {
+                id: animeDetails.id,
+                title: animeDetails.title.romaji || animeDetails.title.native,
+                coverImage: animeDetails.coverImage.large, // Incluindo o coverImage
+            };
+
+            addAnimeTorecent(newAnime);
+
+            // Após adicionar, redirecione para a página de detalhes do anime
+            res.redirect(`/details/${encodeURIComponent(animeDetails.title.romaji)}`);
+
+        } catch (error) {
+            console.error("Erro ao buscar detalhes do anime:", error.message);
+            res.status(500).send("Erro ao adicionar anime ao histórico.");
+        }
+    } else {
+        // Se o anime já estiver no histórico, redireciona diretamente para a página de detalhes
+        res.redirect(`/details/${encodeURIComponent(title)}`);
+    }
+});
+
 
 // Rota de busca usando Trace.moe e AniList
 app.post("/search", upload.single("image"), async (req, res) => {
