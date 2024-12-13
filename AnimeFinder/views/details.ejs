@@ -46,23 +46,66 @@
         </nav>
     </div>
 
-
-
-    <h1 class="text-center my-4"><%= anime.title %></h1>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 capa">
                 <img src="<%= anime.coverImage %>" class="img-fluid" alt="<%= anime.title %>">
+                <h2 class="my-3"><%= anime.title %></h2>
+
+                <div class="d-block">
+                    <h4>Genres:</h4>
+                    <% if (anime.genres && anime.genres.length > 0) { %>
+                        <% anime.genres.forEach(function(genre) { %>
+                            <span class="genre-item"><%= genre %></span>
+                        <% }); %>
+                    <% } else { %>
+                        <span>No genres available.</span>
+                    <% } %>
+                </div>
             </div>
             <div class="col-md-6 order-lg-1 order-md-2 order-1">
-                <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %>
-            <a href="/" class="btn btn-primary">Voltar</a>
+                <h4>Synopsis</h4>
+                <p class="detailsp"><%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %></p>
+                
+                <h4>Tags:</h4>
+                <% if (anime.tags && anime.tags.length > 0) { %>
+                    <% anime.tags.forEach(function(tag) { %>
+                        <% if (typeof tag === 'object') { %>
+                            <span class="tag-item"><%= tag.name %></span>
+                        <% } else { %>
+                            <span class="tag-item"><%= tag %></span>
+                        <% } %>
+                    <% }); %>
+                <% } else { %>
+                    <span>No tags available.</span>
+                <% } %>
             </div>
         </div>
+
+        <div class="video-container" <% if (!anime.trailer) { %> style="display: none;" <% } %>>
+            <% if (anime.trailer) { %>
+                <iframe src="<%= anime.trailer %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <% } else { %>
+                <p class="text-center">Trailer não disponível.</p>
+            <% } %>
+        </div>
+        
+
+        <div>
+            <% if (anime.characters && anime.characters.length > 0) { %>
+                <h4>Characters</h4>
+                <% anime.characters.forEach(function(character) { %>
+                    <div class="character-item">
+                        <img src="<%= character.image %>" alt="<%= character.name %>" class="character-image">
+                        <span class="character-name"><%= character.name %></span>
+                    </div>
+                <% }); %> 
+            <% } %>
+        </div>        
+        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
-
 

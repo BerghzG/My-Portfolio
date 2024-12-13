@@ -92,7 +92,7 @@
                             <div class="d-flex justify-content-center">
                                 <% for (let j = i; j < i + 3 && j < recentSearches.length; j++) { %>
                                     <div class="card mx-2 card11" style="width: 18rem;">
-                                        <a href="/details/<%= recentSearches[j].id %>">
+                                        <a href="/details/<%= encodeURIComponent(recentSearches[j].title) %>">
                                             <img src="<%= recentSearches[j].coverImage %>" class="card-img-top" alt="<%= recentSearches[j].title %>">
                                         </a>
                                     </div>

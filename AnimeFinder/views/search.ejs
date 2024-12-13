@@ -167,7 +167,8 @@
                                 <p class="card-text">Similarity: <%= (mainResult.match * 100).toFixed(2) %> %</p>
                             
                                 <!-- Botão único para o anime principal -->
-                                <a href="/details/<%= searchType === 'text' ? mainResult.anilist : mainResult.id %>" class="btn vejaso btn-primary">See More</a>
+                                <a href="/details/<%= encodeURIComponent(mainResult.title) %>" class="btn vejaso btn-primary">See More</a>
+
                             </div>                            
                         </div>
                     </div>
@@ -178,19 +179,21 @@
                     <div class="alav card-container">
                         <% otherResults.forEach((anime) => { %>
                             <div class="card alav">
-                                <a href="/details/<%= anime.id %>">
+                                <!-- Corrigir o href para usar anime.title -->
+                                <a href="/details/<%= encodeURIComponent(anime.title) %>">
                                     <img src="<%= anime.coverImage %>" class="card-img-top alav" alt="<%= anime.title %>">
                                 </a>
                                 <div class="card-body alav">
                                     <h5 class="card-title"><%= anime.title %></h5>
                                     <p class="card-text"><strong>Synopsis:</strong> <%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %></p>
                                     <p class="card-text">Similarity: <%= (anime.match * 100).toFixed(2) %> %</p>
-                                    <a href="/details/<%= anime.id %>" class="btn btn-secondary">See More</a>
+                                    <!-- Corrigir o href para usar anime.title -->
+                                    <a href="/details/<%= encodeURIComponent(anime.title) %>" class="btn btn-secondary">See More</a>
                                 </div>
                             </div>
                         <% }) %>
                     </div>
-                <% } %>
+                <% } %>                
             <% } %>
         <% } %>
         
