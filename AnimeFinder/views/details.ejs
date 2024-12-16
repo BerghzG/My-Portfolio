@@ -49,11 +49,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 capa">
-                <img src="<%= anime.coverImage %>" class="img-fluid" alt="<%= anime.title %>">
-                <h2 class="my-3"><%= anime.title %></h2>
+                <div class="imgalah">
+                    <img src="<%= anime.coverImage %>" class="img-fluid" alt="<%= anime.title %>">
+                    <h2 class="my-3"><%= anime.title %></h2>
+                </div>
+
 
                 <div class="d-block">
-                    <h4>Genres:</h4>
+                    <h4>Genres</h4>
                     <% if (anime.genres && anime.genres.length > 0) { %>
                         <% anime.genres.forEach(function(genre) { %>
                             <span class="genre-item"><%= genre %></span>
@@ -65,51 +68,73 @@
 
                 <!-- Example single danger button -->
                 <div class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" id="downMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action
+                    <button type="button" class="btn btn-danger dropdown-toggle" id="downMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        Action
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="downMenu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
-                </div>
+                    <ul class="dropdown-menu" aria-labelledby="downMenu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                    </ul>
+                </div>                
             </div>
-            <div class="col-md-6 order-lg-1 order-md-2 order-1">
-                <h4>Synopsis</h4>
-                <p class="detailsp"><%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %></p>
+            <div class="col-md-6 order-lg-1 order-md-2 order-1 des">
+
+                <div class="descrip">
+                    <h4>Synopsis</h4>
+                    <p class="detailsp"><%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %></p>
                 
-                <h4>Tags:</h4>
-                <% if (anime.tags && anime.tags.length > 0) { %>
-                    <% anime.tags.forEach(function(tag) { %>
-                        <% if (typeof tag === 'object') { %>
-                            <span class="tag-item"><%= tag.name %></span>
-                        <% } else { %>
-                            <span class="tag-item"><%= tag %></span>
-                        <% } %>
-                    <% }); %>
+                </div>
+                <div class="descrip">
+                    <h4>Tags</h4>
+                    <% if (anime.tags && anime.tags.length > 0) { %>
+                        <% anime.tags.forEach(function(tag) { %>
+                            <% if (typeof tag === 'object') { %>
+                                <span class="tag-item"><%= tag.name %></span>
+                            <% } else { %>
+                                <span class="tag-item"><%= tag %></span>
+                            <% } %>
+                        <% }); %>
+                    <% } else { %>
+                        <span>No tags available.</span>
+                    <% } %>
+                </div>
+
+                <% if (anime.averageScore <= 30 ) { %>
+                    <div>
+                        <h3 class="guri">Average Score: <span style="color: red;"><%= anime.averageScore %></span></h3>
+                    </div>
+                <% } else if (anime.averageScore <= 60) { %>
+                    <div>
+                        <h3 class="guri">Average Score: <span style="color: rgb(255, 123, 0);"><%= anime.averageScore %></span></h3>
+                    </div>
+                <% } else if (anime.averageScore <= 90) { %>
+                    <div>
+                        <h3 class="guri">Average Score: <span style="color: rgb(60, 134, 0);"><%= anime.averageScore %></span></h3>
+                    </div>
                 <% } else { %>
-                    <span>No tags available.</span>
+                    <div>
+                        <h3 class="guri">Average Score: <span style="color: rgb(2, 192, 2)"><%= anime.averageScore %></span></h3>
+                    </div>
                 <% } %>
 
-                <div>
-                    <h3 class="guri">Average Score: <%= anime.averageScore %></h3>
-                </div>
+
             </div>
         </div>
 
-        <div class="video-container" <% if (!anime.trailer) { %> style="display: none;" <% } %>>
-            <% if (anime.trailer) { %>
-                <iframe src="<%= anime.trailer %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <% } else { %>
-                <p class="text-center">Trailer não disponível.</p>
-            <% } %>
-        </div>
-        
+        <div class="video-wrapper">
+            <div class="video-container" <% if (!anime.trailer) { %> style="display: none;" <% } %>>
+                <% if (anime.trailer) { %>
+                    <iframe src="<%= anime.trailer %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <% } else { %>
+                    <p class="text-center">Trailer não disponível.</p>
+                <% } %>
+            </div>
+        </div>        
 
-        <div>
+        <div class="carac">
             <% if (anime.characters && anime.characters.length > 0) { %>
                 <h4>Characters</h4>
                 <div class="characters-container">

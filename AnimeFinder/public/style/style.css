@@ -270,19 +270,19 @@ label {
 
 @media (min-width: 468px) {
     .card11 img {
-      height: 230px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+        height: 230px; 
     }
 }
 
 @media (min-width: 500px) {
     .card11 img {
-      height: 300px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+        height: 300px; 
     }
 }
 
 @media (min-width: 568px) {
     .card11 img {
-      height: 315px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+        height: 315px; 
     }
 }
 
@@ -497,10 +497,82 @@ a.vejaso:hover {
     justify-content: center; /* Centraliza os elementos no eixo vertical */
     align-items: center; /* Centraliza os elementos no eixo horizontal */
     text-align: center; /* Aplica alinhamento interno */
+    padding-top: 30px;
+}
+
+.capa img {
+    border-radius: 10px;
+} 
+
+@media (min-width: 768px) {
+    .capa img {
+      height: 420px; /* Aumenta a altura da imagem em telas maiores (desktop) */
+    }
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+    .row {
+        display: flex; /* Mantém os itens lado a lado */
+        flex-wrap: nowrap; /* Garante que não haja quebra de linha */
+        align-items: flex-start; /* Alinha os itens pelo topo */
+    }
+
+    .capa {
+        flex: 1; /* Faz com que a coluna da imagem ocupe o espaço necessário */
+        display: flex;
+        flex-direction: column; /* Mantém a estrutura interna empilhada */
+        align-items: center; /* Alinha o conteúdo à esquerda */
+        justify-content: center;
+    }
+
+    .imgalah {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .capa img {
+        height: 315px; /* Mantém a proporção da imagem */
+    }
+
+    .des {
+        flex: 1; /* Faz com que o container de descrição ocupe o restante do espaço */
+        margin-left: 15px; /* Adiciona espaço entre a imagem e o texto */
+        display: flex;
+        flex-direction: column; /* Organiza os elementos da descrição verticalmente */
+    }
+
+    /* Adicione esta regra para evitar margens ou preenchimentos indesejados */
+    .row > .capa, 
+    .row > .des {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.capa .d-block {
+    padding: 5px 10px;
 }
 
 .capa .d-block h4 {
     text-align: left; /* Força o alinhamento à esquerda */
+}
+
+.btn-group {
+    padding-top: 5px;
+}
+
+@media (min-width: 768px) {
+    .btn-group {
+        padding-bottom: 20px;
+    }
+}
+
+.des {
+    padding-top: 25px;
+}
+
+.descrip {
+    padding: 7px 7px 15px;
 }
 
 .genre-item {
@@ -525,6 +597,10 @@ a.vejaso:hover {
     color: #c2185b;
     border-radius: 5px;
     font-size: 14px;
+}
+
+.video-wrapper {
+    padding: 4px 10px 25px;
 }
 
 .video-container {
@@ -571,6 +647,14 @@ a.vejaso:hover {
         max-width: 100%; /* O vídeo ocupa toda a largura da tela em dispositivos móveis */
         padding-bottom: 56.25%; /* Mantém a proporção 16:9 no mobile */
     }
+}
+
+.carac {
+    padding-bottom: 22px;
+}
+
+.carac h4 {
+    padding-bottom: 5px;
 }
 
 /* Estilo da lista de staff */
@@ -645,9 +729,10 @@ a.vejaso:hover {
 h3.guri {
     font-size: 20px;
     font-weight: bold;
-    color: #333;
+    color: #353535;
     margin-bottom: 20px;
     text-align: center;
+    padding: 10px;
 }
 
 
