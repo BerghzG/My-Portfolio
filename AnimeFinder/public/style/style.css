@@ -580,6 +580,7 @@ a.vejaso:hover {
     display: flex;
     align-items: center; /* Garante o alinhamento vertical */
     gap: 10px; /* Define o espaçamento entre os itens */
+    padding-top: 5px;
 }
 
 .btn-group .btn {
@@ -926,8 +927,6 @@ h3.guri {
         flex: 0 0 100%; /* 1 personagem por linha em telas menores */
     }
 }
-
-
 
 /* Contêiner para as recomendações */
 .recommendations-container {
