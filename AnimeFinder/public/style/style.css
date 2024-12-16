@@ -567,6 +567,87 @@ a.vejaso:hover {
     }
 }
 
+.heart-checkbox {
+    display: none;
+}
+
+.coracao {
+    margin-bottom: 5px;
+}
+
+  /* Estilo do botão circular */
+.butoesDetails {
+    display: flex;
+    align-items: center; /* Garante o alinhamento vertical */
+    gap: 10px; /* Define o espaçamento entre os itens */
+}
+
+.btn-group .btn {
+    height: 40px; /* Garante que o botão tenha o mesmo tamanho que o coração */
+    display: flex;
+    align-items: center;
+}
+
+.heart-label {
+    font-size: 1.6rem;
+    color: #dc3545;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #dc3545;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+  /* Coração vazio por padrão */
+.heart-label .bi-heart-fill {
+    display: none;
+}
+
+  /* Quando checado, muda o ícone e o estilo */
+.heart-checkbox:checked + .heart-label {
+    background-color: #dc3545; /* Fundo vermelho */
+    border-color: #dc3545;
+    color: #fff; /* Ícone branco */
+}
+.heart-checkbox:checked + .heart-label .bi-heart {
+    display: none;
+}
+.heart-checkbox:checked + .heart-label .bi-heart-fill {
+    display: inline;
+}
+
+/* Tooltip visível apenas no hover */
+.heart-label:hover {
+    background-color: rgba(220, 53, 69, 0.1); /* Fundo suave ao passar o mouse */
+}
+
+@media (max-width: 768px) {
+    .butoesDetails {
+        flex-direction: row; /* Garante que os itens fiquem lado a lado */
+        justify-content: center; /* Centraliza os itens no eixo horizontal */
+        gap: 10px; /* Mantém um espaçamento adequado */
+    }
+
+    .coracao {
+        margin-bottom: -15px;
+    }
+    
+    .heart-label {
+        width: 37px; /* Ajusta o tamanho para dispositivos menores */
+        height: 37px;
+    }
+
+    .btn-group .btn {
+        font-size: 0.875rem; /* Reduz o texto para telas pequenas */
+        height: 36px;
+    }
+}
+
+
 .des {
     padding-top: 25px;
 }
@@ -650,7 +731,7 @@ a.vejaso:hover {
 }
 
 .carac {
-    padding-bottom: 22px;
+    padding: 10px 0 24px;
 }
 
 .carac h4 {
