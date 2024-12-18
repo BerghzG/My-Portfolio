@@ -22,7 +22,7 @@ app.set("view engine", "ejs");
 
 // Função para obter animes recentemente procurados
 const getRecentSearches = () => {
-    const animesPath = path.join(__dirname, "animes.json");
+    const animesPath = path.join(__dirname, "/JSON/animes.json");
     if (!fs.existsSync(animesPath)) {
         return [];
     }
@@ -31,7 +31,7 @@ const getRecentSearches = () => {
 };
 
 const addAnimeTorecent = (newAnime) => {
-    const animePath = path.join(__dirname, "animes.json");
+    const animePath = path.join(__dirname, "/JSON/animes.json");
     const animes = fs.existsSync(animePath)
         ? JSON.parse(fs.readFileSync(animePath))
         : [];
