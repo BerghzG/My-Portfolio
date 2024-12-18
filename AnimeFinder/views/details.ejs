@@ -72,26 +72,38 @@
 
                 <!-- Example single danger button -->
 
-                <div class="butoesDetails">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger dropdown-toggle" id="downMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            Status
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="downMenu">
-                            <li><a class="dropdown-item" href="#">Watching</a></li>
-                            <li><a class="dropdown-item" href="#">Dropped</a></li>
-                            <li><a class="dropdown-item" href="#">Finished</a></li>
-                        </ul>
-                    </div>       
+                <form id="statusForm">
+                    <input type="hidden" name="id" value="<%= anime.id %>">
+                    <input type="hidden" name="title" value="<%= anime.title %>">
+                    <input type="hidden" name="coverImage" value="<%= anime.coverImage %>">
                 
-                    <div class="coracao">
-                        <input type="checkbox" id="heartCheckbox" class="heart-checkbox">
-                        <label for="heartCheckbox" class="heart-label">
-                            <i class="bi bi-heart"></i>
-                            <i class="bi bi-heart-fill"></i>
-                        </label>
+                    <div class="butoesDetails">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" id="downMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                Status
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="downMenu">
+                                <li><a class="dropdown-item <% if (status === 'Watching') { %>bg-warning text-dark<% } %>" href="#" onclick="updateWatched('Watching')">Watching</a></li>
+                                <li><a class="dropdown-item <% if (status === 'Dropped') { %>bg-danger text-white<% } %>" href="#" onclick="updateWatched('Dropped')">Dropped</a></li>
+                                <li><a class="dropdown-item <% if (status === 'Finished') { %>bg-success text-white<% } %>"" href="#" onclick="updateWatched('Finished')">Finished</a></li>
+                            </ul>
+                        </div>
+                
+                        <div class="coracao">
+                            <input 
+                                type="checkbox" 
+                                id="heartCheckbox" 
+                                class="heart-checkbox" 
+                                onclick="toggleFavorite()" 
+                                <%= anime.favorite ? 'checked' : '' %> 
+                            >
+                            <label for="heartCheckbox" class="heart-label">
+                                <i class="bi bi-heart"></i>
+                                <i class="bi bi-heart-fill"></i>
+                            </label>
+                        </div>                        
                     </div>
-                </div>
+                </form>                
             </div>
             <div class="col-md-6 order-lg-1 order-md-2 order-1 des">
 
@@ -275,9 +287,68 @@
             }
         }
 
+        async function updateWatched(status) {
+            const formData = new FormData(document.getElementById('statusForm'));
+            formData.append('status', status);
+            formData.append('favorite', document.getElementById('heartCheckbox').checked);
+
+            const data = Object.fromEntries(formData.entries());
+
+            console.log('Dados enviados para o backend:', data);
+
+            try {
+                const response = await fetch('/add-to-watched', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    console.log('Anime adicionado ao watched.json!');
+                } else {
+                    console.error('Erro ao adicionar anime.');
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+            }
+        }
+
+        async function toggleFavorite() {
+            const checkbox = document.getElementById('heartCheckbox');
+            checkbox.disabled = true; // Evita múltiplos cliques enquanto a requisição é processada
+
+            const formData = new FormData(document.getElementById('statusForm'));
+            formData.append('favorite', checkbox.checked); // Atualiza o campo favorito
+
+            const data = Object.fromEntries(formData.entries());
+
+            console.log('Dados enviados para o backend:', data);
+
+            try {
+                const response = await fetch('/add-to-watched', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    console.log('Anime marcado como favorito!');
+                } else {
+                    console.error('Erro ao atualizar favorito.');
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+            } finally {
+                checkbox.disabled = false; // Reativa o checkbox
+            }
+        }
+
         console.log("Anime Detalhado:", animeDetails);
         console.log("Recomendações:", animeDetails.recommendations ? animeDetails.recommendations.edges : []);
-
     </script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

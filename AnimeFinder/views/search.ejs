@@ -118,10 +118,6 @@
             </form>
         </div>
         
-        
-
-        
-
         <% if (!mainResult && (!otherResults || otherResults.length === 0)) { %>
             <div class="text-center mt-5">
                 <img src="/images/maya_outfit.png" alt="Nenhuma busca realizada" class="img-fluid">
@@ -275,7 +271,6 @@
             
             const searchType = "<%= searchType %>";
 
-
             // Checar se o searchType é 'image' e se os elementos de imagem e vídeo existem
             if (searchType === 'image' && image && video) {
                 // Quando o mouse passa sobre a imagem
@@ -328,7 +323,6 @@
                 });
             }
         });
-
 
 </script>   
 </body>
