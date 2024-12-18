@@ -154,6 +154,9 @@ app.get("/details/:title", async (req, res) => {
                         }
                     }
                 }
+                startDate {
+                    year
+                }
             }
         }`;
 
@@ -209,6 +212,7 @@ app.get("/details/:title", async (req, res) => {
                 coverImage: edge.node.mediaRecommendation.coverImage.large,
                 description: edge.node.mediaRecommendation.description,
             })),
+            startDate: animeDetails.startDate.year,
         };        
 
         res.render("details", { anime: detailsResult, recommendations: animeDetails.recommendations.edges });

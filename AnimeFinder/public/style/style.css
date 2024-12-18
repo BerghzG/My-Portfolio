@@ -744,6 +744,8 @@ a.vejaso:hover {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a linha seguinte */
 }
 
 /* Estilo para cada item de staff */
@@ -757,6 +759,8 @@ a.vejaso:hover {
     background-color: #f9f9f9; /* Cor de fundo suave */
     border-radius: 8px; /* Bordas arredondadas */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito ao passar o mouse */
+    width: 48%; /* Cada item ocupa 48% da largura, permitindo dois itens por linha */
+    margin-right: 2%; /* Pequeno espaçamento entre os itens */
 }
 
 /* Efeito de hover no item */
@@ -793,6 +797,15 @@ a.vejaso:hover {
     color: #777; /* Cor mais suave para o papel */
     margin-top: 5px;
 }
+
+/* Para dispositivos menores, manter a exibição de um item por linha */
+@media (max-width: 768px) {
+    .staff-item {
+        width: 100%; /* Um item por linha em dispositivos móveis */
+        margin-right: 0; /* Remove o espaçamento à direita */
+    }
+}
+
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -928,58 +941,99 @@ h3.guri {
     }
 }
 
-/* Contêiner para as recomendações */
-.recommendations-container {
-    display: flex; /* Exibe os itens em linha */
-    overflow-x: auto; /* Permite rolagem horizontal */
-    gap: 20px; /* Espaçamento entre os itens */
-    padding: 10px 0; /* Espaçamento interno */
+.eutotentando {
+    padding: 25px;
 }
 
-/* Estilo de cada item de recomendação */
+/* Mobile: 2 itens por slide */
+@media screen and (max-width: 768px) {
+    .carousel-inner {
+        padding: 1em;
+    }
+
+    .card {
+        margin: 0.5em;
+    }
+
+    .carousel-item {
+        width: 100%;
+        display: flex; /* Exibe os itens lado a lado */
+        flex-wrap: wrap;
+    }
+
+    .col-6 {
+        width: 50%; /* 2 itens por linha no mobile */
+    }
+}
+
+/* Tablet: 3 itens por slide */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .carousel-item {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col-sm-4 {
+        width: 33.33%; /* 3 itens por linha em tablets */
+    }
+}
+
+/* Desktop: 4 itens por slide */
+@media screen and (min-width: 1024px) {
+    .carousel-item {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col-md-3 {
+        width: 25%; /* 4 itens por linha no desktop */
+    }
+}
+
+
+/* Garante que todos os cards tenham a mesma altura */
 .recommendation-item {
-    flex: 0 0 auto; /* Garante que cada item tenha largura fixa */
-    width: 220px; /* Largura do item */
-    border: 1px solid #ddd; /* Borda ao redor de cada item */
-    border-radius: 8px; /* Borda arredondada */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 10px; /* Espaçamento interno */
-    text-align: center; /* Alinha o conteúdo ao centro */
+    margin: 0.3rem auto;
+    width: 100%; /* Cada card ocupa a largura total de sua coluna */
+    display: flex;
+    flex-direction: column;
+    height: 300px; /* Definindo uma altura fixa para os cards */
+    overflow: hidden; /* Para esconder qualquer conteúdo extra que ultrapasse a altura do card */
 }
 
-/* Imagem da recomendação */
+.recommendation-item img {
+    height: 250px;
+}
+
+/* As imagens dentro dos cards */
 .recommendation-image {
-    width: 100%; /* A imagem ocupa toda a largura do item */
-    height: 150px; /* Altura fixa para a imagem */
-    object-fit: cover; /* Faz a imagem cobrir o espaço sem distorção */
-    border-radius: 8px; /* Arredondar a imagem */
+    width: 100%;
+    height: 180px; /* Altura fixa para as imagens */
+    object-fit: cover; /* Garante que a imagem ocupe toda a área */
+    border-radius: 8px;
 }
 
-/* Informações da recomendação */
-.recommendation-info {
-    margin-top: 10px;
+/* Corpo do card (com informações) */
+.card-body .recommendation-info {
+    flex-grow: 1; /* Faz o corpo do card crescer para ocupar o restante do espaço */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Garante que o título e a descrição se distribuam bem */
 }
 
 /* Título da recomendação */
 .recommendation-info h5 {
     font-size: 16px;
     font-weight: bold;
+    margin: 0; /* Remove margem para evitar distorção */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-/* Descrição curta da recomendação */
-.recommendation-info p {
-    font-size: 12px;
-    color: #555;
-    margin-bottom: 10px;
+.recommendation-item:hover {
+    transform: scale(1.021); /* Aumenta a imagem em 5% */
 }
 
-/* Link de 'See more' */
-.recommendation-info a {
-    font-size: 14px;
-    color: #007bff;
-    text-decoration: none;
-}
-
-.recommendation-info a:hover {
-    text-decoration: underline;
-}

@@ -15,6 +15,10 @@
         .menu {
             padding: 10px;
         }
+
+        .botoespassa {
+            padding: 15px;
+        }
     </style>
 </head>
 <body>
@@ -111,24 +115,30 @@
                     <% } %>
                 </div>
 
-                <% if (anime.averageScore <= 30 ) { %>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <% if (anime.averageScore <= 30 ) { %>
+                        <div>
+                            <h3 class="guri">Average Score: <span style="color: red;"><%= anime.averageScore %></span></h3>
+                        </div>
+                    <% } else if (anime.averageScore <= 60) { %>
+                        <div>
+                            <h3 class="guri">Average Score: <span style="color: rgb(255, 123, 0);"><%= anime.averageScore %></span></h3>
+                        </div>
+                    <% } else if (anime.averageScore <= 90) { %>
+                        <div>
+                            <h3 class="guri">Average Score: <span style="color: rgb(60, 134, 0);"><%= anime.averageScore %></span></h3>
+                        </div>
+                    <% } else { %>
+                        <div>
+                            <h3 class="guri">Average Score: <span style="color: rgb(2, 192, 2)"><%= anime.averageScore %></span></h3>
+                        </div>
+                    <% } %>
+                    
                     <div>
-                        <h3 class="guri">Average Score: <span style="color: red;"><%= anime.averageScore %></span></h3>
+                        <h3 class="guri">Realize Year:  <span style="color: rgb(61, 32, 32);"><%= anime.startDate %></span></h3>
                     </div>
-                <% } else if (anime.averageScore <= 60) { %>
-                    <div>
-                        <h3 class="guri">Average Score: <span style="color: rgb(255, 123, 0);"><%= anime.averageScore %></span></h3>
-                    </div>
-                <% } else if (anime.averageScore <= 90) { %>
-                    <div>
-                        <h3 class="guri">Average Score: <span style="color: rgb(60, 134, 0);"><%= anime.averageScore %></span></h3>
-                    </div>
-                <% } else { %>
-                    <div>
-                        <h3 class="guri">Average Score: <span style="color: rgb(2, 192, 2)"><%= anime.averageScore %></span></h3>
-                    </div>
-                <% } %>
-
+                </div>
+                
 
             </div>
         </div>
@@ -200,26 +210,54 @@
     </div>
 
     <% if (anime.recommendations && anime.recommendations.length > 0) { %>
-        <h4>Recommended Animes</h4>
-        <div class="recommendations-container">
-            <% anime.recommendations.forEach(function(rec) { %>
-                <div class="recommendation-item">
-                    <img src="<%= rec.coverImage %>" alt="<%= rec.title %>" class="recommendation-image">
-                    <div class="recommendation-info">
-                        <h5><%= rec.title %></h5>
-                        <p><%= rec.description ? rec.description.substring(0, 150).replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %>...</p>
-                        <button class="see-more-btn">
-                            <a href="/add-recommendation/<%= rec.id %>/<%= encodeURIComponent(rec.title) %>">See More</a>
-                        </button>
+        <div class="eutotentando">
+            <h4>Recommended Animes</h4>
+            <div class="wrapper">
+                <div id="carouselExamplecontrols" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <% anime.recommendations.forEach(function(rec, index) { %>
+                            <% if (index % 4 === 0) { %> <!-- Agrupa 4 itens por slide -->
+                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                    <div class="row justify-content-center">
+                            <% } %>
+                            <div class="col-6 col-sm-4 col-md-3">
+                                <div class="card recommendation-item">
+                                    <a style="text-decoration: none;" href="/add-recommendation/<%= rec.id %>/<%= encodeURIComponent(rec.title) %>">
+                                        <img src="<%= rec.coverImage %>" alt="<%= rec.title %>" class="recommendation-image">
+                                        <div class="card-body recommendation-info">
+                                            <h5 class="card-title"><%= rec.title %></h5>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <% if ((index + 1) % 4 === 0 || index === anime.recommendations.length - 1) { %>
+                                    </div> <!-- Fecha o row -->
+                                </div> <!-- Fecha o carousel-item -->
+                            <% } %>
+                        <% }); %>
                     </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExamplecontrols" data-bs-slide="prev">
+                        <div class="botoespassa">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </div>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExamplecontrols" data-bs-slide="next">
+                        <div class="botoespassa">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </div>
+                        <span class="visually-hidden">Próximo</span>
+                    </button>                    
                 </div>
-            <% }); %>            
+            </div>
         </div>
+
     <% } else { %>
         <p>No recommendations available for this anime.</p>
     <% } %>
     
-
     <%- include('partials/footer') %>
 
     
