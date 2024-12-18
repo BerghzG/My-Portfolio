@@ -58,10 +58,49 @@ const addAnimeTorecent = (newAnime) => {
     fs.writeFileSync(animePath, JSON.stringify(filteredAnimes, null, 2));
 };
 
-// Página inicial com "Animes Procurados Recentemente"
-app.get("/", (req, res) => {
+let cachedNews = [];  // Inicializa como array vazio por padrão
+let lastFetchTime = null;
+
+const fetchNews = async () => {
+    try {
+        // Corrigindo a URL para usar o operador "OR" com o pipe "|"
+        const url = "https://api.thenewsapi.com/v1/news/all?api_token=YGCvTUftDbGTtToHhUGIVx1wKPVFobPMTwvvhNKZ&search=anime%20adaptations%20|%20anime%20studio%20|%20anime%20new%20season%20|%20anime%20sales%20|%20anime%20delays%20|%20anime%20films%20|%20anime%20events%20|%20anime%20controversies%20|%20anime%20collaborations%20|%20anime%20awards%20|%20anime%20streaming";
+        
+        const response = await axios.get(url);
+        console.log(response.data);  // Apenas para depuração
+
+        if (response.data && response.data.data) {
+            const englishNews = response.data.data.filter(news => news.language === 'en');
+
+            if (englishNews.length > 0) {
+                cachedNews = englishNews;
+                lastFetchTime = Date.now();
+                console.log("Notícias encontradas:", cachedNews);
+            } else {
+                cachedNews = [];
+            }
+        } else {
+            cachedNews = [];
+        }
+    } catch (error) {
+        console.log("Erro ao buscar notícias:", error);
+        cachedNews = [];
+    }
+};
+
+
+// Página inicial
+app.get("/", async (req, res) => {
     const recentSearches = getRecentSearches();
-    res.render("index.ejs", { recentSearches });
+    const oneDay = 24 * 60 * 60 * 1000; // 24 horas
+
+    // Verificar se as notícias precisam ser recarregadas (mais de um dia)
+    if (!cachedNews || (Date.now() - lastFetchTime > oneDay)) {
+        await fetchNews();  // Recarregar as notícias se necessário
+    }
+
+    // Passar os dados para o template
+    res.render("index.ejs", { recentSearches, noticias: cachedNews });
 });
 
 app.get('/watched', (req, res) => {
@@ -83,17 +122,42 @@ app.get("/details/:title", async (req, res) => {
     const animeTitle = decodeURIComponent(req.params.title);
     console.log("Título decodificado:", animeTitle);
 
+    // Obtenha todos os animes recentes do animes.json
     const animes = getRecentSearches();
-    const animeFromJson = animes.find(a => a.title === animeTitle);
-    console.log("Dados do JSON correspondente:", animeFromJson);
+    let animeFromJson = animes.find(a => a.title === animeTitle);
 
-    // Carregar o JSON watched.json para verificar o estado de "favorito"
+    if (!animeFromJson) {
+        console.log("Anime não encontrado no animes.json.");
+    } else {
+        console.log("Dados do anime encontrado no animes.json:", animeFromJson);
+    }
+
+    // Carregar o JSON watched.json para verificar o estado de "favorito" e "status"
     const watchedPath = path.join(__dirname, '/JSON/watched.json');
     const watched = fs.existsSync(watchedPath) ? JSON.parse(fs.readFileSync(watchedPath)) : [];
 
-    const favoriteAnime = watched.find(a => Number(a.id) === Number(animeFromJson.id)); // Converte ambos para número
-    const isFavorite = favoriteAnime ? favoriteAnime.favorite === true : false; 
-    
+    // Se não encontrou no animes.json, tente buscar no watched.json
+    let favoriteAnime;
+    if (animeFromJson) {
+        // Buscar no watched.json usando o id do anime do animes.json
+        favoriteAnime = watched.find(a => Number(a.id) === Number(animeFromJson.id));
+    }
+
+    // Caso o anime não tenha sido encontrado em animes.json, busque no watched.json
+    if (!animeFromJson && watched.length > 0) {
+        favoriteAnime = watched.find(a => a.title === animeTitle); // Buscando pelo título
+        if (favoriteAnime) {
+            console.log("Anime encontrado no watched.json:", favoriteAnime);
+            animeFromJson = favoriteAnime; // Se encontrado, ele é tratado como anime válido
+        }
+    }
+
+    if (!animeFromJson) {
+        return res.status(404).send("Anime não encontrado no histórico.");
+    }
+
+    // Verifique o estado de "favorito" e "status"
+    const isFavorite = favoriteAnime ? favoriteAnime.favorite === true : false;
     const status = favoriteAnime ? favoriteAnime.status : undefined;
 
     console.log("Estado favorito para o anime:", {
@@ -101,10 +165,6 @@ app.get("/details/:title", async (req, res) => {
         title: animeFromJson.title,
         isFavorite,
     });
-
-    if (!animeFromJson) {
-        return res.status(404).send("Anime não encontrado no histórico.");
-    }
 
     try {
         const query = `
@@ -141,27 +201,27 @@ app.get("/details/:title", async (req, res) => {
                         }
                     }
                 }
-                    characters {
-                        edges {
-                            node {
-                                name {
-                                    full
-                                }
-                                image {
-                                    large
-                                }
+                characters {
+                    edges {
+                        node {
+                            name {
+                                full
                             }
-                            voiceActors {
-                                name {
-                                    full
-                                }
-                                image {
-                                    large
-                                }
-                                languageV2
+                            image {
+                                large
                             }
                         }
+                        voiceActors {
+                            name {
+                                full
+                            }
+                            image {
+                                large
+                            }
+                            languageV2
+                        }
                     }
+                }
                 recommendations {
                     edges {
                         node {
@@ -204,7 +264,7 @@ app.get("/details/:title", async (req, res) => {
         }
 
         const detailsResult = {
-            id: animeDetails.id, // Certifique-se de que o ID está aqui
+            id: animeDetails.id,
             favorite: isFavorite, // Aqui você passa o valor do favorito
             anilist: animeDetails.id,
             title: animeDetails.title.romaji || animeDetails.title.native,
@@ -240,7 +300,7 @@ app.get("/details/:title", async (req, res) => {
                 description: edge.node.mediaRecommendation.description,
             })),
             startDate: animeDetails.startDate.year,
-        };        
+        };
 
         res.render("details", { anime: detailsResult, recommendations: animeDetails.recommendations.edges, status: status });
 
@@ -283,6 +343,24 @@ app.post('/add-to-watched', (req, res) => {
     // Responder com uma mensagem de sucesso
     res.status(200).json({ message: 'Anime atualizado com sucesso no histórico!' });
 });
+
+app.delete('/delete-watched/:id', (req, res) => {
+    const animeId = req.params.id;
+    const watchedPath = path.join(__dirname, '/JSON/watched.json');
+
+    // Ler o arquivo watched.json
+    const watched = fs.existsSync(watchedPath) ? JSON.parse(fs.readFileSync(watchedPath)) : [];
+
+    // Filtrar os animes que não correspondem ao ID
+    const updatedWatched = watched.filter(anime => anime.id !== animeId);
+
+    // Salvar no arquivo JSON
+    fs.writeFileSync(watchedPath, JSON.stringify(updatedWatched, null, 2));
+
+    // Responder ao cliente
+    res.status(200).json({ message: 'Anime deletado com sucesso!' });
+});
+
 
 app.get("/add-recommendation/:id/:title", async (req, res) => {
     const { id, title } = req.params;

@@ -314,7 +314,67 @@ label {
     color: rgb(22, 8, 8);
 }
 
-
+/* Contêiner principal */
+.noticia-item {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os elementos se empilhem no mobile */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd; /* Linha separadora entre as notícias */
+    padding-bottom: 15px;
+  }
+  
+  /* A imagem fica à esquerda, e o texto à direita */
+  .noticia-imagem {
+    flex: 1 1 200px; /* A imagem ocupa uma largura mínima de 200px, mas pode crescer */
+    padding-right: 15px;
+  }
+  
+  .noticia-img {
+    width: 100%; /* A imagem vai ocupar toda a largura do contêiner */
+    height: auto;
+    border-radius: 8px; /* Bordas arredondadas na imagem */
+  }
+  
+  /* O texto fica à direita da imagem */
+  .noticia-texto {
+    flex: 2 1 60%; /* O texto ocupa mais espaço que a imagem */
+  }
+  
+  .noticia-texto h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  
+  .noticia-texto p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Estilo para a versão mobile */
+  @media (max-width: 768px) {
+    .noticia-item {
+      flex-direction: column; /* No mobile, a imagem e o texto ficam empilhados */
+      align-items: center;
+    }
+  
+    .noticia-imagem {
+      padding-right: 0; /* Remove o espaço direito no mobile */
+      margin-bottom: 15px; /* Deixa um espaço entre a imagem e o texto */
+    }
+  
+    .noticia-texto {
+      text-align: center; /* Deixa o texto centralizado no mobile */
+    }
+  
+    .noticia-texto h3 {
+      font-size: 1.2rem; /* Ajusta o tamanho da fonte para o mobile */
+    }
+  
+    .noticia-texto p {
+      font-size: 0.9rem; /* Ajusta o tamanho da fonte para o mobile */
+    }
+  }
+  
 
 /* Search.ejs */
 
@@ -498,6 +558,11 @@ a.vejaso:hover {
     align-items: center; /* Centraliza os elementos no eixo horizontal */
     text-align: center; /* Aplica alinhamento interno */
     padding-top: 30px;
+}
+
+.funt {
+    font-variant: small-caps;
+    font-family: "Libre Baskervile", sans-serif;
 }
 
 .capa img {
@@ -1036,4 +1101,47 @@ h3.guri {
 .recommendation-item:hover {
     transform: scale(1.021); /* Aumenta a imagem em 5% */
 }
+
+
+/* Watched.ejs */
+
+.vaida {
+    padding: 10px;
+}
+
+.butFit {
+    padding: 10px 10px 15px;
+}
+
+.butFit button {
+    border-radius: 30px;
+    padding: 5px;
+    border: 2px solid #333333;
+    display: inline-flex;
+    align-items: center;
+    margin: 3px;
+}
+
+.butFit button:hover {
+    background-color: #d1d1d1;
+}
+
+.num {
+    background-color: #585858;
+    border-radius: 50%; /* Garante que o círculo seja perfeito */
+    padding: 5px; /* Espaço interno */
+    min-width: 20px; /* Largura mínima do círculo */
+    max-width: 50px; /* Largura máxima do círculo */
+    height: 20px; /* Altura fixa para garantir a forma arredondada */
+    display: inline-flex;
+    justify-content: center; /* Para centralizar o conteúdo horizontalmente */
+    align-items: center; /* Para centralizar o conteúdo verticalmente */
+    color: white;
+    font-size: 12px; /* Tamanho da fonte para se ajustar ao círculo */
+    margin-left: 5px;
+    text-align: center;
+    line-height: 1; /* Garante que o texto fique centralizado */
+    width: auto; /* Permite que o círculo estique na horizontal */
+}
+
 

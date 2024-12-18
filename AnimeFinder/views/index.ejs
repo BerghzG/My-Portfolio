@@ -118,9 +118,29 @@
             </div>
         </div>
 
-        <%- include('partials/footer') %>
     <% } %>    
+
+    <% if (noticias && noticias.length > 0) { %>
+        <div>
+            <h2>News</h2>
+            <% noticias.forEach(function(noticia) { %>
+                <div class="noticia-item">
+                    <div class="noticia-imagem">
+                        <img src="<%= noticia.image_url %>" alt="<%= noticia.title %>" class="noticia-img">
+                    </div>
+                    <div class="noticia-texto">
+                        <h3><a href="<%= noticia.url %>"><%= noticia.title %></a></h3>
+                        <p><%= noticia.description %></p>
+                        <p>Por: <%= noticia.source %></p>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>Nenhuma notícia encontrada.</p>
+    <% } %>         
     
+    <%- include('partials/footer') %>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

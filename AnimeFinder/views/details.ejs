@@ -55,12 +55,12 @@
             <div class="col-md-6 capa">
                 <div class="imgalah">
                     <img src="<%= anime.coverImage %>" class="img-fluid" alt="<%= anime.title %>">
-                    <h2 class="my-3"><%= anime.title %></h2>
+                    <h2 style="text-transform: uppercase; font-variant: normal; padding: 5px;" class="my-3 funt"><%= anime.title %></h2>
                 </div>
 
 
                 <div class="d-block">
-                    <h4>Genres</h4>
+                    <h4 class="funt">Genres</h4>
                     <% if (anime.genres && anime.genres.length > 0) { %>
                         <% anime.genres.forEach(function(genre) { %>
                             <span class="genre-item"><%= genre %></span>
@@ -108,12 +108,12 @@
             <div class="col-md-6 order-lg-1 order-md-2 order-1 des">
 
                 <div class="descrip">
-                    <h4>Synopsis</h4>
+                    <h4 class="funt">Synopsis</h4>
                     <p class="detailsp"><%= anime.description ? anime.description.replace(/(<([^>]+)>)/gi, "") : "Synopsis not available" %></p>
                 
                 </div>
                 <div class="descrip">
-                    <h4>Tags</h4>
+                    <h4 class="funt">Tags</h4>
                     <% if (anime.tags && anime.tags.length > 0) { %>
                         <% anime.tags.forEach(function(tag) { %>
                             <% if (typeof tag === 'object') { %>
@@ -167,7 +167,7 @@
 
         <div class="carac">
             <% if (anime.characters && anime.characters.length > 0) { %>
-                <h4>Characters</h4>
+                <h4 class="funt">Characters</h4>
                 <div class="characters-container">
                     <% anime.characters.forEach(function(character) { %>
                         <div class="character-item">
@@ -203,7 +203,7 @@
         <div>
             <% if (anime.staff) { %>
                 <% if (anime.staff && anime.staff.length > 0) { %>
-                    <h4>Staff</h4>
+                    <h4 class="funt">Staff</h4>
                     <ul class="staff-list">
                         <% anime.staff.forEach(function(staffs) { %>
                             <li class="staff-item">
@@ -223,7 +223,7 @@
 
     <% if (anime.recommendations && anime.recommendations.length > 0) { %>
         <div class="eutotentando">
-            <h4>Recommended Animes</h4>
+            <h4 class="funt">Recommended Animes</h4>
             <div class="wrapper">
                 <div id="carouselExamplecontrols" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
