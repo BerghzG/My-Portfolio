@@ -14,6 +14,7 @@
         margin: 0;
         display: flex;
         flex-direction: column;
+        background-color: #f9f9f9;
     }
 
     .container-fluid {
@@ -34,31 +35,84 @@
         display: flex;
         flex-wrap: wrap;
         gap: 16px;
-        justify-content: flex-start; /* Pode ajustar conforme a necessidade */
+        justify-content: flex-start; /* Mantém o layout em linha no desktop */
     }
 
     .card {
-        display: flex;
-        flex-direction: column; /* Organiza os elementos em coluna */
-        align-items: center; /* Centraliza os elementos horizontalmente */
-        width: 200px; /* Garante a largura consistente */
+        display: flex; /* Flexbox no card inteiro */
+        flex-direction: column; /* Coloca os itens (imagem, título, botão) em coluna */
+        align-items: flex-start; /* Alinha os itens à esquerda do card */
+        width: 200px;
+        border: none;
+        position: relative; /* Importante para garantir o posicionamento correto do botão */
+        background-color: #f9f9f9;
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            width: 175px; /* Ajuste para telas menores */
+        }
+
+        .card img {
+            height: 275px;
+            width: 175px; /* Ajusta a imagem para o tamanho do card */
+        }
+
+        .card-container {
+            gap: 18px; /* Espaço entre os cards */
+
+            justify-content: center;
+            margin-right: 30px;
+        }
     }
 
     .card img {
         height: 290px;
         width: 200px;
-        object-fit: cover; /* Garante proporção correta */
-        border-radius: 8px; /* Deixa as bordas arredondadas */
+        object-fit: cover;
+        border-radius: 8px;
+        position: relative; /* Posicionamento relativo para garantir a sobreposição do botão */
+        transition: opacity 0.3s ease;
+    }
+
+    .card img:hover {
+        opacity: 0.7;
+    }
+
+    .card .image-container {
+        display: flex;
+        justify-content: space-between; /* Alinha a imagem e o botão */
+        align-items: flex-start;
+        width: 100%;
+        position: relative; /* Permite que o botão se sobreponha */
     }
 
     .card .delete-btn {
-        margin-top: 8px;
-        width: 100%; /* O botão ocupa toda a largura do card */
-        text-align: center;
+        border: none;
+        background-color: rgb(248, 107, 107);
+        padding: 4px 7px;
+        border-radius: 0 0 10px 10px;
+        position: absolute;
+        top: 5px; /* Fixa o botão no topo da imagem */
+        right: 5px; /* Garante que o botão fique no canto superior direito */
+        z-index: 1; /* Garante que o botão fique sobre a imagem */
+    }
+
+    .delete-btn:hover {
+        background-color: rgb(216, 17, 17);
+        color: aliceblue;
+    }
+
+    .card .anime-title {
+        padding: 10px;
+        margin-left: 10px;
+        text-align: left;
+        flex-grow: 1; /* Faz o nome do anime ocupar o espaço restante */
     }
 
     h1 {
         font-family: "Oswald", sans-serif;
+        color: rgb(29, 10, 10);
     }
 
 
@@ -126,8 +180,11 @@
                             <a href="/details/<%= encodeURIComponent(anime.title) %>">
                                 <img src="<%= anime.coverImage %>" class="card-img-top" alt="<%= anime.title %>">
                             </a>
-                            <button class="delete-btn" onclick="deleteAnime('<%= anime.id %>')">Deletar</button>
-                        </div>
+                            <div class="card-content" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                <div class="anime-title"><%= anime.title %></div>
+                                <button class="delete-btn" onclick="deleteAnime('<%= anime.id %>')"><i class="bi bi-trash3"></i></button>
+                            </div>
+                        </div>                        
                     <% }) %>
                 </div>               
             </div>          
@@ -190,7 +247,7 @@
     document.addEventListener('DOMContentLoaded', updateCounters);
 
     function deleteAnime(animeId) {
-        if (!confirm("Tem certeza de que deseja deletar este anime?")) return;
+        if (!confirm("Sure you want to delete this anime?")) return;
 
         fetch(`/delete-watched/${animeId}`, { method: 'DELETE' })
             .then(response => {
@@ -211,7 +268,7 @@
                         }
                     }
                 } else {
-                    console.error('Falha ao deletar o anime.');
+                    console.error('Failed to delete the anime.');
                 }
             })
             .catch(error => console.error('Erro:', error));

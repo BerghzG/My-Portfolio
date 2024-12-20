@@ -254,13 +254,13 @@ app.get("/details/:title", async (req, res) => {
 
         if (response.data.errors) {
             console.error("Erro na consulta GraphQL:", response.data.errors);
-            return res.status(500).send("Erro ao buscar anime.");
+            return res.status(500).send("Error fetching anime.");
         }
 
         const animeDetails = response.data.data.Media;
 
         if (!animeDetails || !animeDetails.id) {
-            return res.status(404).send("Anime não encontrado na API.");
+            return res.status(404).send("Anime not found in the API.");
         }
 
         const detailsResult = {
@@ -306,7 +306,7 @@ app.get("/details/:title", async (req, res) => {
 
     } catch (error) {
         console.error("Erro ao buscar detalhes do anime:", error.message);
-        res.status(500).send("Erro ao buscar anime.");
+        res.status(500).send("Error fetching anime.");
     }
 });
 
@@ -434,7 +434,7 @@ app.post("/search", upload.single("image"), async (req, res) => {
 
     // Se não houver nome de anime e arquivo de imagem, retorna erro
     if (!animeName && !req.file) {
-        return res.status(400).send("Por favor, envie uma imagem ou digite o nome do anime.");
+        return res.status(400).send("Please upload an image or type the name of the anime.");
     }
 
     // Verificar se a busca foi feita por imagem
@@ -446,7 +446,7 @@ app.post("/search", upload.single("image"), async (req, res) => {
     if (req.file) {
         const mimeType = req.file.mimetype;
         if (!mimeType.startsWith("image/") && mimeType !== "image/gif") {
-            return res.status(400).send("Apenas imagens e GIFs são permitidos.");
+            return res.status(400).send("Only images and GIFs are allowed.");
         }
 
         try {
@@ -467,7 +467,7 @@ app.post("/search", upload.single("image"), async (req, res) => {
             results = traceResponse.data.result;
 
             if (!results || results.length === 0) {
-                return res.status(404).send("Nenhum anime encontrado para a imagem fornecida.");
+                return res.status(404).send("No anime found for the provided image.");
             }
 
             // Ordenar os resultados pela maior similaridade
@@ -477,7 +477,7 @@ app.post("/search", upload.single("image"), async (req, res) => {
             const filteredResults = sortedResults.filter(result => result.similarity >= 0.75);
 
             if (filteredResults.length === 0) {
-                return res.status(404).send("Nenhum resultado relevante encontrado.");
+                return res.status(404).send("No relevant results found.");
             }
 
             const animeDetailsList = [];
@@ -789,7 +789,7 @@ if (animeName) {
         }        
     } catch (error) {
         console.error("Erro ao buscar anime por título:", error.message);
-        return res.status(500).send("Erro ao buscar anime.");
+        return res.status(500).send("Error fetching anime.");
     }
 }
 
