@@ -64,7 +64,7 @@ let lastFetchTime = null;
 const fetchNews = async () => {
     try {
         // Corrigindo a URL para usar o operador "OR" com o pipe "|"
-        const url = "https://api.thenewsapi.com/v1/news/all?api_token=YGCvTUftDbGTtToHhUGIVx1wKPVFobPMTwvvhNKZ&search=anime%20adaptations%20|%20anime%20studio%20|%20anime%20new%20season%20|%20anime%20sales%20|%20anime%20delays%20|%20anime%20films%20|%20anime%20events%20|%20anime%20controversies%20|%20anime%20collaborations%20|%20anime%20awards%20|%20anime%20streaming";
+        const url = "https://api.thenewsapi.com/v1/news/all?api_token=YGCvTUftDbGTtToHhUGIVx1wKPVFobPMTwvvhNKZ&search=anime%20adaptations%20|%20anime%20studio%20|%20anime%20new%20season%20|%20anime%20sales%20|%20anime%20delays%20|%20anime%20films%20|%20anime%20events%20|%20anime%20awards%20|%20anime%20collaborations%20|%20anime%20streaming";
         
         const response = await axios.get(url);
         console.log(response.data);  // Apenas para depuração

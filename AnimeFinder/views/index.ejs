@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnimeFinder</title>
 
+    <link rel="shortcut icon" href="/favicon_io/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="/favicon_io/site.webmanifest">
+
     <meta name="description" content="Discover details about your favorite animes with AnimeFinder. Complete information, trailers, and much more!">
     <meta name="author" content="Berghz G">
 
@@ -121,15 +127,18 @@
     <% } %>    
 
     <% if (noticias && noticias.length > 0) { %>
-        <div style="padding: 17px;">
-            <h2>News</h2>
+        <div style="padding: 20px;">
+            <h2 style="font-variant: small-caps; padding-bottom: 15px;">News</h2>
             <% noticias.forEach(function(noticia) { %>
                 <div class="noticia-item">
                     <div class="noticia-imagem">
-                        <img src="<%= noticia.image_url %>" alt="<%= noticia.title %>" class="noticia-img">
+                        <a href="<%= noticia.url %>" target="_blank">
+                            <img src="<%= noticia.image_url %>" alt="<%= noticia.title %>" class="noticia-img">
+                        </a>
+                        
                     </div>
                     <div class="noticia-texto">
-                        <h3><a href="<%= noticia.url %>"><%= noticia.title %></a></h3>
+                        <h3 style="color: rgb(22, 8, 8);"><a href="<%= noticia.url %>" class="custom-link" target="_blank"><%= noticia.title %></a></h3>
                         <p><%= noticia.description %></p>
                         <p>Por: <%= noticia.source %></p>
                     </div>

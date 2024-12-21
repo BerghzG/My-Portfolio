@@ -321,60 +321,70 @@ label {
     margin-bottom: 20px;
     border-bottom: 1px solid #ddd; /* Linha separadora entre as notícias */
     padding-bottom: 15px;
-  }
-  
+}
+
   /* A imagem fica à esquerda, e o texto à direita */
-  .noticia-imagem {
+.noticia-imagem {
     flex: 1 1 200px; /* A imagem ocupa uma largura mínima de 200px, mas pode crescer */
     padding-right: 15px;
-  }
-  
-  .noticia-img {
+}
+
+.noticia-img {
     width: 100%; /* A imagem vai ocupar toda a largura do contêiner */
     height: auto;
     border-radius: 8px; /* Bordas arredondadas na imagem */
-  }
-  
+}
+
+.custom-link {
+    color: #0475ec; /* Cor azul, você pode mudar para a cor que preferir */
+    text-decoration: none; /* Remove o sublinhado */
+    font-weight: bold; /* Torna o texto em negrito */
+    transition: color 0.3s ease; /* Transição suave de cor */
+}
+
+.custom-link:hover {
+    color: #0056b3; /* Cor ao passar o mouse, você pode mudar para outra */
+    text-decoration: underline; /* Adiciona o sublinhado ao passar o mouse */
+}
   /* O texto fica à direita da imagem */
-  .noticia-texto {
+.noticia-texto {
     flex: 2 1 60%; /* O texto ocupa mais espaço que a imagem */
-  }
-  
-  .noticia-texto h3 {
+}
+
+.noticia-texto h3 {
     font-size: 1.4rem;
     font-weight: bold;
-  }
-  
-  .noticia-texto p {
+}
+
+.noticia-texto p {
     font-size: 1rem;
     color: #555;
-  }
-  
+}
+
   /* Estilo para a versão mobile */
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
     .noticia-item {
-      flex-direction: column; /* No mobile, a imagem e o texto ficam empilhados */
-      align-items: center;
+        flex-direction: column; /* No mobile, a imagem e o texto ficam empilhados */
+        align-items: center;
     }
-  
+
     .noticia-imagem {
-      padding-right: 0; /* Remove o espaço direito no mobile */
-      margin-bottom: 15px; /* Deixa um espaço entre a imagem e o texto */
+        padding-right: 0; /* Remove o espaço direito no mobile */
+        margin-bottom: 15px; /* Deixa um espaço entre a imagem e o texto */
     }
-  
+
     .noticia-texto {
-      text-align: center; /* Deixa o texto centralizado no mobile */
+        text-align: center; /* Deixa o texto centralizado no mobile */
     }
-  
+
     .noticia-texto h3 {
-      font-size: 1.2rem; /* Ajusta o tamanho da fonte para o mobile */
+        font-size: 1.2rem; /* Ajusta o tamanho da fonte para o mobile */
     }
-  
+
     .noticia-texto p {
-      font-size: 0.9rem; /* Ajusta o tamanho da fonte para o mobile */
+        font-size: 0.9rem; /* Ajusta o tamanho da fonte para o mobile */
     }
-  }
-  
+}
 
 /* Search.ejs */
 
