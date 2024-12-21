@@ -132,13 +132,13 @@
             <% noticias.forEach(function(noticia) { %>
                 <div class="noticia-item">
                     <div class="noticia-imagem">
-                        <a href="<%= noticia.url %>" target="_blank">
+                        <a href="<%= noticia.url %>" target="_blank" rel="noopener noreferrer">
                             <img src="<%= noticia.image_url %>" alt="<%= noticia.title %>" class="noticia-img">
                         </a>
                         
                     </div>
                     <div class="noticia-texto">
-                        <h3 style="color: rgb(22, 8, 8);"><a href="<%= noticia.url %>" class="custom-link" target="_blank"><%= noticia.title %></a></h3>
+                        <h3 style="color: rgb(22, 8, 8);"><a href="<%= noticia.url %>" class="custom-link" target="_blank" rel="noopener noreferrer"><%= noticia.title %></a></h3>
                         <p><%= noticia.description %></p>
                         <p>Por: <%= noticia.source %></p>
                     </div>
