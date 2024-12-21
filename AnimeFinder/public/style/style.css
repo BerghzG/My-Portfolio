@@ -912,12 +912,13 @@ h3.guri {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center; /* Alinha os itens ao centro */
+    margin-top: 19px;
 }
 
 /* Cada item de personagem */
 .character-item {
     border: 1px solid #ddd;
-    padding: 15px;
+    padding: 17px;
     width: 220px;
     text-align: center;
     position: relative;
