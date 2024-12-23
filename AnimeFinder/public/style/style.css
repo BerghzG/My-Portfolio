@@ -80,6 +80,25 @@ a.nav-link {
     z-index: 1; /* A imagem fica acima do fundo */
 }
 
+@media (max-width: 768px) {
+    .image-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;  /* Centraliza horizontalmente */
+        align-items: flex-end;    /* Alinha a imagem ao fundo */
+    }
+
+    .image-container img {
+        object-fit: cover;       /* Mantém a imagem cobrindo a área, sem distorcer */
+        width: 100%;             /* Faz a imagem ocupar 100% da largura */
+        height: auto;            /* Ajusta a altura de forma proporcional */
+        max-height: 80%;         /* Limita a altura da imagem para não ultrapassar muito */
+        display: block;          /* Garante que o elemento seja tratado como bloco */
+    }
+}
+
 .back {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 20px 30px;
@@ -106,8 +125,6 @@ a.nav-link {
     color: white; /* Cor do texto ajustada para branco */
     z-index: 2; /* Texto acima do fundo */
 }
-
-
 
 /* Ajuste de largura do formulário e espaçamento dos elementos */
 .text-overlay.d-none.d-md-flex form {
@@ -210,22 +227,12 @@ label {
     display: block;
 }
 
-/* Estilos para a imagem de fundo */
-.image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    z-index: 1; /* A imagem fica atrás do fundo escuro */
-}
-
 /* Ajuste no layout mobile */
 @media (max-width: 768px) {
     .text-overlay.d-block.d-md-none {
         top: 40%;
     }
 }
-
 
 /* Carrosel de recentes no index*/
 .carousel-caption {
