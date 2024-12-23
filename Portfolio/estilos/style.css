@@ -278,7 +278,7 @@ h4 {
    align-items: stretch; /* Garante que todas as colunas tenham a mesma altura */
 }
 
-.card {
+.pro {
    display: flex;
    flex-direction: column;
    padding: 15px;
