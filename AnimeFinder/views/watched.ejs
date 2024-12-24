@@ -116,7 +116,7 @@
     .card .anime-title {
         padding: 10px;
         margin-left: 10px;
-        text-align: left;
+        text-align: center;
         flex-grow: 1; /* Faz o nome do anime ocupar o espaço restante */
     }
 
@@ -125,25 +125,6 @@
         color: rgb(29, 10, 10);
     }
 
-
-    /*  @media (max-width: 991px) {
-    li {
-        color: rgb(255, 255, 255);
-        background-color: rgb(240, 186, 186);
-    }
-
-    a.nav-link {
-        font-weight: bold;
-        color: rgb(34, 33, 33);
-        padding: 10px;
-        display: block;
-    }
-
-    
-    li:not(:last-child) a.nav-link {
-        border-bottom: 1px solid #ccc;
-    } 
-} */
 </style>
 <body>
     <div class="container-fluid">
@@ -171,7 +152,7 @@
                 </div>
             </nav>
         </div>
-    
+        <% console.log(watchedAnimes); %> <!-- Verifique se os dados estão sendo passados corretamente -->
         <% if (watchedAnimes && watchedAnimes.length > 0) { %>
             <div class="vaida">
                 <h1>My List</h1>
@@ -182,8 +163,7 @@
                     <button onclick="filterAnimes('Finished')">Finished <span class="num" id="finished-count">0</span></button>
                     <button onclick="filterAnimes('Favorite')">Favorites <span class="num" id="favorite-count">0</span></button>
                 </div>    
-            
-            
+        
                 <div class="card-container">
                     <% watchedAnimes.forEach((anime) => { %>
                         <div class="card" data-id="<%= anime.id %>" data-status="<%= anime.status %>" data-favorite="<%= anime.favorite %>">
@@ -201,9 +181,8 @@
         <% } else { %>
             <div class="text-center mt-5">
                 <img class="img-fluid" src="/images/Nothing_Here.png" alt="Nothing here yet">
-            </div>
-            
-        <% } %>
+            </div>   
+        <% } %>        
     </div>
     <%- include('partials/footer') %>
 </body>
@@ -256,7 +235,6 @@
             }, 0);
         }
     }
-
 
     // Atualiza os contadores na carga inicial da página
     document.addEventListener('DOMContentLoaded', updateCounters);

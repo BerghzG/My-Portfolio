@@ -47,8 +47,8 @@
                         <a class="nav-link" href="https://berghzg.com">About</a> 
                     </li> 
                     <li class="nav-item"> 
-                        <a class="nav-link" href="/watched">Watched</a> 
-                    </li> 
+                        <button class="nav-link btn" onclick="viewWatched()">Watched</button>
+                    </li>
                     <li class="nav-item"> 
                         <a class="nav-link" href="/search">Find</a> 
                     </li> 
@@ -68,7 +68,6 @@
                     <h2 style="text-transform: uppercase; font-variant: normal; padding: 5px;" class="my-3 funt"><%= anime.title %></h2>
                 </div>
 
-
                 <div class="d-block">
                     <h4 class="funt">Genres</h4>
                     <% if (anime.genres && anime.genres.length > 0) { %>
@@ -86,6 +85,7 @@
                     <input type="hidden" name="id" value="<%= anime.id %>">
                     <input type="hidden" name="title" value="<%= anime.title %>">
                     <input type="hidden" name="coverImage" value="<%= anime.coverImage %>">
+                    <input type="hidden" name="status" value="<%= anime.status || '' %>"> <!-- Novo campo escondido para status -->
                 
                     <div class="butoesDetails">
                         <div class="btn-group">
@@ -95,7 +95,7 @@
                             <ul class="dropdown-menu" aria-labelledby="downMenu">
                                 <li><a class="dropdown-item <% if (status === 'Watching') { %>bg-warning text-dark<% } %>" href="#" onclick="updateWatched('Watching')">Watching</a></li>
                                 <li><a class="dropdown-item <% if (status === 'Dropped') { %>bg-danger text-white<% } %>" href="#" onclick="updateWatched('Dropped')">Dropped</a></li>
-                                <li><a class="dropdown-item <% if (status === 'Finished') { %>bg-success text-white<% } %>"" href="#" onclick="updateWatched('Finished')">Finished</a></li>
+                                <li><a class="dropdown-item <% if (status === 'Finished') { %>bg-success text-white<% } %>" href="#" onclick="updateWatched('Finished')">Finished</a></li>
                             </ul>
                         </div>
                 
@@ -113,7 +113,7 @@
                             </label>
                         </div>                        
                     </div>
-                </form>                
+                </form>                           
             </div>
             <div class="col-md-6 order-lg-1 order-md-2 order-1 des">
 
@@ -359,8 +359,77 @@
 
         console.log("Anime Detalhado:", animeDetails);
         console.log("Recomendações:", animeDetails.recommendations ? animeDetails.recommendations.edges : []);
-    </script>
+
+        function generateUserId() { 
+            return 'user-' + Math.random().toString(36).substring(2, 15) + '-' + Math.random().toString(36).substring(2, 15); 
+        } 
+        
+        function getUserId() { 
+            let userId = localStorage.getItem('userId');
+            if (!userId) { 
+                userId = generateUserId();
+                // Gera um novo userId 
+                localStorage.setItem('userId', userId); // Armazena no localStorage 
+            }
+
+            return userId; 
+        } 
+        
+        // Obtém o 
+        const userId = getUserId(); 
+        
+        // Função para redirecionar para a rota /watched com o userId 
+        function viewWatched() {
+            const userId = getUserId();  // Obtém o userId dentro da função
+            window.location.href = '/watched?userId=' + userId; 
+        }
+
+        // Função para adicionar anime ao "watched"
+        function addToWatched(anime) {
+            const userId = getUserId(); // Obtém o userId do localStorage
+            fetch('/add-to-watched', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...anime, userId }), // Envia o anime com o userId
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Erro:', error));
+        }
     
+        // Função para atualizar o status (chamada quando o usuário clica em "Watching", "Dropped", ou "Finished")
+        function updateWatched(status) {
+            const anime = {
+                id: '<%= anime.id %>',
+                title: '<%= anime.title %>',
+                coverImage: '<%= anime.coverImage %>',
+                status: status,  // Atualiza o status conforme a escolha do usuário
+                favorite: document.getElementById('heartCheckbox').checked // Pega o estado do checkbox "favorito"
+            };
+    
+            // Adiciona o anime ao "watched"
+            addToWatched(anime);
+    
+            // Atualiza o formulário com o novo status
+            document.querySelector('#statusForm input[name="status"]').value = status;
+        }
+    
+        // Função para alternar o status de "favorito" (checkbox)
+        function toggleFavorite() {
+            const anime = {
+                id: '<%= anime.id %>',
+                title: '<%= anime.title %>',
+                coverImage: '<%= anime.coverImage %>',
+                status: document.querySelector('#statusForm input[name="status"]').value,  // Usar o status atual
+                favorite: document.getElementById('heartCheckbox').checked
+            };
+    
+            // Adiciona o anime ao "watched"
+            addToWatched(anime);
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

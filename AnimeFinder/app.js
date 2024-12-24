@@ -88,7 +88,6 @@ const fetchNews = async () => {
     }
 };
 
-
 // Página inicial
 app.get("/", async (req, res) => {
     const recentSearches = getRecentSearches();
@@ -103,52 +102,42 @@ app.get("/", async (req, res) => {
     res.render("index.ejs", { recentSearches, noticias: cachedNews });
 });
 
-app.get('/watched', (req, res) => {
-    const watchedPath = path.join(__dirname, '/JSON/watched.json');
-    
-    // Ler o arquivo watched.json
-    const watched = fs.existsSync(watchedPath) ? JSON.parse(fs.readFileSync(watchedPath)) : [];
-
-    // Passar os dados para a view
-    res.render('watched', { watchedAnimes: watched });
-});
-
 app.get("/search", (req, res) => {
     const searchType = 'text';  // Ou 'image', dependendo da lógica
     res.render("search", { mainResult: null, otherResults: [], searchType })   
 })
 
 app.get("/details/:title", async (req, res) => {
-    const animeTitle = decodeURIComponent(req.params.title);
+    const animeTitle = decodeURIComponent(req.params.title);  // Obtém o título do anime da URL
     console.log("Título decodificado:", animeTitle);
 
-    // Obtenha todos os animes recentes do animes.json
+    // Obtenha o userId do localStorage ou qualquer outra lógica
+    const userId = req.query.userId || '';  // Aqui, o userId pode vir da query string se necessário
+
+    console.log("UserId recebido na rota:", userId);
+
+    // Obtenha todos os animes recentes
     const animes = getRecentSearches();
     let animeFromJson = animes.find(a => a.title === animeTitle);
 
     if (!animeFromJson) {
         console.log("Anime não encontrado no animes.json.");
-    } else {
-        console.log("Dados do anime encontrado no animes.json:", animeFromJson);
     }
 
-    // Carregar o JSON watched.json para verificar o estado de "favorito" e "status"
-    const watchedPath = path.join(__dirname, '/JSON/watched.json');
+    // Carregar o JSON específico do usuário (por userId) baseado no nome do arquivo
+    const watchedPath = path.join(__dirname, `/JSON/${userId}-watched.json`);
     const watched = fs.existsSync(watchedPath) ? JSON.parse(fs.readFileSync(watchedPath)) : [];
 
-    // Se não encontrou no animes.json, tente buscar no watched.json
+    // Caso o anime não tenha sido encontrado, busque no histórico
     let favoriteAnime;
     if (animeFromJson) {
-        // Buscar no watched.json usando o id do anime do animes.json
-        favoriteAnime = watched.find(a => Number(a.id) === Number(animeFromJson.id));
+        favoriteAnime = watched.find(a => a.id === animeFromJson.id);
     }
 
-    // Caso o anime não tenha sido encontrado em animes.json, busque no watched.json
     if (!animeFromJson && watched.length > 0) {
-        favoriteAnime = watched.find(a => a.title === animeTitle); // Buscando pelo título
+        favoriteAnime = watched.find(a => a.title === animeTitle);
         if (favoriteAnime) {
-            console.log("Anime encontrado no watched.json:", favoriteAnime);
-            animeFromJson = favoriteAnime; // Se encontrado, ele é tratado como anime válido
+            animeFromJson = favoriteAnime;
         }
     }
 
@@ -310,57 +299,71 @@ app.get("/details/:title", async (req, res) => {
     }
 });
 
-app.post('/add-to-watched', (req, res) => {
-    const { id, title, coverImage, status, favorite } = req.body;
-    const watchedPath = path.join(__dirname, '/JSON/watched.json');
+// Função para obter o caminho do arquivo JSON do usuário
+function getUserWatchedPath(userId) {
+    return path.join(__dirname, `/JSON/${userId}-watched.json`);
+}
 
-    // Ler o arquivo watched.json
+app.get('/watched', (req, res) => {
+    const userId = req.query.userId; // Obtém o userId da query string
+    if (!userId) {
+        return res.status(400).send('User ID is required');
+    }
+    
+    const watchedPath = getUserWatchedPath(userId);
+
+    // Ler o arquivo watched.json específico do usuário
     const watched = fs.existsSync(watchedPath) ? JSON.parse(fs.readFileSync(watchedPath)) : [];
 
-    // Verificar se o anime já existe
-    const existingAnime = watched.find(anime => anime.id === id);
+    // Passar os dados para a view
+    res.render('watched', { watchedAnimes: watched });
+});
 
+// Rota para adicionar animes aos "watched" com userId no corpo da requisição
+app.post('/add-to-watched', (req, res) => {
+    const { id, title, coverImage, status, favorite, userId } = req.body;
+    const watchedPath = getUserWatchedPath(userId);
+
+    // Lê o arquivo watched.json do usuário
+    const watched = fs.existsSync(watchedPath) ? JSON.parse(fs.readFileSync(watchedPath)) : [];
+
+    // Verifica se o anime já está nos "watched"
+    const existingAnime = watched.find(anime => anime.id === id);
     if (existingAnime) {
-        // Atualiza apenas os campos enviados, preservando os outros
+        // Atualiza os campos existentes
         if (title) existingAnime.title = title;
         if (coverImage) existingAnime.coverImage = coverImage;
         if (status) existingAnime.status = status;
         if (favorite !== undefined) existingAnime.favorite = favorite === 'true' || favorite === true;
     } else {
-        // Adicionar novo anime
+        // Adiciona um novo anime
         watched.push({
             id,
             title,
             coverImage,
             status,
-            favorite: favorite === 'true' || favorite === true, // Converta para booleano
+            favorite: favorite === 'true' || favorite === true, // Converte para booleano
         });
     }
 
-    // Salvar no arquivo watched.json
+    // Salva no arquivo JSON específico do usuário
     fs.writeFileSync(watchedPath, JSON.stringify(watched, null, 2));
 
-    // Responder com uma mensagem de sucesso
+    // Responde com sucesso
     res.status(200).json({ message: 'Anime atualizado com sucesso no histórico!' });
 });
 
 app.delete('/delete-watched/:id', (req, res) => {
+    const userId = req.headers['userId'];
     const animeId = req.params.id;
-    const watchedPath = path.join(__dirname, '/JSON/watched.json');
 
-    // Ler o arquivo watched.json
+    const watchedPath = getUserWatchedPath(userId);
     const watched = fs.existsSync(watchedPath) ? JSON.parse(fs.readFileSync(watchedPath)) : [];
-
-    // Filtrar os animes que não correspondem ao ID
     const updatedWatched = watched.filter(anime => anime.id !== animeId);
 
-    // Salvar no arquivo JSON
     fs.writeFileSync(watchedPath, JSON.stringify(updatedWatched, null, 2));
-
-    // Responder ao cliente
     res.status(200).json({ message: 'Anime deletado com sucesso!' });
 });
-
 
 app.get("/add-recommendation/:id/:title", async (req, res) => {
     const { id, title } = req.params;

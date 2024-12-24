@@ -55,7 +55,7 @@
     margin-left: auto;
 }
 
-a.nav-link {
+a.nav-link, button.nav-link {
     color: rgb(238, 70, 70);
     font-weight: bold;
 }
@@ -82,9 +82,22 @@ a.nav-link {
 
 /* Ajuste no layout mobile */
 @media (max-width: 768px) {
+    .image-container {
+        width: 470px;
+    }
+
     .image-container img {
         width: 450px;
         margin: 10px; /* Remover a limitação de altura */
+    }
+}
+
+@media (max-width: 380px) {
+    .image-container img {
+        
+        transform: scale(0.95); 
+        margin-top: 45px; /* Reduz a imagem para 50% do seu tamanho original */
+        margin-left: -35px;
     }
 }
 
@@ -155,8 +168,6 @@ a.nav-link {
 }
 
 /* Responsividade para o formulário no mobile */
-
-
 /* Correção para garantir que as colunas não tenham margens indesejadas */
 .row.g-0 {
     margin-right: 0;
@@ -237,7 +248,6 @@ label {
 
 .carousel {
     overflow: hidden; /* Garante que o conteúdo do carrossel seja visível */
-    
 }
 
 #animeCarousel {
@@ -297,7 +307,6 @@ label {
 .botoespassa:hover {
     background-color: rgba(15, 4, 4, 0.85);
 }
-
 
 .h2index {
     padding-bottom: 5px;
@@ -420,7 +429,6 @@ label {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Opcional: leve brilho na borda */
 }
 
-
 #uploadLabel {
     display: flex;
     align-items: center; /* Centraliza o conteúdo do label */
@@ -503,7 +511,6 @@ label {
 
 }
 
-
 #imgOne {
     width: 100%;
     height: auto;
@@ -547,7 +554,6 @@ a.vejaso:hover {
     justify-content: center;
     align-items: center;
 }
-
 
 
 /* details.ejs */
@@ -714,7 +720,6 @@ a.vejaso:hover {
     }
 }
 
-
 .des {
     padding-top: 25px;
 }
@@ -872,7 +877,6 @@ a.vejaso:hover {
     }
 }
 
-
 /* Responsividade */
 @media (max-width: 768px) {
     .staff-item {
@@ -895,7 +899,6 @@ h3.guri {
     text-align: center;
     padding: 10px;
 }
-
 
 /* Contêiner para os personagens */
 .characters-container {
