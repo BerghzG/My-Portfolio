@@ -30,6 +30,8 @@
 
 9. <a href="">AnimeFinder: </a>AnimeFinder is an application that allows you to search for animes by text or image, offering detailed information such as synopsis, trailer, characters and voice actors. It also allows you to create personal lists categorized as watched, watching, dropped and favorites, stored in JSON files. In addition, the application displays updated news from the anime universe, obtained through The News API, updated every 24 hours.
 
+10.
+
  ## Contribution
  If any projects were inspired by tutorialos or other people's work, they will be properly credited here.
 
