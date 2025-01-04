@@ -1,0 +1,98 @@
+/* login sign */
+
+.image-container {
+    background-image: url('images/fundologin.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; 
+}
+
+.owner-img {
+    position: fixed;
+    bottom: 10px;
+    left: 10px; 
+    padding: 5px;
+    border-radius: 5px; 
+}
+
+.owner-img a, a.copy {
+    text-decoration: none;
+    color: white;
+}
+
+.coping {
+    position: absolute;
+    bottom: 17.5px; 
+    left: 75%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+a.copy:hover {
+    color: rgb(181, 189, 196);
+}
+
+@media (max-width: 768px) {
+    .image-container {
+        display: none;
+        color: white;
+    }
+
+    .coping {
+        left: 48%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .image-container {
+        display: flex !important;
+        width: 50% !important; 
+    }
+
+    .log {
+        display: flex !important;
+        flex-direction: column; 
+        width: 50% !important;
+    }
+
+    /* Ajustes adicionais para garantir que a altura do login/formulário seja dinâmica */
+    .log .w-100 {
+        max-width: 100% !important; 
+    }
+}
+
+.log {
+    background-color: rgb(5, 5, 5);
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img img {
+    width: 29vh;
+}
+
+h2 {
+    font-family: 'Raleway', sans-serif;
+    color: rgb(202, 215, 226) !important;
+}
+
+.atex {
+    color: rgb(227, 234, 241);
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1.5px solid blue;
+}
+
+
+.btn-primary {
+    margin-top: 7px;
+    width: 215px;
+    border-radius: 50px !important;
+}
