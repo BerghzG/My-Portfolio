@@ -1,9 +1,10 @@
-CREATE DATABASE bookstore;
+CREATE DATABASE book_mate;
 
-CREATE TABLE users(
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(40) NOT NULL,
-    password VARCHAR(8) NOT NULL,
+    name VARCHAR(255),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE books (
