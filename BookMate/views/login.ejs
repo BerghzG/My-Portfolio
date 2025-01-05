@@ -13,6 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <div id="preloader"></div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 col-lg-6  image-container d-none d-md-block">
@@ -121,6 +124,11 @@
             document.getElementById("signup-form").style.display = "none";
             document.getElementById("login-form").style.display = "block";
         });
+        
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function() {
+            loader.style.display = "none"
+        })
     </script>
 </body>
 </html>

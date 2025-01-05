@@ -55,7 +55,6 @@ a.copy:hover {
         width: 50% !important;
     }
 
-    /* Ajustes adicionais para garantir que a altura do login/formulário seja dinâmica */
     .log .w-100 {
         max-width: 100% !important; 
     }
@@ -90,9 +89,19 @@ input:focus, textarea:focus, select:focus {
     border: 1.5px solid blue;
 }
 
-
 .btn-primary {
     margin-top: 7px;
     width: 215px;
     border-radius: 50px !important;
+}
+
+/* index.ejs */
+
+#preloader {
+    background: #000 url(/images/loading.gif) no-repeat center;
+    background-size: 40%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
 }

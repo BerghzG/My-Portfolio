@@ -44,7 +44,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.get("/register", (req, res) => {
-    const errorMessage = req.query.error || null; // Você pode buscar o erro por query params, se for o caso
+    const errorMessage = req.query.error || null;
     res.render("login.ejs", { formData: {}, error: errorMessage });
 });
 
@@ -63,7 +63,7 @@ app.post("/signup", async (req, res) => {
         if (userExist.rowCount > 0) {
             return res.status(400).render("login.ejs", {
                 error: "User already exists.",
-                formData: req.body, // Passa os dados para que o formulário seja preenchido novamente
+                formData: req.body, 
             });
         }
 
@@ -80,7 +80,7 @@ app.post("/signup", async (req, res) => {
         console.error(err);
         res.status(500).render("login.ejs", {
             error: "Error during sign up.",
-            formData: req.body, // Passa os dados para que o formulário seja preenchido novamente
+            formData: req.body, 
         });
     }
 });
@@ -128,13 +128,6 @@ function requireAuth(req, res, next) {
 app.get("/", requireAuth, (req, res) => {
     res.render("index.ejs", { user: req.session.user });
 });
-
-// app.get("/", (req, res) => {
-//     if (!req.session.user) {
-//         return res.redirect("/register");
-//     }
-//     res.render("index.ejs", { user: req.session.user });
-// });
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
