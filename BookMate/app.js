@@ -36,7 +36,7 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: 60000 * 60 }, // 1 hora
+        cookie: { maxAge: (2 * 60000) * 60 }, // 1 hora
     })
 );
 
@@ -115,6 +115,36 @@ app.post("/login", async (req, res) => {
             error: "An error occurred during login.",
             formData: { login_email: email }, 
         });
+    }
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error during logout:", err);
+            return res.status(500).send("An error occurred during logout.");
+        }
+        res.redirect("/register");
+    });
+});
+
+app.get("/search", async (req, res) => {
+    const query = req.query.q; // Captura o termo da pesquisa
+    if (!query) {
+        return res.status(400).send("Search query is required.");
+    }
+
+    try {
+        const apiUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`;
+        
+        // Fazendo a requisição com axios
+        const response = await axios.get(apiUrl);
+
+        // Retorna os resultados para a interface ou usa no backend
+        res.json(response.data.docs.slice(0, 10)); // Envia apenas os 10 primeiros resultados
+    } catch (error) {
+        console.error("Error fetching Open Library data:", error);
+        res.status(500).send("Error fetching data.");
     }
 });
 

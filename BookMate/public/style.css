@@ -76,7 +76,7 @@ a.copy:hover {
 
 h2 {
     font-family: 'Raleway', sans-serif;
-    color: rgb(202, 215, 226) !important;
+    color: rgb(216, 224, 230) !important;
 }
 
 .atex {
@@ -104,4 +104,114 @@ input:focus, textarea:focus, select:focus {
     width: 100%;
     position: fixed;
     z-index: 100;
+}
+
+div.cont1index {
+    background-image: url(./images/index_back.png);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+}
+
+@media(max-width: 300px) {
+    #imgindex {
+        width: 20vh
+    }
+}
+
+.typewriter {
+    font-family: "Abril Fatface", serif;
+    padding-top: 17px;
+    font-weight: 400;
+    font-style: normal;
+    color: rgb(202, 215, 226) !important;
+}
+
+.indexsearch {
+    margin-top: 15vh;
+}
+
+#indexsearch {
+    position: relative;
+}
+
+.indexsearch input {
+    width: 40vh;
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+    vertical-align: middle;
+}
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    width: 35vw;
+    max-height: 200px; /* Limita a altura */
+    overflow-y: auto; /* Adiciona rolagem se necessário */
+    border: 1px solid #ccc; 
+    background-color: #fff;
+    z-index: 1000; 
+    list-style-type: none; /* Remove as bolinhas */
+    padding: 0; /* Remove qualquer espaçamento extra */
+    margin: 0;
+    top: 45px; /* Posição ajustada para ficar logo abaixo do input */
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza a lista */
+}
+
+.dropdown-list li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f1f1; /* Separação entre itens */
+}
+
+.dropdown-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-list li:last-child {
+    border-bottom: none; /* Remove a borda do último item */
+}
+
+.indexsearch button {
+    border: none;
+    background: none;
+    vertical-align: middle;
+}
+
+.indexsearch i {
+    color: white;
+}
+
+@media(max-width: 290px) {
+    .indexsearch input {
+        width: 29vh
+    }
+
+    .indexsearch {
+        margin-top: 10vh;
+    }
+}
+
+
+@media(max-width: 1000px) {
+    
+.dropdown-list {
+    width: 50vh;
+}
+}
+
+@media(max-width: 290px) {
+    
+    .dropdown-list {
+        width: 40vh;
+    }
+    }
+
+@media(min-width: 450px) {
+    .indexsearch input {
+        width: 65vh
+    }
 }
