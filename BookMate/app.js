@@ -9,6 +9,7 @@ import bcrypt from "bcrypt";
 import session from "express-session";
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import { format } from "path/posix";
 
 dotenv.config();
 
@@ -36,7 +37,7 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: (2 * 60000) * 60 }, // 1 hora
+        cookie: { maxAge: (3 * 60000) * 60 }, // 3 horas
     })
 );
 
@@ -128,26 +129,6 @@ app.get("/logout", (req, res) => {
     });
 });
 
-app.get("/search", async (req, res) => {
-    const query = req.query.q; // Captura o termo da pesquisa
-    if (!query) {
-        return res.status(400).send("Search query is required.");
-    }
-
-    try {
-        const apiUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`;
-        
-        // Fazendo a requisição com axios
-        const response = await axios.get(apiUrl);
-
-        // Retorna os resultados para a interface ou usa no backend
-        res.json(response.data.docs.slice(0, 10)); // Envia apenas os 10 primeiros resultados
-    } catch (error) {
-        console.error("Error fetching Open Library data:", error);
-        res.status(500).send("Error fetching data.");
-    }
-});
-
 function requireAuth(req, res, next) {
     if (!req.session.user) {
         return res.redirect("/register");
@@ -156,8 +137,57 @@ function requireAuth(req, res, next) {
 }
 
 app.get("/", requireAuth, (req, res) => {
-    res.render("index.ejs", { user: req.session.user });
+    const message = req.session.message || ''; 
+    req.session.message = null; // Limpa a mensagem após o uso
+    res.render("index.ejs", { user: req.session.user, message: message });
 });
+
+app.get("/book", requireAuth, async (req, res) => {
+    const { title } = req.query
+
+    try {
+        const response = await axios.get(`https://openlibrary.org/search.json?q=${title}&limit=1`); 
+
+        const books = response.data.docs.map(book => ({
+            title: book.title,
+            author: book.author_name ? book.author_name.join(', ') : 'Unknown Author',
+            key: book.key, // Para a segunda requisição
+            cover: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : null,
+            formats: book.format && book.format.length > 0 ? book.format[0] : 'No formats available',
+            publisher: book.publisher && book.publisher.length > 0 ? book.publisher[0] : 'Unknown Publisher',
+            firstIsbn: book.isbn.length > 0 ? book.isbn[0] : 'No ISBN available',
+            id_amazon: book.id_amazon && book.id_amazon.length > 0 ? book.id_amazon : 'Not Avaliable',
+            number_of_pages: book.number_of_pages_median || 'Not specified',
+            genre: book.subject,
+            want_to_read_count: book.want_to_read_count,
+            currently_reading_count: book.currently_reading_count,
+            already_read_count: book.already_read_count
+        }));
+
+        console.log(books)
+
+        if (books.length > 0) { 
+            const book = books[0]; 
+            const bookKey = books[0].key;
+
+            const detailsResponse = await axios.get(`https://openlibrary.org${bookKey}.json`); 
+            const bookDetails = detailsResponse.data;
+
+            const booksMore = {
+                description: bookDetails.description ? (typeof bookDetails.description === 'object' ? bookDetails.description.value : bookDetails.description) : 'N/A',
+            }
+            console.log(booksMore)
+            res.render('book.ejs', { book: book, books: booksMore, user: req.session.user }); 
+        } else { 
+            req.session.message = 'No books found'; 
+            res.redirect('/'); 
+        }
+    } catch (err) {
+        console.error(err); 
+        res.status(500).send("Error during searching the book.");
+        res.redirect("/")
+    }
+})
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);

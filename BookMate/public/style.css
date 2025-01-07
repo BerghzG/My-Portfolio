@@ -162,6 +162,8 @@ div.cont1index {
 }
 
 .dropdown-list li {
+    display: flex;
+    align-items: center;
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #f1f1f1; /* Separação entre itens */
@@ -173,6 +175,10 @@ div.cont1index {
 
 .dropdown-list li:last-child {
     border-bottom: none; /* Remove a borda do último item */
+}
+
+.dropdown-list img {
+    flex-shrink: 0;
 }
 
 .indexsearch button {
@@ -195,12 +201,10 @@ div.cont1index {
     }
 }
 
-
 @media(max-width: 1000px) {
-    
-.dropdown-list {
-    width: 50vh;
-}
+    .dropdown-list {
+        width: 50vh;
+    }
 }
 
 @media(max-width: 290px) {
@@ -214,4 +218,25 @@ div.cont1index {
     .indexsearch input {
         width: 65vh
     }
+
+    .what h3 {
+        padding: 0 20px 0 20px;
+    }
+}
+
+.what {
+    padding-bottom: 15px;
+}
+
+.what p {
+    text-align: justify;
+    padding: 20px;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.what h3 {
+    padding: 35px 20px 0 20px;
+    color: #ffc107;
+    font-family: 'Raleway', sans-serif;
 }

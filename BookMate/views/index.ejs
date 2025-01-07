@@ -11,7 +11,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -47,26 +48,32 @@
         </div>
 
         <div class="text-center indexsearch"> 
-            <form action="" id="searchForm" style="position: relative;"> 
-                <input type="text" id="Searchinput" placeholder="Search for books..." autocomplete="off">
+            <form action="/book" method="GET" id="searchForm" style="position: relative;"> 
+                <input type="text" id="Searchinput" name="title" placeholder="<%= message || 'Search for books or an author...' %>" autocomplete="off" required>
                 <ul id="suggestions" class="dropdown-list"></ul>                
                 <button type="submit"><i class="bi bi-book"></i></button> 
             </form> 
         </div>
     </div>
 
-    <div class="container-fluid" style="background-color: #0d6efd;">
+    <div class="container-fluid what" style="background-color: #0d6efd;">
         <div>
-            <h3>O que é o BookMate?</h3>
-            <p style="margin: 0">
-                O BookMate é uma plataforma criada para apaixonados por leitura que desejam organizar suas experiências literárias de forma simples e intuitiva. Aqui, você pode acompanhar os livros que está lendo, marcar os que já leu, avaliar suas obras favoritas e até compartilhar opiniões com outros leitores.  
-                Seja para explorar novos títulos, revisar clássicos ou criar sua própria biblioteca virtual, o BookMate é o seu companheiro perfeito nessa jornada literária.
-            </p>
-
-            <p style="margin: 0">
-                Você sabia que cerca de 35% da população lê pelo menos um livro por mês? Ler é uma prática transformadora, que amplia horizontes e estimula a criatividade. Nossa missão no BookMate é simplificar a vida dos leitores apaixonados, oferecendo um espaço único e dedicado. Aqui, você pode organizar suas leituras, explorar novas histórias e compartilhar suas opiniões com uma comunidade vibrante de leitores. Vamos juntos tornar sua jornada literária ainda mais especial!
-            </p>
+            <h3 data-aos="fade-up" style="font-family: 'Raleway', sans-serif;">What is BookMate?</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <p data-aos="fade-up" style="margin: 0; font-family: 'Roboto', sans-serif;">
+                        BookMate is a platform created for reading lovers who want to organize their literary experiences in a simple and intuitive way. Here, you can keep track of the books you're reading, mark the ones you've read, rate your favorite works, and even share opinions with other readers.  
+                        Whether you're looking to explore new titles, review classics, or create your own virtual library, BookMate is your perfect companion on this literary journey.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p data-aos="fade-up" style="margin: 0; font-family: 'Roboto', sans-serif;">
+                        Did you know that about 35% of the population reads at least one book a month? Reading is a transformative practice, which broadens horizons and stimulates creativity. Our mission at BookMate is to simplify the lives of passionate readers by offering a unique and dedicated space. Here, you can organize your readings, explore new stories, and share your opinions with a vibrant community of readers. Let's make your literary journey even more special together!
+                    </p>
+                </div>
+            </div>
         </div>
+    </div>    
     </div>
     
     <script>
@@ -75,7 +82,7 @@
             // Aguarda 2 segundos antes de esconder o preloader
             setTimeout(function () {
                 loader.style.display = "none";
-            }, 2000);
+            }, 1000);
         });
 
         const texto = document.querySelector('h1')
@@ -99,7 +106,7 @@
                     $('#suggestions').html('<li>Loading results...</li>').show();
                     
                     $.ajax({
-                        url: `https://openlibrary.org/search.json?q=${query}`,
+                        url: `https://openlibrary.org/search.json?q=${query}&limit=10`,
                         method: 'GET',
                         success: function(data) {
                             let books = data.docs;
@@ -108,10 +115,14 @@
                             // Monta a lista de sugestões
                             books.forEach(book => {
                                 // Verifica se o autor está presente
-                                let author = book.author_name ? book.author_name.join(', ') : 'Author Unknow';
+                               // Verifica se o autor está presente 
+                                let author = book.author_name ? book.author_name.join(', ') : 'Author Unknown';
                                 
+                                let coverUrl = book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg` : '/path/to/default-cover.jpg'
                                 // Adiciona a classe suggestion-item ao li
-                                suggestions += `<li class="suggestion-item"><strong>${book.title}</strong><br><span>${author}</span></li>`;
+                                suggestions += `<li class="suggestion-item"> 
+                                    <img src="${coverUrl}" alt="Book Cover" style="width: 50px; height: 75px; margin-right: 10px;"> 
+                                    <div> <strong  style="margin-right=30px">${book.title}</strong><br> <span  style="margin-right=30px">${author}</span> </div>`
                             });
                             
                             // Exibe as sugestões se houver alguma
@@ -136,9 +147,8 @@
                     $('#suggestions').html('').hide(); 
             });
         });
-
     </script>    
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script> <script> AOS.init(); </script>
 </body>
 </html>
