@@ -89,7 +89,7 @@ input:focus, textarea:focus, select:focus {
     border: 1.5px solid blue;
 }
 
-.btn-primary {
+div.ava button.btn-primary {
     margin-top: 7px;
     width: 215px;
     border-radius: 50px !important;
@@ -148,17 +148,17 @@ div.cont1index {
     display: none;
     position: absolute;
     width: 35vw;
-    max-height: 200px; /* Limita a altura */
-    overflow-y: auto; /* Adiciona rolagem se necessário */
+    max-height: 200px; 
+    overflow-y: auto; 
     border: 1px solid #ccc; 
     background-color: #fff;
     z-index: 1000; 
-    list-style-type: none; /* Remove as bolinhas */
-    padding: 0; /* Remove qualquer espaçamento extra */
+    list-style-type: none; 
+    padding: 0; 
     margin: 0;
-    top: 45px; /* Posição ajustada para ficar logo abaixo do input */
+    top: 45px; 
     left: 50%;
-    transform: translateX(-50%); /* Centraliza a lista */
+    transform: translateX(-50%); 
 }
 
 .dropdown-list li {
@@ -166,7 +166,7 @@ div.cont1index {
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #f1f1f1; /* Separação entre itens */
+    border-bottom: 1px solid #f1f1f1; 
 }
 
 .dropdown-list li:hover {
@@ -174,7 +174,7 @@ div.cont1index {
 }
 
 .dropdown-list li:last-child {
-    border-bottom: none; /* Remove a borda do último item */
+    border-bottom: none; 
 }
 
 .dropdown-list img {
@@ -239,4 +239,94 @@ div.cont1index {
     padding: 35px 20px 0 20px;
     color: #ffc107;
     font-family: 'Raleway', sans-serif;
+}
+
+/* book.ejs */
+
+.star-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    
+}
+.star {
+    width: 24px;
+    height: 24px;
+    margin: 0 2px; /* Margem opcional para espaçamento entre estrelas */
+}
+
+.star-rating { 
+    margin: 0 5px; 
+    font-size: 18px; 
+    line-height: 24px;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .text-left {
+        padding: 30px 15px 15px 15px;
+        margin-bottom: -35px;
+    }
+}
+
+.book2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha ao topo */
+    align-items: flex-start; /* Alinha à esquerda */
+    text-align: left; /* Garante alinhamento do texto */
+    height: 100%;
+    padding: 10px;
+}
+
+#format {
+    display: inline;
+    background-color: #071a36;
+    color: #0866f3;
+    padding: 7px;
+    border-radius: 8px;
+}
+
+#titleh2 {
+    padding-top: 17px;
+    color: white !important;
+}
+
+#h2book {
+    color: #7769a7;
+}
+
+.pbook {
+    color: #dad8e2;
+}
+
+.amazon-link {
+    display: inline-block;
+    background-color: #FF9900; /* Cor laranja da Amazon */
+    color: #FFFFFF; /* Texto branco */
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.amazon-link:hover {
+    background-color: #E47911; /* Tom mais escuro de laranja */
+}
+
+.amazon-link i {
+    margin-left: 8px;
+    color: #FFFFFF; /* Ícone branco */
+}
+
+.book-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha o conteúdo à esquerda */
+    padding: 10px;
 }

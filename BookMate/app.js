@@ -143,51 +143,68 @@ app.get("/", requireAuth, (req, res) => {
 });
 
 app.get("/book", requireAuth, async (req, res) => {
-    const { title } = req.query
+    const { title } = req.query;
 
     try {
-        const response = await axios.get(`https://openlibrary.org/search.json?q=${title}&limit=1`); 
+        const response = await axios.get(`https://openlibrary.org/search.json?q=${title}&limit=5`);
 
         const books = response.data.docs.map(book => ({
             title: book.title,
-            author: book.author_name ? book.author_name.join(', ') : 'Unknown Author',
-            key: book.key, // Para a segunda requisição
+            author: book.author_name ? book.author_name.join(", ") : "Unknown Author",
+            key: book.key,
             cover: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : null,
-            formats: book.format && book.format.length > 0 ? book.format[0] : 'No formats available',
-            publisher: book.publisher && book.publisher.length > 0 ? book.publisher[0] : 'Unknown Publisher',
-            firstIsbn: book.isbn.length > 0 ? book.isbn[0] : 'No ISBN available',
-            id_amazon: book.id_amazon && book.id_amazon.length > 0 ? book.id_amazon : 'Not Avaliable',
-            number_of_pages: book.number_of_pages_median || 'Not specified',
+            formats: book.format && book.format.length > 0 ? book.format[0] : "Format not available",
+            publisher: book.publisher && book.publisher.length > 0 ? book.publisher[0] : "Unknown Publisher",
+            firstIsbn: book.isbn.length > 0 ? book.isbn[0] : "No ISBN available",
+            id_amazon: book.id_amazon && book.id_amazon.length > 0
+                        ? (book.id_amazon[0].trim() !== '' ? book.id_amazon[0].trim() : (book.id_amazon[1] || "Not Available").trim())
+                        : "Not Available",
+            number_of_pages: book.number_of_pages_median || "Not specified",
             genre: book.subject,
             want_to_read_count: book.want_to_read_count,
             currently_reading_count: book.currently_reading_count,
-            already_read_count: book.already_read_count
+            already_read_count: book.already_read_count,
+            first_publish_year: book.first_publish_year,
+            ratings_average: book. ratings_average
         }));
 
-        console.log(books)
 
-        if (books.length > 0) { 
-            const book = books[0]; 
+        if (books.length > 0) {
+            const book = books[0];
             const bookKey = books[0].key;
+            const openLibraryRating = books[0].ratings_average || 0;
 
-            const detailsResponse = await axios.get(`https://openlibrary.org${bookKey}.json`); 
+            console.log(openLibraryRating)
+
+            const detailsResponse = await axios.get(`https://openlibrary.org${bookKey}.json`);
             const bookDetails = detailsResponse.data;
 
+            const siteRatingResult = await db.query("SELECT rating FROM notes WHERE title = $1", [books[0].title]);
+            const siteRating = siteRatingResult.rowCount > 0 ? siteRatingResult.rows[0].rating : null;
+
+            const rating = siteRating !== null
+                ? (openLibraryRating + siteRating) / 2
+                : openLibraryRating;
+
             const booksMore = {
-                description: bookDetails.description ? (typeof bookDetails.description === 'object' ? bookDetails.description.value : bookDetails.description) : 'N/A',
-            }
-            console.log(booksMore)
-            res.render('book.ejs', { book: book, books: booksMore, user: req.session.user }); 
-        } else { 
-            req.session.message = 'No books found'; 
-            res.redirect('/'); 
+                description: bookDetails.description
+                    ? typeof bookDetails.description === "object"
+                        ? bookDetails.description.value
+                        : bookDetails.description
+                    : "N/A",
+            };
+
+            return res.render("book.ejs", { book, books: booksMore, rating, user: req.session.user });
+        } else {
+            req.session.message = "No books found";
+            return res.redirect("/");
         }
     } catch (err) {
-        console.error(err); 
-        res.status(500).send("Error during searching the book.");
-        res.redirect("/")
+        console.error(err);
+        req.session.message = "An error occurred while searching for the book.";
+        return res.redirect("/");
     }
-})
+});
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
