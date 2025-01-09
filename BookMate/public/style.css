@@ -330,3 +330,28 @@ div.cont1index {
     align-items: flex-start; /* Alinha o conteúdo à esquerda */
     padding: 10px;
 }
+
+div.descri p {
+    text-align: justify;
+    color: #b6b2ce;
+}
+
+.genre-list {
+    list-style-type: none; /* Remove as bolinhas */
+    padding: 0; /* Remove o padding da lista */
+    margin: 0; /* Remove a margem da lista */
+}
+
+.genre-item {
+    display: inline-block; /* Exibe os itens em linha */
+    margin-right: 10px; /* Espaçamento entre os itens */
+    background-color: #080750;
+    color: rgb(221, 222, 230);
+    padding: 5px 10px;
+    border-radius: 8px; 
+    margin: 4px;
+}
+
+.h3boo {
+    color: #e0dcdc;
+}

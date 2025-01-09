@@ -155,19 +155,18 @@ app.get("/book", requireAuth, async (req, res) => {
             cover: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : null,
             formats: book.format && book.format.length > 0 ? book.format[0] : "Format not available",
             publisher: book.publisher && book.publisher.length > 0 ? book.publisher[0] : "Unknown Publisher",
-            firstIsbn: book.isbn.length > 0 ? book.isbn[0] : "No ISBN available",
+            firstIsbn: book.isbn && book.isbn.length > 0 ? book.isbn[0] : "No ISBN available",
             id_amazon: book.id_amazon && book.id_amazon.length > 0
                         ? (book.id_amazon[0].trim() !== '' ? book.id_amazon[0].trim() : (book.id_amazon[1] || "Not Available").trim())
                         : "Not Available",
             number_of_pages: book.number_of_pages_median || "Not specified",
-            genre: book.subject,
+            genre: book.subject ? book.subject.slice(0, 10) : [],
             want_to_read_count: book.want_to_read_count,
             currently_reading_count: book.currently_reading_count,
             already_read_count: book.already_read_count,
             first_publish_year: book.first_publish_year,
             ratings_average: book. ratings_average
         }));
-
 
         if (books.length > 0) {
             const book = books[0];
@@ -194,7 +193,14 @@ app.get("/book", requireAuth, async (req, res) => {
                     : "N/A",
             };
 
-            return res.render("book.ejs", { book, books: booksMore, rating, user: req.session.user });
+            const convertedDescription = booksMore.description
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>') // Links markdown para HTML
+                .replace(/[*_~`]/g, "") // Remove formatação especial
+                .replace(/-{2,}/g, ""); // Remove traços longos
+
+            console.log(booksMore)
+
+            return res.render("book.ejs", { book, description: convertedDescription, rating, user: req.session.user });
         } else {
             req.session.message = "No books found";
             return res.redirect("/");
