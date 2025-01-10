@@ -160,7 +160,7 @@ app.get("/book", requireAuth, async (req, res) => {
                         ? (book.id_amazon[0].trim() !== '' ? book.id_amazon[0].trim() : (book.id_amazon[1] || "Not Available").trim())
                         : "Not Available",
             number_of_pages: book.number_of_pages_median || "Not specified",
-            genre: book.subject ? book.subject.slice(0, 10) : [],
+            genre: book.subject ? book.subject.slice(0, 13) : [],
             want_to_read_count: book.want_to_read_count,
             currently_reading_count: book.currently_reading_count,
             already_read_count: book.already_read_count,
@@ -209,6 +209,42 @@ app.get("/book", requireAuth, async (req, res) => {
         console.error(err);
         req.session.message = "An error occurred while searching for the book.";
         return res.redirect("/");
+    }
+});
+
+app.post("/update-book-status", requireAuth, async (req, res) => {
+    const { title, status } = req.body;
+
+    // Verifica se os dados necessários foram enviados
+    if (!title || !status) {
+        return res.status(400).json({
+            success: false,
+            message: "Missing required fields (title or status).",
+        });
+    }
+
+    const { id: userId } = req.session.user; // Obtém o ID do usuário da sessão
+
+    try {
+        // Insere ou atualiza o status do livro no banco de dados
+        const query = `
+            INSERT INTO book (title, status, user_id)
+            VALUES ($1, $2, $3)
+            ON CONFLICT (title, user_id) DO UPDATE
+            SET status = EXCLUDED.status;
+        `;
+        await db.query(query, [title, status, userId]);
+
+        // Retorna sucesso ao cliente
+        res.json({ success: true, message: "Book status updated successfully." });
+    } catch (error) {
+        console.error("Error updating book status:", error);
+
+        // Retorna erro ao cliente
+        res.status(500).json({
+            success: false,
+            message: "An error occurred while updating the book status.",
+        });
     }
 });
 

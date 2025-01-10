@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 </head>
 <body style="background-color: black;">
     <div id="preloader"></div>
@@ -77,13 +79,70 @@
                                     Reading Status
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Reading</a></li>
-                                    <li><a class="dropdown-item" href="#">Finished</a></li>
-                                    <li><a class="dropdown-item" href="#">Dropped</a></li>
+                                    <li><a class="dropdown-item" href="#" data-status="Want to Read">Want to Read</a></li>
+                                    <li><a class="dropdown-item" href="#" data-status="Reading">Reading</a></li>
+                                    <li><a class="dropdown-item" href="#" data-status="Finished">Finished</a></li>
+                                    <li><a class="dropdown-item" href="#" data-status="Dropped">Dropped</a></li>
                                 </ul>
                             </div>
 
-                            <button title="Click here to give your opinion" class="btn btn-primary">+</button>
+                            <button title="Click here to give your opinion" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fullscreenModal">+</button>
+                        </div>
+                        <!-- Fullscreen Modal -->
+                        <div class="modal fade dark-modal" id="fullscreenModal" tabindex="-1" aria-labelledby="fullscreenModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-fullscreen">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="fullscreenModalLabel"><%= book.title %> Note</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Your content here -->
+                                        <p>Content goes here...</p>
+
+                                        <div class="d-flex">
+                                            <fieldset class="ratings">
+                                                <input type="radio" name="ratings" id="stars5" value="5">
+                                                <label for="stars5" class="full" title="5 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars4half" value="4.5">
+                                                <label for="stars4half" class="half" title="4.5 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars4" value="4">
+                                                <label for="stars4" class="full" title="4 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars3half" value="3.5">
+                                                <label for="stars3half" class="half" title="3.5 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars3" value="3">
+                                                <label for="stars3" class="full" title="3 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars2half" value="2.5">
+                                                <label for="stars2half" class="half" title="2.5 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars2" value="2">
+                                                <label for="stars2" class="full" title="2 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars1half" value="1.5">
+                                                <label for="stars1half" class="half" title="1.5 Stars"></label>
+
+                                                <input type="radio" name="ratings" id="stars1" value="1">
+                                                <label for="stars1" class="full" title="1 Stars"></label>
+    
+                                                <input type="radio" name="ratings" id="stars0half" value="0.5">
+                                                <label for="stars0half" class="half" title="0.5 Stars"></label>
+                                            </fieldset>
+
+                                            <p  style="margin-top: 12px" class="starrating">1.5</p>
+                                        </div>
+                                        <textarea name="message" rows="5" cols="30" placeholder="Escreva sua mensagem aqui"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>                        
                     </div>
                 </div>
@@ -100,7 +159,7 @@
                 <h3 class="h3boo">Genres</h3>
                 <ul class="genre-list">
                     <% book.genre.forEach(genre => { %>
-                        <li class="genre-item"><%= genre %></li> <!-- Exibe o nome de cada gênero -->
+                        <li class="genre-item"><%= genre %></li>
                     <% }) %>
                 </ul>                
             </div>
@@ -146,6 +205,58 @@
         var loader = document.getElementById("preloader")
         window.addEventListener("load", function() {
             loader.style.display = "none"
+        })
+
+        document.querySelectorAll(".dropdown-item").forEach(item => {
+            item.addEventListener("click", async event => {
+                event.preventDefault();
+
+                const status = event.target.getAttribute("data-status");
+                const button = document.getElementById("dropdownMenuButton1");
+                const originalText = button.innerHTML;
+
+                // Mostra um ícone de loading enquanto processa
+                button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...';
+
+                try {
+                    const response = await fetch("/update-book-status", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ title: "<%= book.title %>", status }) // Substitua pelo título correto no EJS
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        // Atualiza com ícone de sucesso
+                        button.innerHTML = '<i style="color: rgb(17, 226, 17);" class="bi bi-check-circle-fill"></i> Updated!';
+                    } else {
+                        // Atualiza com ícone de erro
+                        button.innerHTML = '<i style="color:rgb(102, 9, 9);" class="bi bi-x-circle-fill"></i> Error!';
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    // Mostra ícone de erro em caso de falha na requisição
+                    button.innerHTML = '<i class="bi bi-x-circle-fill text-danger"></i> Error!';
+                }
+
+                // Restaura o texto original após 2 segundos
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        });
+
+        const inp = document.querySelectorAll("input[type='radio']")
+        const p = document.querySelector(".starrating")
+        inp.forEach(list => {
+            list.addEventListener("click", () => {
+                let star = document.querySelector("input[type='radio']:checked").value
+                let col = (star < 3) ? "red":"lightgreen"
+                p.textContent = star
+                p.style.color = col
+            })
         })
     </script>
 </body>

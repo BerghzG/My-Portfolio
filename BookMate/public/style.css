@@ -248,7 +248,6 @@ div.cont1index {
     justify-content: center;
     align-items: center;
     padding-top: 10px;
-    
 }
 .star {
     width: 24px;
@@ -256,7 +255,7 @@ div.cont1index {
     margin: 0 2px; /* Margem opcional para espaçamento entre estrelas */
 }
 
-.star-rating { 
+.star-rating{ 
     margin: 0 5px; 
     font-size: 18px; 
     line-height: 24px;
@@ -354,4 +353,69 @@ div.descri p {
 
 .h3boo {
     color: #e0dcdc;
+}
+
+.modal-fullscreen {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dark-modal .modal-content {
+    background-color: #2c2f33; /* Fundo escuro */
+    color: #ffffff; /* Texto branco */
+}
+.dark-modal .modal-header {
+    border-color: #454d55; /* Bordas escuras */
+}
+
+.dark-modal .modal-footer {
+    border: none;
+}
+
+.dark-modal .btn-close {
+    filter: invert(1); /* Botão de fechar invertido para visualizar melhor no fundo escuro */
+}
+
+.ratings input {
+    display: none;
+}
+
+.ratings label::before {
+    content: '\f005'; /* Unicode para estrela no FontAwesome */
+    font-family: "Font Awesome 5 Free"; /* Nome completo da fonte */
+    font-weight: 900; /* Necessário para ícones sólidos */
+    font-size: 25px; /* Tamanho da estrela */
+    margin: 5px; /* Espaço entre ícone e texto (se houver texto) */
+    display: inline-block; /* Garante que o ícone seja visível */
+}
+
+.ratings .half::before {
+    content: '\f089'; 
+    font-family: "Font Awesome 5 Free"; /* Nome completo da fonte */
+    font-weight: 900; /* Necessário para ícones sólidos */
+    font-size: 25px; /* Tamanho da estrela */
+    position: absolute;
+}
+
+.ratings label {
+    float: right;
+    text-align: center;
+    color: gray;
+    cursor: pointer;
+}
+
+.ratings [id^="stars"]:checked~label,
+.ratings:not(:checked) label:hover,
+.ratings:not(:checked) label:hover~label {
+    color: #ffd700;
+}
+
+.ratings [id^="stars"]:checked+label:hover,
+.ratings [id^="stars"]:checked~label:hover,
+.ratings label:hover~[id^="stars"]:checked~label,
+.ratings [id^="stars"]:checked~label:hover~label {
+    color: rgb(128, 128, 128);
 }

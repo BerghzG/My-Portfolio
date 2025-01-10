@@ -7,13 +7,14 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE books (
-    id SERIAL PRIMARY KEY, 
-    title VARCHAR(255) NOT NULL, 
-    author VARCHAR(255) NOT NULL, 
-    note VARCHAR,
-    status VARCHAR(20), 
-    user_id INT REFERENCES users(id) ON DELETE CASCADE 
+CREATE TABLE book (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    UNIQUE (title, user_id) -- Garante que um usuário não pode ter mais de um registro para o mesmo livro
 );
 
 CREATE TABLE notes (
