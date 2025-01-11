@@ -22,7 +22,7 @@
                 <button 
                     class="btn btn-dark dropdown-toggle" 
                     type="button" 
-                    id="userMenuButton" 
+                    id="userMenuButton" title="Menu"
                     data-bs-toggle="dropdown" 
                     aria-expanded="false"
                 >
@@ -48,7 +48,7 @@
                         <svg class="star" id="star4"></svg>
                         <svg class="star" id="star5"></svg>
                         
-                        <p class="star-rating"><%= parseFloat(rating).toFixed(1) %></p>
+                        <p class="star-rating"><%= Math.floor(parseFloat(rating) * 10) / 10 %></p>
 
                     </div>
                 </div>
@@ -93,54 +93,52 @@
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="fullscreenModalLabel"><%= book.title %> Note</h5>
+                                        <h5 class="modal-title" id="fullscreenModalLabel"><%= book.title %> - Write your opinion!</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <!-- Your content here -->
-                                        <p>Content goes here...</p>
-
-                                        <div class="d-flex">
-                                            <fieldset class="ratings">
-                                                <input type="radio" name="ratings" id="stars5" value="5">
-                                                <label for="stars5" class="full" title="5 Stars"></label>
+                                    <form id="noteForm" method="POST" action="/notes">
+                                        <div class="modal-body">
+                                            <div class="d-flex">
+                                                <fieldset class="ratings">
+                                                    <input type="radio" name="ratings" id="stars5" value="5">
+                                                    <label for="stars5" class="full" title="5 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars4half" value="4.5">
+                                                    <label for="stars4half" class="half" title="4.5 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars4" value="4">
+                                                    <label for="stars4" class="full" title="4 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars3half" value="3.5">
+                                                    <label for="stars3half" class="half" title="3.5 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars3" value="3">
+                                                    <label for="stars3" class="full" title="3 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars2half" value="2.5">
+                                                    <label for="stars2half" class="half" title="2.5 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars2" value="2">
+                                                    <label for="stars2" class="full" title="2 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars1half" value="1.5">
+                                                    <label for="stars1half" class="half" title="1.5 Stars"></label>
     
-                                                <input type="radio" name="ratings" id="stars4half" value="4.5">
-                                                <label for="stars4half" class="half" title="4.5 Stars"></label>
+                                                    <input type="radio" name="ratings" id="stars1" value="1">
+                                                    <label for="stars1" class="full" title="1 Stars"></label>
+        
+                                                    <input type="radio" name="ratings" id="stars0half" value="0.5">
+                                                    <label for="stars0half" class="half" title="0.5 Stars"></label>
+                                                </fieldset>
     
-                                                <input type="radio" name="ratings" id="stars4" value="4">
-                                                <label for="stars4" class="full" title="4 Stars"></label>
-    
-                                                <input type="radio" name="ratings" id="stars3half" value="3.5">
-                                                <label for="stars3half" class="half" title="3.5 Stars"></label>
-    
-                                                <input type="radio" name="ratings" id="stars3" value="3">
-                                                <label for="stars3" class="full" title="3 Stars"></label>
-    
-                                                <input type="radio" name="ratings" id="stars2half" value="2.5">
-                                                <label for="stars2half" class="half" title="2.5 Stars"></label>
-    
-                                                <input type="radio" name="ratings" id="stars2" value="2">
-                                                <label for="stars2" class="full" title="2 Stars"></label>
-    
-                                                <input type="radio" name="ratings" id="stars1half" value="1.5">
-                                                <label for="stars1half" class="half" title="1.5 Stars"></label>
-
-                                                <input type="radio" name="ratings" id="stars1" value="1">
-                                                <label for="stars1" class="full" title="1 Stars"></label>
-    
-                                                <input type="radio" name="ratings" id="stars0half" value="0.5">
-                                                <label for="stars0half" class="half" title="0.5 Stars"></label>
-                                            </fieldset>
-
-                                            <p  style="margin-top: 12px" class="starrating">1.5</p>
+                                                <p style="margin-top: 12px" class="starrating">1.5</p>
+                                            </div>
+                                            <textarea class="textarea" name="message" rows="5" cols="30" placeholder="Write your notes here"></textarea>
                                         </div>
-                                        <textarea name="message" rows="5" cols="30" placeholder="Escreva sua mensagem aqui"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>                        

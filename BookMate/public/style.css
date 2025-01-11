@@ -387,7 +387,7 @@ div.descri p {
     content: '\f005'; /* Unicode para estrela no FontAwesome */
     font-family: "Font Awesome 5 Free"; /* Nome completo da fonte */
     font-weight: 900; /* Necessário para ícones sólidos */
-    font-size: 25px; /* Tamanho da estrela */
+    font-size: 28px; /* Tamanho da estrela */
     margin: 5px; /* Espaço entre ícone e texto (se houver texto) */
     display: inline-block; /* Garante que o ícone seja visível */
 }
@@ -396,7 +396,7 @@ div.descri p {
     content: '\f089'; 
     font-family: "Font Awesome 5 Free"; /* Nome completo da fonte */
     font-weight: 900; /* Necessário para ícones sólidos */
-    font-size: 25px; /* Tamanho da estrela */
+    font-size: 28px; /* Tamanho da estrela */
     position: absolute;
 }
 
@@ -418,4 +418,15 @@ div.descri p {
 .ratings label:hover~[id^="stars"]:checked~label,
 .ratings [id^="stars"]:checked~label:hover~label {
     color: rgb(128, 128, 128);
+}
+
+.textarea {
+    height: calc(100vh - 250px);
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 7px;
+    padding: 7px;
+    background-color: rgb(19, 19, 19);
+    color: rgb(247, 242, 242);
+    border: none;
 }

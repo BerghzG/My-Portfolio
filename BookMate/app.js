@@ -178,8 +178,9 @@ app.get("/book", requireAuth, async (req, res) => {
             const detailsResponse = await axios.get(`https://openlibrary.org${bookKey}.json`);
             const bookDetails = detailsResponse.data;
 
-            const siteRatingResult = await db.query("SELECT rating FROM notes WHERE title = $1", [books[0].title]);
-            const siteRating = siteRatingResult.rowCount > 0 ? siteRatingResult.rows[0].rating : null;
+            const siteRatingResult = await db.query("SELECT AVG(rating) AS average_rating FROM notes WHERE title = $1",
+                [books[0].title]);
+            const siteRating = siteRatingResult.rowCount > 0 ? siteRatingResult.rows[0].average_rating : null;            
 
             const rating = siteRating !== null
                 ? (openLibraryRating + siteRating) / 2
@@ -247,6 +248,11 @@ app.post("/update-book-status", requireAuth, async (req, res) => {
         });
     }
 });
+
+app.post('/notes', (req, res) => {
+    const rating = req.body.ratings; 
+    const message = req.body.message;
+})
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
