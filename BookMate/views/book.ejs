@@ -49,7 +49,6 @@
                         <svg class="star" id="star5"></svg>
                         
                         <p class="star-rating"><%= Math.floor(parseFloat(rating) * 10) / 10 %></p>
-
                     </div>
                 </div>
 
@@ -97,10 +96,11 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form id="noteForm" method="POST" action="/notes">
+                                        <input type="hidden" name="title" value="<%= book.title %>">
                                         <div class="modal-body">
                                             <div class="d-flex">
                                                 <fieldset class="ratings">
-                                                    <input type="radio" name="ratings" id="stars5" value="5">
+                                                    <input type="radio" name="ratings" id="stars5" value="5" required>
                                                     <label for="stars5" class="full" title="5 Stars"></label>
         
                                                     <input type="radio" name="ratings" id="stars4half" value="4.5">
@@ -151,7 +151,7 @@
         <div class="row">
             <div class="col-md-6 book2 descri">
                 <h3 class="h3boo">Description</h3>
-                <p><%= description %></p>
+                <p style="max-width: 100%"><%- description %></p>
             </div>
             <div class="col-md-6 book2">
                 <h3 class="h3boo">Genres</h3>
@@ -163,41 +163,76 @@
             </div>
         </div>
     </div>
+
     <div class="container-fluid">
-        <!-- Aba de notas -->
+        <!-- detalhes de leituras -->
     </div>
+
+    <div class="container-fluid" id="notesContainer">
+        <h2 style="padding-bottom: 10px;">Notes</h2>
+        <% if (notes && notes.length > 0) { %>
+            <ul>
+                <% notes.forEach(note => { %>
+                    <div class="licontainer">
+                        <li>
+                            <p style="color: rgb(166, 180, 192); margin-bottom: 4px;"><strong><%= note.username %></strong> rated:</p>
+                            <div class="note-header">
+                                <div class="container-star" data-rating="<%= note.rating %>">
+                                    <svg class="star" id="star1"></svg>
+                                    <svg class="star" id="star2"></svg>
+                                    <svg class="star" id="star3"></svg>
+                                    <svg class="star" id="star4"></svg>
+                                    <svg class="star" id="star5"></svg>
+                                </div>
+                                <small class="note-date"><%= new Date(note.created_at).toLocaleDateString() %></small>
+                            </div>
+                            <p style="color: rgb(156, 168, 179); margin-top: 6px;"><%= note.note.substring(0, 100) %>...</p>
+                            <a href="/note/details?noteId=<%= note.id %>" class="btn btn-sm btn-primary">View Details</a>
+                        </li>
+                    </div>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p style="color: rgb(156, 168, 179);">No notes available for this book yet.</p>
+        <% } %>
+    </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function displayStar(rating) {
+        function displayStar(rating, container) {
             const fullStar = Math.floor(rating);
             const halfStar = rating % 1 >= 0.5;
-    
-            for (let i = 1; i <= 5; i++) {
-                let star = document.getElementById(`star${i}`);
-                if (i <= fullStar) {
+            
+            const stars = container.querySelectorAll('.star');
+
+            stars.forEach((star, index) => {
+                if (index < fullStar) {
                     star.innerHTML = `<polygon points="12,2 15,10 22,9 17,14, 18,21, 12,18 6,21 7,14 2,9 9,10" />`;
                     star.style.fill = "gold";
-                } else if (i === fullStar + 1 && halfStar) {
+                } else if (index === fullStar && halfStar) {
                     star.innerHTML = `
-                                    <defs>
-                                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="50%" style="stop-color: gold; stop-opacity: 1" />
-                                            <stop offset="50%" style="stop-color: lightgray; stop-opacity: 1" />
-                                        </linearGradient>
-                                    </defs>
-                                    <polygon points="12,2 15,10 22,9 17,14 18,21 12,18 6,21 7,14 2,9 9,10" fill="url(#grad1)" />
-                                `;
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="50%" style="stop-color: gold; stop-opacity: 1" />
+                                <stop offset="50%" style="stop-color: lightgray; stop-opacity: 1" />
+                            </linearGradient>
+                        </defs>
+                        <polygon points="12,2 15,10 22,9 17,14 18,21 12,18 6,21 7,14 2,9 9,10" fill="url(#grad1)" />
+                    `;
                 } else {
                     star.innerHTML = `<polygon points="12,2 15,10 22,9 17,14, 18,21, 12,18 6,21 7,14 2,9 9,10" fill="lightgray" />`;
                 }
-            }
+            });
         }
-    
+
         document.addEventListener('DOMContentLoaded', () => {
-            const starContainer = document.querySelector('.star-container');
-            const rating = parseFloat(starContainer.dataset.rating); // Recupera e converte o valor
-            displayStar(rating); // Usa o valor para exibir as estrelas
+            const starContainers = document.querySelectorAll('.star-container, .container-star');
+            
+            starContainers.forEach(container => {
+                const rating = parseFloat(container.dataset.rating); // Recupera e converte o valor
+                displayStar(rating, container); // Usa o valor para exibir as estrelas
+            });
         });
 
         var loader = document.getElementById("preloader")

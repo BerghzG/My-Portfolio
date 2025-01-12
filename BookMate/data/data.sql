@@ -27,3 +27,25 @@ CREATE TABLE notes (
     updated_at TIMESTAMP DEFAULT NOW(),    -- Data e hora da última atualização
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Relaciona com a tabela users
 );
+
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_updated_at
+BEFORE UPDATE ON notes
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
+
+
+CREATE TABLE replies (
+    id SERIAL PRIMARY KEY,
+    note_id INT NOT NULL REFERENCES notes(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES users(id),
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);

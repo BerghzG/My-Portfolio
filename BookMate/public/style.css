@@ -274,7 +274,7 @@ div.cont1index {
     flex-direction: column;
     justify-content: flex-start; /* Alinha ao topo */
     align-items: flex-start; /* Alinha à esquerda */
-    text-align: left; /* Garante alinhamento do texto */
+    text-align: left; 
     height: 100%;
     padding: 10px;
 }
@@ -429,4 +429,42 @@ div.descri p {
     background-color: rgb(19, 19, 19);
     color: rgb(247, 242, 242);
     border: none;
+}
+
+#notesContainer {
+    padding: 30px;
+}
+
+#notesContainer ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px; 
+    padding: 0;
+    list-style: none;
+}
+
+#notesContainer strong {
+    color: #d9dfe7;
+}
+
+.licontainer {
+    background-color: #0f0f0f;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.note-header {
+    display: flex; 
+    align-items: center;
+}
+
+.container-star {
+    display: flex;
+    gap: 2px; 
+}
+
+.note-date {
+    margin-left: 10px; 
+    font-size: 0.9em; 
+    color: rgb(145, 144, 144); 
 }

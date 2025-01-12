@@ -160,7 +160,7 @@ app.get("/book", requireAuth, async (req, res) => {
                         ? (book.id_amazon[0].trim() !== '' ? book.id_amazon[0].trim() : (book.id_amazon[1] || "Not Available").trim())
                         : "Not Available",
             number_of_pages: book.number_of_pages_median || "Not specified",
-            genre: book.subject ? book.subject.slice(0, 13) : [],
+            genre: book.subject ? book.subject.slice(0, 14) : [],
             want_to_read_count: book.want_to_read_count,
             currently_reading_count: book.currently_reading_count,
             already_read_count: book.already_read_count,
@@ -182,9 +182,16 @@ app.get("/book", requireAuth, async (req, res) => {
                 [books[0].title]);
             const siteRating = siteRatingResult.rowCount > 0 ? siteRatingResult.rows[0].average_rating : null;            
 
-            const rating = siteRating !== null
-                ? (openLibraryRating + siteRating) / 2
-                : openLibraryRating;
+            const openLibraryRatingNum = parseFloat(openLibraryRating);
+            const siteRatingNum = parseFloat(siteRating);
+
+            const rating = !isNaN(siteRatingNum)
+                ? (openLibraryRatingNum + siteRatingNum) / 2
+                : openLibraryRatingNum;
+
+                console.log("openLibraryRatingNum:", openLibraryRatingNum);
+                console.log("siteRatingNum:", siteRatingNum);
+                console.log("rating total:", rating);               
 
             const booksMore = {
                 description: bookDetails.description
@@ -195,13 +202,25 @@ app.get("/book", requireAuth, async (req, res) => {
             };
 
             const convertedDescription = booksMore.description
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>') // Links markdown para HTML
-                .replace(/[*_~`]/g, "") // Remove formatação especial
-                .replace(/-{2,}/g, ""); // Remove traços longos
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="text-decoration: none;">$1</a>') 
+            .replace(/\[([0-9]+)\]:\s*(https?:\/\/[^\s]+)/g, '<a href="$2" target="_blank" style="text-decoration: none;">$1</a>') 
+            .replace(/[*_~`]/g, "") 
+            .replace(/-{2,}/g, "");             
+
+                 // **Buscar as notas relacionadas ao livro**
+            const notesResult = await db.query(`
+                SELECT n.id, n.rating, n.note, n.created_at, u.name AS username
+                FROM notes n
+                JOIN users u ON n.user_id = u.id
+                WHERE n.title = $1
+                ORDER BY n.created_at DESC
+            `, [books[0].title]);
+                
+            const notes = notesResult.rows;
 
             console.log(booksMore)
 
-            return res.render("book.ejs", { book, description: convertedDescription, rating, user: req.session.user });
+            return res.render("book.ejs", { book, description: convertedDescription, rating, user: req.session.user, notes });
         } else {
             req.session.message = "No books found";
             return res.redirect("/");
@@ -249,10 +268,98 @@ app.post("/update-book-status", requireAuth, async (req, res) => {
     }
 });
 
-app.post('/notes', (req, res) => {
-    const rating = req.body.ratings; 
-    const message = req.body.message;
+app.post('/notes', requireAuth, async (req, res) => {
+    const { ratings: rating, message, title } = req.body;
+    const { id: userId } = req.session.user;
+
+    if (!rating || !message || !title) {
+        return res.status(400).json({
+            success: false,
+            message: "Missing required fields (rating, message, or title).",
+        });
+    }
+
+    try {
+        const query = `INSERT INTO notes (title, rating, note, user_id, created_at) VALUES ($1, $2, $3, $4, NOW())`;
+        await db.query(query, [title, rating, message, userId]);
+        return res.redirect(`/book?title=${encodeURIComponent(title)}`);
+    } catch (err) {
+        console.error("Error saving book note:", err);
+
+        // Retorna erro ao cliente
+        res.status(500).json({
+            success: false,
+            message: "An error occurred while saving the book note.",
+        });
+    }
 })
+
+app.get("/note/details", requireAuth, async (req, res) => {
+    const { noteId } = req.query;
+
+    if (!noteId) {
+        req.session.message = "Note ID is missing.";
+        return res.redirect("/");
+    }
+
+    try {
+        // Busca a nota pelo ID
+        const noteResult = await db.query(`
+            SELECT n.id, n.rating, n.note, n.created_at, u.name AS username, n.title
+            FROM notes n
+            JOIN users u ON n.user_id = u.id
+            WHERE n.id = $1
+        `, [noteId]);
+
+        if (noteResult.rowCount === 0) {
+            req.session.message = "Note not found.";
+            return res.redirect("/");
+        }
+
+        const note = noteResult.rows[0];
+
+        // Busca as respostas associadas a esta nota
+        const repliesResult = await db.query(`
+            SELECT r.id, r.message, r.created_at, u.name AS username
+            FROM replies r
+            JOIN users u ON r.user_id = u.id
+            WHERE r.note_id = $1
+            ORDER BY r.created_at ASC
+        `, [noteId]);
+
+        const replies = repliesResult.rows;
+
+        return res.render("noteDetails.ejs", { note, replies });
+    } catch (error) {
+        console.error("Error fetching note details:", error);
+        req.session.message = "An error occurred while fetching the note details.";
+        return res.redirect("/");
+    }
+});
+
+app.post("/note/reply", requireAuth, async (req, res) => {
+    const { noteId, message } = req.body;
+    const { id: userId } = req.session.user;
+
+    if (!noteId || !message) {
+        req.session.message = "Missing required fields.";
+        return res.redirect(`/note/details?noteId=${noteId}`);
+    }
+
+    try {
+        await db.query(`
+            INSERT INTO replies (note_id, user_id, message, created_at)
+            VALUES ($1, $2, $3, NOW())
+        `, [noteId, userId, message]);
+
+        req.session.message = "Reply added successfully!";
+        return res.redirect(`/note/details?noteId=${noteId}`);
+    } catch (error) {
+        console.error("Error adding reply:", error);
+        req.session.message = "An error occurred while adding the reply.";
+        return res.redirect(`/note/details?noteId=${noteId}`);
+    }
+});
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);

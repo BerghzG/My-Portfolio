@@ -1,0 +1,29 @@
+<h1>Note Details</h1>
+
+<div>
+    <strong><%= note.username %></strong> rated: <%= note.rating %>/5<br>
+    <p><%= note.note %></p>
+    <small><%= new Date(note.created_at).toLocaleString() %></small>
+</div>
+
+<h2>Replies</h2>
+<div>
+    <% if (replies && replies.length > 0) { %>
+        <ul>
+            <% replies.forEach(reply => { %>
+                <li>
+                    <strong><%= reply.username %></strong>: <%= reply.message %><br>
+                    <small><%= new Date(reply.created_at).toLocaleString() %></small>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No replies yet.</p>
+    <% } %>
+</div>
+
+<form method="POST" action="/note/reply">
+    <input type="hidden" name="noteId" value="<%= note.id %>">
+    <textarea name="message" placeholder="Write your reply here..." required></textarea>
+    <button type="submit" class="btn btn-primary">Reply</button>
+</form>
