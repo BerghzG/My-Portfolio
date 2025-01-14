@@ -160,7 +160,7 @@ app.get("/book", requireAuth, async (req, res) => {
                         ? (book.id_amazon[0].trim() !== '' ? book.id_amazon[0].trim() : (book.id_amazon[1] || "Not Available").trim())
                         : "Not Available",
             number_of_pages: book.number_of_pages_median || "Not specified",
-            genre: book.subject ? book.subject.slice(0, 14) : [],
+            genre: book.subject ? book.subject.slice(0, 15) : [],
             want_to_read_count: book.want_to_read_count,
             currently_reading_count: book.currently_reading_count,
             already_read_count: book.already_read_count,
@@ -172,16 +172,33 @@ app.get("/book", requireAuth, async (req, res) => {
             const book = books[0];
             const bookKey = books[0].key;
             const openLibraryRating = books[0].ratings_average || 0;
+            const alreadyReadAPI = book.already_read_count || 0;
+            const currentReadAPI = book.currently_reading_count || 0;
+            const wantToReadAPI = book.want_to_read_count || 0;
+
 
             console.log(openLibraryRating)
 
             const detailsResponse = await axios.get(`https://openlibrary.org${bookKey}.json`);
             const bookDetails = detailsResponse.data;
 
-            const siteRatingResult = await db.query("SELECT AVG(rating) AS average_rating FROM notes WHERE title = $1",
-                [books[0].title]);
-            const siteRating = siteRatingResult.rowCount > 0 ? siteRatingResult.rows[0].average_rating : null;            
+            const siteRatingResult = await db.query("SELECT AVG(rating) AS average_rating FROM notes WHERE title = $1", [books[0].title]);
+            const siteRating = siteRatingResult.rowCount > 0 ? siteRatingResult.rows[0].average_rating : null;
+            
+            const stats = {
+                wantRead: parseInt((await db.query("SELECT COUNT(*) AS count FROM book WHERE title = $1 AND status = 'Want to Read'", [book.title])).rows[0].count) || 0,
+                reading: parseInt((await db.query("SELECT COUNT(*) AS count FROM book WHERE title = $1 AND status = 'Reading'", [book.title])).rows[0].count) || 0,
+                already: parseInt((await db.query("SELECT COUNT(*) AS count FROM book WHERE title = $1 AND status = 'Finished'", [book.title])).rows[0].count) || 0,
+                drop: parseInt((await db.query("SELECT COUNT(*) AS count FROM book WHERE title = $1 AND status = 'Dropped'", [book.title])).rows[0].count) || 0
+            };            
 
+            const totalStats = {
+                wantRead: stats.wantRead + parseInt(wantToReadAPI),
+                reading: stats.reading + parseInt(currentReadAPI),
+                already: stats.already + parseInt(alreadyReadAPI),
+                drop: stats.drop,
+            }; 
+            
             const openLibraryRatingNum = parseFloat(openLibraryRating);
             const siteRatingNum = parseFloat(siteRating);
 
@@ -220,7 +237,7 @@ app.get("/book", requireAuth, async (req, res) => {
 
             console.log(booksMore)
 
-            return res.render("book.ejs", { book, description: convertedDescription, rating, user: req.session.user, notes });
+            return res.render("book.ejs", { book, description: convertedDescription, rating, user: req.session.user, notes, want: totalStats.wantRead, finished: totalStats.already, reading: totalStats.reading, dropped: totalStats.drop });
         } else {
             req.session.message = "No books found";
             return res.redirect("/");
