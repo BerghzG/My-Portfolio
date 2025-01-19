@@ -136,10 +136,30 @@ function requireAuth(req, res, next) {
     next();
 }
 
-app.get("/", requireAuth, (req, res) => {
+app.get("/", requireAuth, async  (req, res) => {
     const message = req.session.message || ''; 
     req.session.message = null; // Limpa a mensagem após o uso
-    res.render("index.ejs", { user: req.session.user, message: message });
+
+    const recentes = await db.query("SELECT title FROM notes ORDER BY created_at DESC LIMIT 10")
+    const livros = []
+
+    for (const livro of recentes.rows) {
+        try {
+            const response = await axios.get(`https://openlibrary.org/search.json?q=${livro.title}&format=json`);
+            const livroData = response.data
+
+            if (livroData && livroData.cover_i) {
+                livros.push({
+                    nome: livro.title,
+                    capa: `https://covers.openlibrary.org/b/id/${livroData.cover_i}-M.jpg`
+                })
+            }
+        } catch (err) {
+            console.log(`Error searching book cover of ${livro.title}: ${err}`)
+        }
+    }
+
+    res.render("index.ejs", { user: req.session.user, message: message, livros });
 });
 
 app.get("/book", requireAuth, async (req, res) => {
