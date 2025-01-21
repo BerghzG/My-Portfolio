@@ -37,7 +37,7 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: (3 * 60000) * 60 }, // 3 horas
+        cookie: { maxAge: (4 * 60000) * 60 }, // 4 horas
     })
 );
 
@@ -145,19 +145,30 @@ app.get("/", requireAuth, async  (req, res) => {
 
     for (const livro of recentes.rows) {
         try {
-            const response = await axios.get(`https://openlibrary.org/search.json?q=${livro.title}&format=json`);
-            const livroData = response.data
-
-            if (livroData && livroData.cover_i) {
-                livros.push({
-                    nome: livro.title,
-                    capa: `https://covers.openlibrary.org/b/id/${livroData.cover_i}-M.jpg`
-                })
+            console.log(`Buscando: ${livro.title}`); // Exibe o título buscado
+            const response = await axios.get(`https://openlibrary.org/search.json?q=${encodeURIComponent(livro.title)}&format=json`);
+            const livroData = response.data;
+    
+            // Verifique se os dados retornados são válidos
+            if (livroData.docs && livroData.docs.length > 0) {
+                const primeiroLivro = livroData.docs[0]; // Pega o primeiro resultado
+    
+                if (primeiroLivro.cover_i) {
+                    // Adiciona ao array se tiver capa
+                    livros.push({
+                        nome: livro.title,
+                        capa: `https://covers.openlibrary.org/b/id/${primeiroLivro.cover_i}-M.jpg`,
+                    });
+                } else {
+                    console.log(`Nenhuma capa encontrada para: ${livro.title}`);
+                }
+            } else {
+                console.log(`Nenhum resultado encontrado para: ${livro.title}`);
             }
         } catch (err) {
-            console.log(`Error searching book cover of ${livro.title}: ${err}`)
+            console.error(`Erro ao buscar o livro "${livro.title}": ${err.message}`);
         }
-    }
+    }    
 
     res.render("index.ejs", { user: req.session.user, message: message, livros });
 });
