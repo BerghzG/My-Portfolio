@@ -136,25 +136,26 @@ function requireAuth(req, res, next) {
     next();
 }
 
-app.get("/", requireAuth, async  (req, res) => {
-    const message = req.session.message || ''; 
-    req.session.message = null; // Limpa a mensagem após o uso
+app.get("/", requireAuth, async (req, res) => {
+    const message = req.session.message || '';
+    req.session.message = null;
 
-    const recentes = await db.query("SELECT title FROM notes ORDER BY created_at DESC LIMIT 10")
-    const livros = []
+    const recentes = await db.query("SELECT title FROM notes ORDER BY created_at DESC LIMIT 10");
+    const livros = [];
 
-    for (const livro of recentes.rows) {
+    const livrosMaisBemAvaliados = await db.query(`SELECT title, AVG(rating) AS mediaRating FROM notes GROUP BY title ORDER BY mediaRating DESC LIMIT 10`);
+    const avaliados = []
+
+    const promessas = recentes.rows.map(async (livro) => {
         try {
-            console.log(`Buscando: ${livro.title}`); // Exibe o título buscado
+            console.log(`Buscando: ${livro.title}`);
             const response = await axios.get(`https://openlibrary.org/search.json?q=${encodeURIComponent(livro.title)}&format=json`);
             const livroData = response.data;
-    
-            // Verifique se os dados retornados são válidos
+
             if (livroData.docs && livroData.docs.length > 0) {
-                const primeiroLivro = livroData.docs[0]; // Pega o primeiro resultado
-    
+                const primeiroLivro = livroData.docs[0];
+
                 if (primeiroLivro.cover_i) {
-                    // Adiciona ao array se tiver capa
                     livros.push({
                         nome: livro.title,
                         capa: `https://covers.openlibrary.org/b/id/${primeiroLivro.cover_i}-M.jpg`,
@@ -168,7 +169,9 @@ app.get("/", requireAuth, async  (req, res) => {
         } catch (err) {
             console.error(`Erro ao buscar o livro "${livro.title}": ${err.message}`);
         }
-    }    
+    });
+
+    await Promise.all(promessas);
 
     res.render("index.ejs", { user: req.session.user, message: message, livros });
 });
@@ -196,7 +199,7 @@ app.get("/book", requireAuth, async (req, res) => {
             currently_reading_count: book.currently_reading_count,
             already_read_count: book.already_read_count,
             first_publish_year: book.first_publish_year,
-            ratings_average: book. ratings_average
+            ratings_average: book.ratings_average
         }));
 
         if (books.length > 0) {
