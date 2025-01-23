@@ -41,6 +41,30 @@ app.use(
     })
 );
 
+app.use(async (req, res, next) => {
+    if (req.session.user) {
+        const { id: userId } = req.session.user;
+
+        try {
+            // Consultar o número de notificações não lidas
+            const notifications = await db.query(`
+                SELECT COUNT(*) AS unread_count
+                FROM notifications
+                WHERE user_id = $1 AND is_read = FALSE
+            `, [userId]);
+
+            // Passar o número para todas as páginas via res.locals
+            res.locals.unreadNotifications = notifications.rows[0].unread_count || 0;
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+            res.locals.unreadNotifications = 0;
+        }
+    } else {
+        res.locals.unreadNotifications = 0; // Sem notificações se o usuário não estiver logado
+    }
+    next(); // Passar para o próximo middleware ou rota
+});
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -371,7 +395,7 @@ app.get("/note/details", requireAuth, async (req, res) => {
 
         // Busca as respostas associadas a esta nota
         const repliesResult = await db.query(`
-            SELECT r.id, r.message, r.created_at, u.name AS username
+            SELECT r.id, r.message, r.created_at, u.name AS username, r.user_id
             FROM replies r
             JOIN users u ON r.user_id = u.id
             WHERE r.note_id = $1
@@ -380,7 +404,11 @@ app.get("/note/details", requireAuth, async (req, res) => {
 
         const replies = repliesResult.rows;
 
-        return res.render("noteDetails.ejs", { note, replies });
+        // Inclua o userId do usuário logado na renderização
+        const userId = req.session.user.id;
+        
+        console.log("Rendering noteDetails with:", { note, replies, userId });
+        return res.render("noteDetails.ejs", { note, replies, userId });
     } catch (error) {
         console.error("Error fetching note details:", error);
         req.session.message = "An error occurred while fetching the note details.";
@@ -392,16 +420,50 @@ app.post("/note/reply", requireAuth, async (req, res) => {
     const { noteId, message } = req.body;
     const { id: userId } = req.session.user;
 
+    console.log("noteId:", noteId, "message:", message, "userId:", userId);
+
     if (!noteId || !message) {
         req.session.message = "Missing required fields.";
         return res.redirect(`/note/details?noteId=${noteId}`);
     }
 
     try {
-        await db.query(`
+        const result = await db.query(`
             INSERT INTO replies (note_id, user_id, message, created_at)
             VALUES ($1, $2, $3, NOW())
+            RETURNING id
         `, [noteId, userId, message]);
+
+        const replyId = result.rows[0].id;
+
+        const cleanedMessage = message.trim();
+
+        const mentions = cleanedMessage.match(/@[\w]+/g);
+        console.log("Mentions found:", mentions);
+
+        if (mentions) {
+            for (const mention of mentions) {
+                const username = mention.replace("@", ""); // Remover '@'
+                console.log("Checking mention for username:", username);
+        
+                const userResult = await db.query(`
+                    SELECT id FROM users WHERE name = $1
+                `, [username]);
+        
+                if (userResult.rowCount > 0) {
+                    const mentionedUserId = userResult.rows[0].id;
+                    console.log("Mentioned user found:", mentionedUserId);
+        
+                    // Inserir a notificação com o noteId do req.body
+                    await db.query(`
+                        INSERT INTO notifications (user_id, type, reply_id, note_id, message, is_read, created_at)
+                        VALUES ($1, 'mention', $2, $3, 'Você foi mencionado em uma resposta.', FALSE, NOW())
+                    `, [mentionedUserId, replyId, noteId]);
+                } else {
+                    console.log("Mentioned user not found:", username);
+                }
+            }
+        }        
 
         req.session.message = "Reply added successfully!";
         return res.redirect(`/note/details?noteId=${noteId}`);
@@ -409,6 +471,90 @@ app.post("/note/reply", requireAuth, async (req, res) => {
         console.error("Error adding reply:", error);
         req.session.message = "An error occurred while adding the reply.";
         return res.redirect(`/note/details?noteId=${noteId}`);
+    }
+});
+
+// app.post("/reply/edit", requireAuth, async (req, res) => {
+//     const { replyId, newMessage } = req.body;
+//     const { id: userId } = req.session.user;
+
+//     if (!replyId || !newMessage) {
+//         req.session.message = "Missing required fields.";
+//         return res.redirect("back");
+//     }
+
+//     try {
+//         // Atualizar mensagem, verificando se pertence ao usuário logado
+//         const result = await db.query(`
+//             UPDATE replies
+//             SET message = $1, updated_at = NOW()
+//             WHERE id = $2 AND user_id = $3
+//         `, [newMessage, replyId, userId]);
+
+//         if (result.rowCount === 0) {
+//             req.session.message = "You are not authorized to edit this reply.";
+//         } else {
+//             req.session.message = "Reply updated successfully!";
+//         }
+//         return res.redirect("back");
+//     } catch (error) {
+//         console.error("Error editing reply:", error);
+//         req.session.message = "An error occurred while editing the reply.";
+//         return res.redirect("back");
+//     }
+// });
+
+// app.post("/reply/delete", requireAuth, async (req, res) => {
+//     const { replyId } = req.body;
+//     const { id: userId } = req.session.user;
+
+//     if (!replyId) {
+//         req.session.message = "Missing required fields.";
+//         return res.redirect("back");
+//     }
+
+//     try {
+//         // Excluir mensagem, verificando se pertence ao usuário logado
+//         const result = await db.query(`
+//             DELETE FROM replies
+//             WHERE id = $1 AND user_id = $2
+//         `, [replyId, userId]);
+
+//         if (result.rowCount === 0) {
+//             req.session.message = "You are not authorized to delete this reply.";
+//         } else {
+//             req.session.message = "Reply deleted successfully!";
+//         }
+//         return res.redirect("back");
+//     } catch (error) {
+//         console.error("Error deleting reply:", error);
+//         req.session.message = "An error occurred while deleting the reply.";
+//         return res.redirect("back");
+//     }
+// });
+
+app.get("/notifications", requireAuth, async (req, res) => {
+    const { id: userId } = req.session.user;
+
+    try {
+        const notifications = await db.query(`
+            SELECT id, message, note_id, reply_id, created_at
+            FROM notifications
+            WHERE user_id = $1
+            ORDER BY created_at DESC
+        `, [userId]);
+
+        await db.query(`
+            UPDATE notifications
+            SET is_read = TRUE
+            WHERE user_id = $1
+        `, [userId]);
+
+        res.render("notifications.ejs", { notifications: notifications.rows });
+    } catch (error) {
+        console.error("Error fetching notifications:", error);
+        req.session.message = "Error fetching notifications.";
+        res.redirect("/");
     }
 });
 

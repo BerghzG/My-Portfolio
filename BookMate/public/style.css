@@ -531,3 +531,9 @@ div.custom-card {
     border-radius: 0;
 }
 
+.badge {
+    margin-left: 8px;
+    font-size: 0.75rem;
+    vertical-align: middle;
+}
+

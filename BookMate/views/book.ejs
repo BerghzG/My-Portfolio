@@ -30,7 +30,14 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
                     <li><a class="dropdown-item" href="/profile">My Perfil</a></li>
-                    <li><a class="dropdown-item" href="/settings">Notification</a></li>
+                    <li>
+                        <a class="dropdown-item" href="/notifications">
+                            Notification 
+                            <% if (unreadNotifications > 0) { %>
+                                <span class="badge bg-danger"><%= unreadNotifications %></span>
+                            <% } %>
+                        </a>
+                    </li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="/logout" style="color: red;">Logout</a></li>
                 </ul>

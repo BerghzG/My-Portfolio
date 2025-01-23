@@ -14,7 +14,20 @@
                 <li>
                     <strong><%= reply.username %></strong>: <%= reply.message %><br>
                     <small><%= new Date(reply.created_at).toLocaleString() %></small>
-                </li>
+                    <% if (reply.user_id === userId) { %>
+                        <!-- Botão de editar -->
+                        <form method="POST" action="/reply/edit" style="display: inline;">
+                            <input type="hidden" name="replyId" value="<%= reply.id %>">
+                            <input type="text" name="newMessage" placeholder="Edit your message">
+                            <button type="submit" class="btn btn-sm btn-warning">Edit</button>
+                        </form>
+                        <!-- Botão de deletar -->
+                        <form method="POST" action="/reply/delete" style="display: inline;">
+                            <input type="hidden" name="replyId" value="<%= reply.id %>">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    <% } %>
+                </li>                
             <% }) %>
         </ul>
     <% } else { %>
@@ -24,6 +37,11 @@
 
 <form method="POST" action="/note/reply">
     <input type="hidden" name="noteId" value="<%= note.id %>">
-    <textarea name="message" placeholder="Write your reply here..." required></textarea>
+    <textarea 
+        name="message" 
+        placeholder="Write your reply here... Use @username to mention someone."
+        required>
+    </textarea>
     <button type="submit" class="btn btn-primary">Reply</button>
 </form>
+

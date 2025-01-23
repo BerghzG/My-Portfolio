@@ -1,0 +1,15 @@
+<h1>Notifications</h1>
+<% if (notifications.length > 0) { %>
+    <ul>
+        <% notifications.forEach(notification => { %>
+            <li>
+                <a href="/note/details?noteId=<%= notification.note_id %>">
+                    <%= notification.message %>
+                </a>
+                <small><%= new Date(notification.created_at).toLocaleString() %></small>
+            </li>
+        <% }) %>
+    </ul>
+<% } else { %>
+    <p>No notifications yet.</p>
+<% } %>

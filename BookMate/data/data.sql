@@ -49,3 +49,16 @@ CREATE TABLE replies (
     message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
+
+CREATE TABLE notifications (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    note_id INT,
+    reply_id INT,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (note_id) REFERENCES notes(id),
+    FOREIGN KEY (reply_id) REFERENCES replies(id)
+);
