@@ -99,7 +99,7 @@ app.post("/signup", async (req, res) => {
         );
 
         const userData = newUser.rows[0];
-        req.session.user = { id: userData.id, email: userData.email };
+        req.session.user = { id: userData.id, email: userData.email, name: userData.name };
         res.redirect("/");
     } catch (err) {
         console.error(err);
@@ -132,7 +132,7 @@ app.post("/login", async (req, res) => {
             });
         }
 
-        req.session.user = { id: userData.id, email: userData.email };
+        req.session.user = { id: userData.id, email: userData.email, name: userData.name };
         res.redirect("/");
     } catch (err) {
         console.error(err);
@@ -457,7 +457,7 @@ app.post("/note/reply", requireAuth, async (req, res) => {
                     // Inserir a notificação com o noteId do req.body
                     await db.query(`
                         INSERT INTO notifications (user_id, type, reply_id, note_id, message, is_read, created_at)
-                        VALUES ($1, 'mention', $2, $3, 'Você foi mencionado em uma resposta.', FALSE, NOW())
+                        VALUES ($1, 'mention', $2, $3, 'You were mentioned in a reply.', FALSE, NOW())
                     `, [mentionedUserId, replyId, noteId]);
                 } else {
                     console.log("Mentioned user not found:", username);
@@ -534,7 +534,7 @@ app.post("/note/reply", requireAuth, async (req, res) => {
 // });
 
 app.get("/notifications", requireAuth, async (req, res) => {
-    const { id: userId } = req.session.user;
+    const { id: userId, name } = req.session.user;
 
     try {
         const notifications = await db.query(`
@@ -550,7 +550,7 @@ app.get("/notifications", requireAuth, async (req, res) => {
             WHERE user_id = $1
         `, [userId]);
 
-        res.render("notifications.ejs", { notifications: notifications.rows });
+        res.render("notifications.ejs", { notifications: notifications.rows, userName: name });
     } catch (error) {
         console.error("Error fetching notifications:", error);
         req.session.message = "Error fetching notifications.";
