@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRF Portfolio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        svg {
+            display:block;
+        }
+
+        .info-card .card h3 {
+            margin-bottom: 1rem;
+        }
+
+        #sp {
+            color: #4ade80;
+        }
+
+        a.btn {
+            width: 80%; 
+            justify-content: center; 
+            margin-top: 1.2rem; 
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>RRF.dev</span>
+                <img src="../img/owl.gif" alt="GIF ilustrativo">
+            </div>
+            <ul>
+                <li><a href="index.html">Sobre</a></li>
+                <li><a href="formacao.html">Formação</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="inicio">
+            <div id="apresen">
+                <p id="mundo">Olá Mundo!</p>
+                <h1 class="typing">Sou <strong>Robert</strong> R. Frazier</h1>
+                <p id="inic">Desenvolvedor em formação, apaixonado por tecnologia, leitura e aprendizado contínuo. Entre códigos, café e boas conversas, estou sempre buscando evoluir um pouco mais a cada dia.</p>
+            </div>
+            <div id="gif">
+                <svg width="40" height="40">
+                    <circle cx="20" cy="20" r="18" fill="#7161ac" />
+                    <circle cx="13" cy="14" r="3" fill="#5a4d8a" opacity="0.6" />
+                    <circle cx="26" cy="11" r="2" fill="#5a4d8a" opacity="0.5" />
+                    <circle cx="28" cy="25" r="4" fill="#5a4d8a" opacity="0.5" />
+                    <circle cx="14" cy="27" r="2" fill="#5a4d8a" opacity="0.4" />
+                    <circle cx="22" cy="20" r="2.5" fill="#5a4d8a" opacity="0.4" />
+                    <circle cx="13" cy="11" r="6" fill="white" opacity="0.07" />
+                </svg>
+            </div>
+        </section>
+        <div class="wave-separador">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80">
+            <path fill="#D7D1ED" 
+            d="M0,0 C360,80 1080,0 1440,80 L1440,80 L0,80 Z"/>
+            </svg>
+        </div>
+        <section id="sobre">
+            <h2>Quem sou eu</h2>
+            <div class="sobre-grid">
+                <div>
+                    <p class="bio">
+                        Olá! Sou Robert Reis Frazier, estudante de Análise e Desenvolvimento de Sistemas na UNINTER e graduando em Ciências
+                        Contábeis. Tenho maior afinidade com desenvolvimento <strong>front-end</strong>, mas também gosto de trabalhar com o
+                        back-end,
+                        buscando criar aplicações completas e funcionais. Ao longo da minha trajetória, venho desenvolvendo projetos utilizando
+                        HTML, CSS, JavaScript, Node.js, Express, bancos de dados relacionais e outras tecnologias voltadas ao desenvolvimento
+                        web.
+                    </p>
+                    <p class="bio">
+                        Acredito que a combinação entre tecnologia, lógica e conhecimentos em negócios e finanças me proporciona uma visão mais
+                        ampla na hora de desenvolver soluções, sempre buscando unir organização, usabilidade e eficiência.
+                    </p>
+                    <p class="bio">
+                        Fora da programação, gosto de ler, jogar videogame, ouvir música (principalmente rock), assistir animes e aprender sobre
+                        os mais diversos assuntos. Sou movido pela curiosidade e estou sempre procurando evoluir, seja estudando uma nova
+                        tecnologia, lendo um bom livro ou desenvolvendo um novo projeto. E este site que você está vendo agora? Foi desenvolvido
+                        por mim, do zero, utilizando HTML, CSS e JavaScript.
+                    </p>
+
+                    <h3 class="skills-titulo">Habilidades</h3>
+                    <div class="skills-grid" id="skillsGrid">
+                    <!-- As habilidades são geradas pelo JS abaixo -->
+                    </div>
+                </div>
+
+                <div class="info-card card">
+                    <h3>Dados rápidos</h3>
+
+                    <div class="info-linha">
+                        <span>Localização</span>
+                        <span>Rio de Janeiro, RJ</span>
+                    </div>
+                    <div class="info-linha">
+                        <span>Curso</span>
+                        <span>ADS — UNINTER</span>
+                    </div>
+                    <div class="info-linha">
+                        <span>Paralelo</span>
+                        <span>C. Contábeis</span>
+                    </div>
+                    <div class="info-linha">
+                        <span>Foco</span>
+                        <span>Full-Stack</span>
+                    </div>
+                    <div class="info-linha">
+                        <span>Disponível</span>
+                        <span id="sp">● Sim</span>
+                    </div>
+
+                    <a href="contato.html" class="btn">
+                        Fale comigo
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Robert Reis Frazier — feito com HTML, CSS e JS puro</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

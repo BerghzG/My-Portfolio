@@ -1,0 +1,105 @@
+/* --- Estilos específicos da página Portfólio --- */
+
+    /* Filtros de categoria */
+.filtros {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding: 17px;
+}
+
+/* Botão de filtro */
+.filtro-btn {
+    background: #16161d;
+    border: 1px solid 12px;
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    color: #747491;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.filtro-btn:hover,
+.filtro-btn.ativo {
+    background: v#c084fc;
+    border-color: #c084fc;
+    color: #c084fc;
+    font-weight: 500;
+}
+
+    /* Grade de projetos */
+.projetos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+    padding: 17px;
+}
+
+    /* Card de projeto */
+.projeto-card {
+    background: #16161d;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+    cursor: default;
+}
+
+.projeto-card:hover {
+    border-color: #c084fc;
+    transform: translateY(-3px);
+}
+
+    /* Ícone do projeto (emoji grande) */
+.projeto-icone {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+    /* Tags de tecnologia */
+.projeto-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #1f1f2a;
+    border: 1px solid #2a2a3a;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.78rem;
+    color: #6b6b8a;
+    font-family: 'Space Mono', monospace;
+}
+
+
+    /* Tipo de projeto (badge de categoria) */
+.projeto-tipo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: #818cf8;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+    /* Card oculto pelo filtro */
+.projeto-card.oculto {
+    display: none;
+}
+
+    /* Mensagem de nenhum resultado */
+#sem-resultado {
+    display: none;
+    color: #6b6b8a;
+    font-size: 0.95rem;
+    padding: 2rem 0;
+}

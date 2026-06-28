@@ -1,0 +1,112 @@
+   /* Linha do tempo vertical */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+    /* Linha vertical contínua à esquerda */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: #2a2a3a;
+}
+
+    /* Item da linha do tempo */
+.timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+    /* Ponto na linha do tempo */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #c084fc;
+    border: 2px solid #0e0e12;
+    box-shadow: 0 0 0 2px #c084fc;
+    transform: translateX(-4px);
+}
+
+    /* Data / período */
+.timeline-data {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: #c084fc;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+}
+
+.timeline-inst {
+    font-size: 0.82rem;
+    color: #6b6b8a;
+    margin-bottom: 0.25rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-family: 'Space Mono', monospace;
+    margin-top: 0.4rem;
+}
+
+.badge-em-curso {
+    background: rgba(192, 132, 252, 0.12);
+    color: #c084fc;
+    border: 1px solid rgba(192, 132, 252, 0.3);
+}
+
+.badge-concluido {
+    background: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+
+.certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+
+.cert-card {
+    background: #16161d;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    transition: 0.25s ease, transform 0.25s ease;
+}
+
+.cert-card:hover {
+    border-color: #c084fc;
+    transform: translateY(-2px);
+}
+
+.cert-plataforma {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: #6b6b8a;
+    margin-bottom: 0.3rem;
+}
+
+.cert-nome {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #e2e2f0;
+}
+
+.secao-gap {
+    margin-top: 3.5rem;
+}

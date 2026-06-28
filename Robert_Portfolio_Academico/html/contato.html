@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRF Portfolio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/contato.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin: 0;
+            padding: 0 15px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: "Roboto", sans-serif;
+            color: #9286BA;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            margin-bottom: 0.5rem;
+            font-family: "Roboto", sans-serif;
+            color: #D7D1ED;
+        }
+
+        .p1 {
+            color: #9b9bbb; 
+            margin-bottom: 1.5rem; 
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            width: 100%; 
+            justify-content: center;
+        }
+
+        .sp {
+            color: #e2e2f0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>RRF.dev</span>
+                <img src="../img/owl.gif" alt="GIF ilustrativo">
+            </div>
+            <ul>
+                <li><a href="index.html">Sobre</a></li>
+                <li><a href="formacao.html">Formação</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Contato</h2>
+        
+        <div class="contato-grid">
+            <div>
+                <p class="p1">
+                    Tem um projeto, dúvida ou quer só trocar uma ideia? Me manda uma mensagem!
+                </p>
+
+                <form id="contatoForm" novalidate>
+
+                    <div class="form-grupo">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" placeholder="Seu nome completo" />
+                        <span class="erro" id="erroNome">Por favor, informe seu nome.</span>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="seuemail@exemplo.com" />
+                        <span class="erro" id="erroEmail">Informe um e-mail válido.</span>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="assunto">Assunto</label>
+                        <input type="text" id="assunto" placeholder="Ex: Parceria, dúvida, orçamento..." />
+                        <span class="erro" id="erroAssunto">Informe o assunto.</span>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea id="mensagem" placeholder="Escreva sua mensagem aqui..."></textarea>
+                        <span class="erro" id="erroMensagem">Escreva sua mensagem.</span>
+                    </div>
+
+                    <button type="submit" class="btn">
+                        Enviar mensagem
+                    </button>
+                </form>
+
+                <div id="sucesso">
+                    ✓ Mensagem enviada! Retorno em breve.
+                </div>
+            </div>
+
+            <div class="contato-info card">
+                <h3>Outros canais</h3>
+
+                <div class="contato-linha">
+                    <span class="contato-icone">📧</span>
+                    <div>
+                        <span class="contato-label">E-mail</span>
+                        <a href="mailto:berghzg@gmail.com">berghzg@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="contato-linha">
+                    <span class="contato-icone">💼</span>
+                    <div>
+                        <span class="contato-label">LinkedIn</span>
+                        <a href="https://www.linkedin.com/in/robert-reis-frazier-8ab614334" target="_blank" rel="noopener">linkedin.com/in/robertreis</a>
+                    </div>
+                </div>
+
+                <div class="contato-linha">
+                    <span class="contato-icone">📱</span>
+                    <div>
+                        <span class="contato-label">WhatsApp</span>
+                        <a href="https://wa.me/5521977378034" target="_blank" rel="noopener">+55 (21) 97737-8034</a>
+                    </div>
+                </div>
+
+                <div class="contato-linha">
+                    <span class="contato-icone">📍</span>
+                    <div>
+                        <span class="contato-label">Localização</span>
+                        <span class="sp">Rio de Janeiro, RJ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2026 Robert Reis Frazier — feito com HTML, CSS e JS puro</p>
+    </footer>
+    <script src="../js/contato.js"></script>
+</body>
+</html>

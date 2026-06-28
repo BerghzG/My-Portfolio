@@ -1,16 +1,18 @@
 # My Portfolio
+
 This is my project portfolio, where I share a collection of work that I have developed or copied for educational and learning purposes. Each project has its own directory with a brief description.
 
 ## Projects
+
 Here is a list of the top projects in this repository:
 
 1. **[Quiz](https://berghzg.github.io/My-Portfolio/Quiz/)**  
    This is an interactive quiz project about the science fiction series *Doctor Who*, created by the BBC. The quiz consists of 10 multiple-choice questions about the characters, episodes, and interesting facts from the series. The aim is to test your knowledge and passion for the Doctor Who universe.
 
-2. **[Discord Bot](https://github.com/BerghzG/My-Portfolio/tree/main/Bot%20de%20Discord)**  
+2. **[Discord Bot](https://github.com/BerghzG/My-Portfolio/tree/main/Discord_Bot)**  
    This is a Discord bot made with Python that plays a points game. The player adds points by summoning the bot using the "!pontos" command.
 
-3. **[Login with PySimpleGUI](https://github.com/BerghzG/My-Portfolio/tree/main/PySimpleGui%20Login)**  
+3. **[Login with PySimpleGUI](https://github.com/BerghzG/My-Portfolio/tree/main/PySimpleGui_Login)**  
    This is a simple user login and registration system developed in Python with the PySimpleGUI library. The system allows users to log in with a previously registered username and password, in addition to offering the option to save the login, register new users, and view the list of registered users.
 
 4. **[My Bot Portfolio](https://t.me/BerghzBot)**  
@@ -19,7 +21,7 @@ Here is a list of the top projects in this repository:
 5. **[Jokenpo](https://berghzg.github.io/My-Portfolio/Jokenpo/)**  
    In this game, players can compete against the computer in a classic game of rock, paper, scissors. The game includes an attractive and interactive design, a scoreboard to keep track of scores, and the ability to reset the score with just one click.
 
-6. **[Ping Pong Game](https://github.com/BerghzG/My-Portfolio/tree/main/PyGame%20Project)**  
+6. **[Ping Pong Game](https://github.com/BerghzG/My-Portfolio/tree/main/PyGame_Project)**  
    This is a ping pong game developed in Python with the Pygame library, inspired by the classic Atari game. The goal is to provide a fun and nostalgic experience for players, recreating the atmosphere of retro games.
 
 7. **[Portfolio Website](https://berghzg.github.io/My-Portfolio/Bootstap%20Portifolio/)**  
@@ -31,14 +33,21 @@ Here is a list of the top projects in this repository:
 9. **[AnimeFinder](https://animefinder-9dp1.onrender.com)**  
    AnimeFinder is an application that allows users to search for animes by text or image. It provides detailed information such as synopses, trailers, characters, and voice actors. The app also allows users to create personal lists (watched, watching, dropped, and favorites) stored in JSON files. It displays updated anime news every 24 hours through The News API.
 
+10. **[Some SQL](https://github.com/BerghzG/My-Portfolio/tree/main/Just_SQL)**
+   This project contains the modeling of a system developed based on the analysis of a client example video proposed in an academic paper. Based on the requirements gathering, the ERD (Entity-Relationship Model) was created and, subsequently, its implementation in SQL was carried out, transforming the conceptual model into a relational database structure.
+
 ## Contribution
+
 If any of the projects were inspired by tutorials or other people's work, they will be properly credited here.
 
 ## License
+
 All projects are licensed under the MIT License.
 
 ## Contact
-If you'd like to get in touch with me about a specific project or collaboration opportunity, you can find me on [Instagram](https://www.instagram.com/berghz_g/).
+
+If you'd like to get in touch with me about a specific project or collaboration opportunity, you can find me on [Instagram](https://www.instagram.com/berghz_g/) or [LinkedIn](https://www.linkedin.com/in/robert-reis-frazier-8ab614334).
 
 ## Project Status
+
 This portfolio is a work in progress, and new projects may be added or updated as I continue to learn and create more. Please feel free to follow the updates.

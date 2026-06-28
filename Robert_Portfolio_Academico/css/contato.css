@@ -1,0 +1,120 @@
+
+.contato-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 3rem;
+    align-items: start;
+}
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+}
+
+label {
+    font-size: 0.82rem;
+    color: #9b9bbb;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.04em;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    background: #16161d;
+    border: 1px solid #2a2a3a;
+    border-radius: 8px;
+    color: #e2e2f0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+    transition: border-color 0.25s ease;
+    outline: none;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: #c084fc;
+;
+}
+
+textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.erro {
+    font-size: 0.78rem;
+    color: #f87171;
+    display: none;
+}
+
+    /* Mensagem de sucesso após envio */
+#sucesso {
+    display: none;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    color: #4ade80;
+    font-size: 0.92rem;
+    margin-top: 1rem;
+}
+
+.contato-info {
+    position: sticky;
+    top: 84px;
+}
+
+.contato-linha {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #2a2a3a;
+    font-size: 0.88rem;
+}
+
+.contato-linha:last-child {
+    border-bottom: none;
+}
+
+
+.contato-icone {
+    font-size: 1.1rem;
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.contato-label {
+    color: #6b6b8a;
+    font-size: 0.75rem;
+    display: block;
+    margin-bottom: 1px;
+}
+
+a {
+    color:#c084fc;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+a:hover {
+    color: #818cf8;
+}
+
+    /* Responsividade */
+@media (max-width: 680px) {
+    .contato-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contato-info {
+        position: static;
+    }
+}
